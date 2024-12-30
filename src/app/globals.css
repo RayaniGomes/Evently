@@ -64,11 +64,6 @@ p {
   font-size: 12px;
 }
 
-a {
-  text-decoration: none;
-  cursor: pointer;
-}
-
 .botaoBranco {
   display: flex;
   align-items: center;
@@ -124,4 +119,8 @@ a {
   &:hover {
     box-shadow: var(--drop-shadow-azul-hover);
   }
+}
+
+:focus {
+  outline: none;
 }

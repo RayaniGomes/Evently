@@ -1,6 +1,9 @@
-export default function Home() {
+'use client';
+
+import Home from "./home/page";
+
+export default function App() {
   return (
-    <div >
-    </div>
+      <Home />
   );
 }
