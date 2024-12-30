@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import StyledComponentsRegistry from "./registry";
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const metadata: Metadata = {
   title: "Evently",
@@ -13,8 +16,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
+      <head>
+        <link rel="icon" href="/favicon.svg" />
+      </head>
       <body>
-        {children}
+        <StyledComponentsRegistry>
+          {children}
+        </StyledComponentsRegistry>
       </body>
     </html>
   );
