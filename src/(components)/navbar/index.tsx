@@ -17,6 +17,8 @@ export default function Navbar() {
                 <Image
                     src="/logo.svg"
                     alt="Logo"
+                    loading="lazy"
+                    objectFit="cover"
                     width={150}
                     height={50}
                 />
