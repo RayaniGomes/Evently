@@ -85,43 +85,50 @@ export default function Navbar() {
 
             <NavMobile className={isMenuOpen ? 'menu-mobile' : ''}>
                 <div className="menu">
-                    {window.location.pathname === "/" ? (
-                        <Link href="/" className="active">
-                            HOME
-                        </Link>
-                    ) : (
-                        <Link href="/">
-                            HOME
-                        </Link>)
-                    }
-                    {window.location.pathname === "/quem-somos" ? (
-                        <Link href="/quem-somos" className="active">
-                            QUEM SOMOS
-                        </Link>
-                    ) : (
-                        <Link href="/quem-somos">
-                            QUEM SOMOS
-                        </Link>)
-                    }
-                    {window.location.pathname === "/eventos" ? (
-                        <Link href="/eventos" className="active">
-                            EVENTOS
-                        </Link>
-                    ) : (
-                        <Link href="/eventos">
-                            EVENTOS
-                        </Link>)
-                    }
-
-                    {window.location.pathname === "/login" ? (
-                        <Link href="/login" className="active">
-                            LOGIN
-                        </Link>
-                    ) : (
-                        <Link href="/login">
-                            LOGIN
-                        </Link>
-                    )}
+                    <div>
+                        {window.location.pathname === "/" ? (
+                            <Link href="/" className="active">
+                                HOME
+                            </Link>
+                        ) : (
+                            <Link href="/">
+                                HOME
+                            </Link>)
+                        }
+                    </div>
+                    <div>
+                        {window.location.pathname === "/quem-somos" ? (
+                            <Link href="/quem-somos" className="active">
+                                QUEM SOMOS
+                            </Link>
+                        ) : (
+                            <Link href="/quem-somos">
+                                QUEM SOMOS
+                            </Link>)
+                        }
+                    </div>
+                    <div>
+                        {window.location.pathname === "/eventos" ? (
+                            <Link href="/eventos" className="active">
+                                EVENTOS
+                            </Link>
+                        ) : (
+                            <Link href="/eventos">
+                                EVENTOS
+                            </Link>)
+                        }
+                    </div>
+                    <div>
+                        {window.location.pathname === "/login" ? (
+                            <Link href="/login" className="active">
+                                LOGIN
+                            </Link>
+                        ) : (
+                            <Link href="/login">
+                                LOGIN
+                            </Link>
+                        )}
+                    </div>
                     <form className="search-mobile">
                         <input type="search" placeholder="Pesquisar" />
                         <button type="submit">
@@ -130,7 +137,7 @@ export default function Navbar() {
                     </form>
                 </div>
             </NavMobile>
-            
+
             <ButtonMenuHamburger className={isMenuOpen ? 'bi bi-x' : 'bi bi-list'} onClick={toggleMenu} />
         </Nav>
     );

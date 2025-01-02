@@ -66,25 +66,23 @@ export const Menu = styled.div`
         text-decoration: none;
         position: relative;
 
-        &:hover::after {
+        &::before {
             content: '';
             position: absolute;
+            left: 0;
+            bottom: -2px;
             width: 100%;
             height: 2px;
-            bottom: 2px;
-            left: 0;
             background-color: var(--branco);
+            border-radius: 4px;
+            scale: 0 1;
+            transform-origin: center;
+            transition: scale 0.35s;
         }
 
-        
-        &.active::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 2px;
-            bottom: 2px;
-            left: 0;
-            background-color: var(--branco);
+        &:hover::before,
+        &.active::before {
+            scale: 1;
         }
     }
 
@@ -109,14 +107,23 @@ export const Login = styled.div`
         text-decoration: none;
         position: relative;
 
-        &:hover::after {
+        &::before {
             content: '';
             position: absolute;
+            left: 0;
+            bottom: -2px;
             width: 100%;
             height: 2px;
-            bottom: 2px;
-            left: 0;
             background-color: var(--branco);
+            border-radius: 4px;
+            scale: 0 1;
+            transform-origin: center;
+            transition: scale 0.35s;
+        }
+
+        &:hover::before, 
+        &.active::before {
+            scale: 1;
         }
 
         @media (max-width: 768px) {
@@ -180,9 +187,25 @@ export const NavMobile = styled.div`
         font-weight: 400;
         color: var(--branco);
         text-decoration: none;
+        position: relative;
 
-        &.active, &:hover {
-            text-decoration: underline;
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 100%;
+            height: 2px;
+            background-color: var(--branco);
+            border-radius: 4px;
+            scale: 0 1;
+            transform-origin: center;
+            transition: scale 0.35s;
+        }
+
+        &:hover::before,
+        &.active::before {
+            scale: 1;
         }
     }
 
@@ -251,6 +274,10 @@ export const ButtonMenuHamburger = styled.button`
     justify-content: center;
     border-radius: 7px;
     margin-left: 1rem;
+
+    &:hover {
+        box-shadow: var(--drop-shadow-branco-hover);
+    }
 
     @media (max-width: 768px) {
         display: flex;
