@@ -1,12 +1,14 @@
 import Banner from "@/(components)/banner";
+import Card from "@/(components)/card";
 import Footer from "@/(components)/footer";
 import Navbar from "@/(components)/navbar";
 
 export default function Home() {
     return (
-        <main style={{height: "100vh"}}>    
+        <main>    
             <Navbar />
             <Banner />
+            <Card />
             <Footer />
         </main>        
     );
