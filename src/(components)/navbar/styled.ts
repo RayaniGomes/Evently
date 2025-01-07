@@ -147,6 +147,7 @@ export const Login = styled.div`
             background-color: var(--branco);
             color: var(--azul-medio);
             box-shadow: var(--drop-shadow-branco-hover);
+            transform: scale(1.1);
         }
     }
 

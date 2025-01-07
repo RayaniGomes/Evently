@@ -1,6 +1,8 @@
 import { useEvento } from "@/stores/eventoStore";
 import Image from "next/image";
 import { useEffect } from "react";
+import { CardEvento } from "./styled";
+import Link from "next/link";
 
 export default function Card() {
     const { eventos, getEventos } = useEvento();
@@ -11,21 +13,41 @@ export default function Card() {
     }, []);
 
     return (
-        <div>
+        <div className="d-flex m-5 flex-wrap justify-content-center">
+            
             {eventos.map((evento) => {
                 return (
-                    <div key={evento.id}>
-                        <Image 
-                            src={evento.imagem} 
-                            alt={evento.nome} 
+                    <CardEvento key={evento.id}>
+                        <Image
+                            src={evento.imagem}
+                            alt={evento.nome}
                             width={200}
-                            height={200}
+                            height={218}
                         />
-                        <div>
-                            <h6>{evento.nome}</h6>
-                            <p>{evento.data}</p>
+                        <div className="box">
+                            <div>
+                                <div className="d-flex justify-content-between">
+                                    <h6>{evento.nome}</h6>
+                                    
+                                    <button 
+                                        type="button" 
+                                        className="compartilhar" 
+                                        data
+                                    >
+                                        <i className="bi bi-share-fill" />
+                                    </button>
+                                </div>
+                                <p>{evento.local}</p>
+                                <p>{evento.cidade} / {evento.uf}</p>
+                                <h6>{evento.data}</h6>
+                            </div>
+
+                            <div className="botoes">
+                                <button>Inscreva-se</button>
+                                <Link href={`/detalhes-evento/${evento.id}`}>Detalhes</Link>
+                            </div>
                         </div>
-                    </div>
+                    </CardEvento>
                 )
             })}
         </div>
