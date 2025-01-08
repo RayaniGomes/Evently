@@ -35,6 +35,7 @@ export const Form = styled.form`
     padding: 0.25rem 0.5rem;
 
     input {
+        width: 100%;
         border: none;
         color: var(--azul-escuro);
         background-color: transparent;
