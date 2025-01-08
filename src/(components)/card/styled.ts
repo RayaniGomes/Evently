@@ -25,6 +25,7 @@ export const CardEvento = styled.div`
         color: var(--branco);
         padding: 1rem;
         line-height: 0;
+        position: relative;
     }
 
     & .botoes {
@@ -55,24 +56,6 @@ export const CardEvento = styled.div`
             display: flex;
             align-items: center;
             justify-content: center;
-        }
-    }
-
-    & .compartilhar {
-        width: 25px;
-        height: 25px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--branco);
-        color: var(--azul-escuro);
-        border-radius: 50%;
-        border: none;
-        font-size: 12px;
-
-        &:hover {
-            box-shadow: var(--drop-shadow-branco-hover);
-            transform: scale(1.1);
         }
     }
 `

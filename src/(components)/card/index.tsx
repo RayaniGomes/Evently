@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { CardEvento } from "./styled";
 import Link from "next/link";
+import Compartilhar from "../compartinhar";
 
 export default function Card() {
     const { eventos, getEventos } = useEvento();
@@ -29,13 +30,7 @@ export default function Card() {
                                 <div className="d-flex justify-content-between">
                                     <h6>{evento.nome}</h6>
                                     
-                                    <button 
-                                        type="button" 
-                                        className="compartilhar" 
-                                        data
-                                    >
-                                        <i className="bi bi-share-fill" />
-                                    </button>
+                                    <Compartilhar />
                                 </div>
                                 <p>{evento.local}</p>
                                 <p>{evento.cidade} / {evento.uf}</p>
