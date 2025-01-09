@@ -5,7 +5,7 @@ import { useEvento } from "@/stores/eventoStore";
 import { useEffect } from "react";
 
 export default function Banner() {
-    const { eventos, getEventos } = useEvento();
+    const { eventos, getEventos: getEventos } = useEvento();
 
     useEffect(() => {
         getEventos();
