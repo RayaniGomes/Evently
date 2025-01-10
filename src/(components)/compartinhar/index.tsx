@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { BntCompartilhar } from "@/interfaces";
 
-export default function Compartilhar({ bg_Color: bgColor, color, tamanho, fontSize, padding }: BntCompartilhar) {
+export default function Compartilhar({ bg_Color: bgColor, color, tamanho, fontSize, padding, top, right }: BntCompartilhar) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -31,6 +31,8 @@ export default function Compartilhar({ bg_Color: bgColor, color, tamanho, fontSi
             tamanho={tamanho} 
             fontSize={fontSize} 
             padding={padding}
+            top={top}
+            right={right}
         >
             <button className="btn" type="button" onClick={handleToggle}>
                 <i className="bi bi-share-fill" />

@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 export const BtnCompartilhar = styled.div<BntCompartilhar>`
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: ${props => props.top}rem;
+    right: ${props => props.right}rem;
     z-index: 1;
 
     .btn {

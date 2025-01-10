@@ -24,6 +24,8 @@ export default function Card({ evento }: { evento: Evento }) {
                                 tamanho={25}
                                 fontSize={12}
                                 padding=".4rem"
+                                top={1}
+                                right={1}
                             />
                         </div>
                         <p>{evento.local}</p>
