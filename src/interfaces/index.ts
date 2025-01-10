@@ -21,4 +21,6 @@ export interface BntCompartilhar {
     tamanho: number;
     fontSize: number;
     padding: string;
+    top: number;
+    right: number;
 }
