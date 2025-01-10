@@ -14,3 +14,11 @@ export interface Evento {
     complemento: string;
     imagem: string;
 }
+
+export interface BntCompartilhar {
+    bg_Color: string;
+    color: string;
+    tamanho: number;
+    fontSize: number;
+    padding: string;
+}

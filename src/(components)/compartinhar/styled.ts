@@ -1,52 +1,71 @@
+import { BntCompartilhar } from "@/interfaces";
 import styled from "styled-components";
 
-export const BtnCompartilhar = styled.div`
+export const BtnCompartilhar = styled.div<BntCompartilhar>`
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1;
+
+    .btn {
     display: flex;
     flex-direction: column;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: var(--branco);
-    color: var(--azul-escuro);
+    background-color: ${props => props.bg_Color};
+    color: ${props => props.color};
     border-radius: 50px;
     border: none;
-    font-size: 14px;
-    padding: .5rem;
-    gap: .5rem;
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-
-    button {
-        color: var(--azul-escuro); 
-        border: none;
-        background-color: transparent;
+    font-size: ${props => props.fontSize}px;
+    width: ${props => props.tamanho}px;
+    height: ${props => props.tamanho}px;
+    
     }
 
     .links {
-        display: none;
+        width: ${props => props.tamanho}px;
+        background-color: ${props => props.bg_Color};
+        position: absolute;
+        top: 0;
+        display: flex;
+        align-items: center;
         flex-direction: column;
+        padding: ${props => props.padding};
         gap: 0.5rem;
-        font-size: 14px;
-        border-radius: 50%;
+        font-size: ${props => props.fontSize}px;
+        border-radius: 50px;
+        box-shadow: var(--drop-shadow-azul-hover);
+
+        .btn {
+            width: 0;
+            height: 0;
+            padding: ${props => props.padding};
+        }
+
+        button {
+            background-color: transparent;
+            color: ${props => props.color};
+            border: none;
+        }
 
         a{
-            color: var(--azul-escuro);
+            color: ${props => props.color}; 
+
+            &:hover {
+                opacity: 0.8;
+                transform: scale(1.2);
+            }
+        }
+
+        button:hover {
+            background-color: transparent;
+            opacity: 0.7;
+            transform: scale(1.1);
         }
     }
 
-    &:hover {
-        box-shadow: var(--drop-shadow-branco-hover);
-        
-        .links {
-            display: flex;
-            scale: 1;
-            
-            button:hover, 
-            a:hover {
-                color: var(--azul-claro);
-                box-shadow: var(--drop-shadow-azul-hover);
-            }
-        }
+    .close {
+        display: none;
     }
 `

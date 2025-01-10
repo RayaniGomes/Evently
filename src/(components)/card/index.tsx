@@ -18,7 +18,13 @@ export default function Card({ evento }: { evento: Evento }) {
                     <div>
                         <div className="d-flex justify-content-between">
                             <h6>{evento.nome}</h6>
-                            <Compartilhar />
+                            <Compartilhar
+                                bg_Color="var(--branco)"
+                                color="var(--azul-escuro)"
+                                tamanho={25}
+                                fontSize={12}
+                                padding=".4rem"
+                            />
                         </div>
                         <p>{evento.local}</p>
                         <p>{evento.cidade} / {evento.uf}</p>

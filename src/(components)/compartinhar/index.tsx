@@ -1,8 +1,15 @@
 import Link from "next/link";
 import { BtnCompartilhar } from "./styled";
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { BntCompartilhar } from "@/interfaces";
 
-export default function Compartilhar() {
+export default function Compartilhar({ bg_Color: bgColor, color, tamanho, fontSize, padding }: BntCompartilhar) {
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleToggle = () => {
+        setIsOpen(!isOpen);
+    }
     const handleCopyLink = () => {
         const url = "http://localhost:3000/detalhes-evento/1";
         navigator.clipboard
@@ -16,15 +23,25 @@ export default function Compartilhar() {
             });
     };
 
+
     return (
-        <BtnCompartilhar>
-            <button type="button">
+        <BtnCompartilhar 
+            bg_Color={bgColor} 
+            color={color} 
+            tamanho={tamanho} 
+            fontSize={fontSize} 
+            padding={padding}
+        >
+            <button className="btn" type="button" onClick={handleToggle}>
                 <i className="bi bi-share-fill" />
             </button>
 
-            <div className="links">
+            <div className={isOpen ? "links" : "close"}>
+                <button className="btn" type="button" onClick={handleToggle}>
+                    <i className="bi bi-share-fill" />
+                </button>
                 <button type="button" onClick={handleCopyLink}>
-                    <i className="bi bi-copy" /> 
+                    <i className="bi bi-copy" />
                 </button>
 
                 <Link
