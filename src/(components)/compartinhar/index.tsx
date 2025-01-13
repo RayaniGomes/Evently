@@ -2,9 +2,9 @@ import Link from "next/link";
 import { BtnCompartilhar } from "./styled";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { BntCompartilhar } from "@/interfaces";
+import { StyledCompartilhar } from "@/interfaces";
 
-export default function Compartilhar({ bg_Color: bgColor, color, tamanho, fontSize, padding, top, right }: BntCompartilhar) {
+export default function Compartilhar({$bgColor, $color, $tamanho, $fontSize, $padding, $top, $right }: StyledCompartilhar) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -23,20 +23,17 @@ export default function Compartilhar({ bg_Color: bgColor, color, tamanho, fontSi
             });
     };
 
-
     return (
         <BtnCompartilhar 
-            bg_Color={bgColor} 
-            color={color} 
-            tamanho={tamanho} 
-            fontSize={fontSize} 
-            padding={padding}
-            top={top}
-            right={right}
+            $bgColor={$bgColor} 
+            $color={$color} 
+            $tamanho={$tamanho} 
+            $fontSize={$fontSize} 
+            $padding={$padding}
+            $top={$top}
+            $right={$right}
         >
-            <button className="btn" type="button" onClick={handleToggle}>
-                <i className="bi bi-share-fill" />
-            </button>
+            <button className="btn bi bi-share-fill" type="button" onClick={handleToggle} />
 
             <div className={isOpen ? "links" : "close"}>
                 <button className="btn" type="button" onClick={handleToggle}>

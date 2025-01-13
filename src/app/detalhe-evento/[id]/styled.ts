@@ -6,8 +6,8 @@ export const Section = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 7rem auto;
-    padding: 0 2rem;
+    margin: 0 auto;
+    padding: 7rem 2rem;
     gap: 5rem;
     position: relative;
 
@@ -17,6 +17,7 @@ export const Section = styled.section`
     }
 
     @media (max-width: 768px) {
+        padding: 7rem 1rem 3rem 1rem;
         gap: 2rem;
     }
 `
@@ -24,7 +25,6 @@ export const Section = styled.section`
 export const Detalhe = styled.div`
     width: 90%;
     display: flex;
-    margin-bottom: 5rem;
     gap: 5rem;
 
     .img-container {
@@ -80,6 +80,16 @@ export const Detalhe = styled.div`
             img {
                 width: 100%;
                 height: auto;
+            }
+        }
+    }
+
+    @media (max-width: 425px) {
+        .info-container {
+            .btnInscricao {
+                width: 100px;
+                height: 30px;
+                font-size: 10px;
             }
         }
     }

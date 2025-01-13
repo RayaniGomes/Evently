@@ -56,13 +56,13 @@ export default function DetalheEvento(props: { params: Params }) {
                         <div className="info-container">
                             {}
                             <Compartilhar
-                                bg_Color="var(--azul-escuro)"
-                                color="var(--branco)"
-                                tamanho={40}
-                                fontSize={16}
-                                padding="1rem"
-                                top={0}
-                                right={0}
+                                $bgColor="--azul-escuro"
+                                $color="--branco"
+                                $tamanho={40}
+                                $fontSize={16}
+                                $padding="1rem"
+                                $top={0}
+                                $right={0}
                             />
                             <div className="info">
                                 <div>

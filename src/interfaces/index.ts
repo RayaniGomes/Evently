@@ -15,12 +15,12 @@ export interface Evento {
     imagem: string;
 }
 
-export interface BntCompartilhar {
-    bg_Color: string;
-    color: string;
-    tamanho: number;
-    fontSize: number;
-    padding: string;
-    top: number;
-    right: number;
+export interface StyledCompartilhar {
+    $bgColor: string;
+    $color: string;
+    $tamanho: number;
+    $fontSize: number;
+    $padding: string;
+    $top: number;
+    $right: number;
 }

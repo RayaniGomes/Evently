@@ -19,13 +19,13 @@ export default function Card({ evento }: { evento: Evento }) {
                         <div className="d-flex justify-content-between">
                             <h6>{evento.nome}</h6>
                             <Compartilhar
-                                bg_Color="var(--branco)"
-                                color="var(--azul-escuro)"
-                                tamanho={25}
-                                fontSize={12}
-                                padding=".4rem"
-                                top={1}
-                                right={1}
+                                $bgColor="--branco"
+                                $color="--azul-escuro"
+                                $tamanho={25}
+                                $fontSize={12}
+                                $padding=".4rem"
+                                $top={1}
+                                $right={1}
                             />
                         </div>
                         <p>{evento.local}</p>
