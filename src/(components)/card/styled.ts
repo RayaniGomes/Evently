@@ -2,11 +2,10 @@ import styled from "styled-components";
 
 export const CardEvento = styled.div`
     display: flex;
-    background-color: var(--azul-medio);
-    border-radius: 10px;
-    width: 537px;
     height: 250px;
+    background-color: var(--azul-medio);
     box-shadow: var(--drop-shadow);
+    border-radius: 10px;
     margin: 1rem;
 
     & img {
@@ -57,5 +56,33 @@ export const CardEvento = styled.div`
             align-items: center;
             justify-content: center;
         }
+    }
+
+    @media (max-width: 1024px) {
+        & img {
+            margin-left: -2rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        
+        & img {
+            width: 90%;
+            height: 70%;
+            margin: 0 auto;
+            margin-top: -5rem;
+        }
+
+        .botoes {
+            margin-top: 0.5em;
+            justify-content: center;
+            
+            button, a {
+                width: 80px;
+                height: 30px;
+            }
+        }
+
     }
 `
