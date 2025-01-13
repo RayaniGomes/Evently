@@ -54,7 +54,7 @@ export default function DetalheEvento(props: { params: Params }) {
                         </div>
 
                         <div className="info-container">
-                            {}
+                            
                             <Compartilhar
                                 $bgColor="--azul-escuro"
                                 $color="--branco"
@@ -63,6 +63,7 @@ export default function DetalheEvento(props: { params: Params }) {
                                 $padding="1rem"
                                 $top={0}
                                 $right={0}
+                                $hover="--drop-shadow-azul-hover"
                             />
                             <div className="info">
                                 <div>

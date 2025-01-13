@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { StyledCompartilhar } from "@/interfaces";
 
-export default function Compartilhar({$bgColor, $color, $tamanho, $fontSize, $padding, $top, $right }: StyledCompartilhar) {
+export default function Compartilhar({$bgColor, $color, $tamanho, $fontSize, $padding, $top, $right, $hover }: StyledCompartilhar) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -32,6 +32,7 @@ export default function Compartilhar({$bgColor, $color, $tamanho, $fontSize, $pa
             $padding={$padding}
             $top={$top}
             $right={$right}
+            $hover={$hover}
         >
             <button className="btn bi bi-share-fill" type="button" onClick={handleToggle} />
 

@@ -23,4 +23,5 @@ export interface StyledCompartilhar {
     $padding: string;
     $top: number;
     $right: number;
+    $hover: string;
 }

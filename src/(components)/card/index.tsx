@@ -25,6 +25,7 @@ export default function Card({ evento }: { evento: Evento }) {
                             $padding=".4rem"
                             $top={1}
                             $right={1}
+                            $hover="--drop-shadow-branco-hover"
                         />
                     </div>
                     <p>{evento.local}</p>

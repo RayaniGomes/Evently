@@ -8,19 +8,22 @@ export const BtnCompartilhar = styled.div<StyledCompartilhar>`
     z-index: 1;
 
     .btn {
-    display: flex;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: var(${props => props.$bgColor});
-    color: var(${props => props.$color});
-    border-radius: 50px;
-    border: none;
-    font-size: ${props => props.$fontSize}px;
-    width: ${props => props.$tamanho}px;
-    height: ${props => props.$tamanho}px;
-    
+        display: flex;
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(${props => props.$bgColor});
+        color: var(${props => props.$color});
+        border-radius: 50px;
+        border: none;
+        font-size: ${props => props.$fontSize}px;
+        width: ${props => props.$tamanho}px;
+        height: ${props => props.$tamanho}px;
+        
+        &:hover {
+            box-shadow: var(${props => props.$hover});
+        }
     }
 
     .links {
@@ -35,7 +38,7 @@ export const BtnCompartilhar = styled.div<StyledCompartilhar>`
         gap: 0.5rem;
         font-size: ${props => props.$fontSize}px;
         border-radius: 50px;
-        box-shadow: var(--drop-shadow-azul-hover);
+        box-shadow: var(${props => props.$hover});
 
         .btn {
             width: 0;
