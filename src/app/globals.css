@@ -7,8 +7,8 @@
   --branco: #F4F4F4;
   --botao: linear-gradient(90deg, #085EB3 0%, #103356 100%);
 
-  --gradiente-radial: linear-gradient(0deg, #103356, #103356),
-  radial-gradient(50% 50% at 50% 50%, rgba(16, 51, 86, 0.5) 27%, rgba(6, 18, 30, 0.5) 100%);
+  --gradiente-radial: radial-gradient(50% 50% at 50% 50%, #103356 25%, #06121E 100%);
+
 
   --drop-shadow: 4px 4px 10px 0px #00000040;
   --drop-shadow-branco-hover: 0px 0px 20px 0px var(--branco);
