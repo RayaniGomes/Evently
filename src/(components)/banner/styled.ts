@@ -5,11 +5,11 @@ export const CntainerBanner = styled.section`
     display: flex;
     margin-top: 5rem;
     overflow: hidden;
-    `
+`
 
 export const Slide = styled.div<{ imagem: string }>`
     width: 100%;
-    height: 700px;
+    height: 500px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +31,7 @@ export const Slide = styled.div<{ imagem: string }>`
         flex-direction: column;
         align-items: left;
         justify-content: center;
-        width: 700px;
+        width: 500px;
         height: 100%;
         padding-left: 5rem;
         color: var(--branco);
@@ -74,6 +74,22 @@ export const Slide = styled.div<{ imagem: string }>`
         }
         100% {
             transform: translateX(0%);
+        }
+    }
+
+    @media (max-width: 768px) {
+        height: 350px;
+
+        .conteudo {
+            width: 100%;
+            border-radius: 0;
+            padding-left: 2rem;
+            align-items: right;
+
+            a {
+                width: 100px;
+                height: 30px;
+            }
         }
     }
 `

@@ -10,7 +10,7 @@ export const CardEvento = styled.div`
 
     & img {
         margin: auto 0;
-        margin-left: -1rem;
+        margin-left: -2rem;
         border-radius: 10px;
         object-fit: cover;
         box-shadow: var(--drop-shadow);
@@ -64,7 +64,7 @@ export const CardEvento = styled.div`
         }
     }
 
-    @media (max-width: 768px) {
+    @media (max-width: 1024px) {
         flex-direction: column;
         
         & img {
