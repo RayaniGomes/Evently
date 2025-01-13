@@ -34,8 +34,8 @@ h1 {
   font-weight: 500 !important;
   font-size: 48px !important;
 
-  @media (max-width: 425) {
-    font-size: 32px !important;
+  @media (max-width: 425px) {
+    font-size: 24px !important;
   }
 }
 
@@ -43,7 +43,7 @@ h2 {
   font-weight: 400 !important;
   font-size: 40px !important;
 
-  @media (max-width: 425) {
+  @media (max-width: 425px) {
     font-size: 32px !important;
   }
 }
@@ -52,7 +52,7 @@ h3 {
   font-weight: 400 !important;
   font-size: 32px !important;
 
-  @media (max-width: 425) {
+  @media (max-width: 425px) {
     font-size: 26px !important;
   }
 }
@@ -61,7 +61,7 @@ h4 {
   font-weight: 400 !important;
   font-size: 24px !important;
 
-  @media (max-width: 425) {
+  @media (max-width: 425px) {
     font-size: 16px !important;
   }
 }
@@ -70,8 +70,8 @@ h5 {
   font-weight: 400 !important;
   font-size: 20px !important;
 
-  @media (max-width: 425) {
-    font-size: 16px !important;
+  @media (max-width: 425px) {
+    font-size: 14px !important;
   }
 }
 
@@ -79,7 +79,7 @@ h6 {
   font-weight: 500 !important;
   font-size: 16px !important;
 
-  @media (max-width: 425) {
+  @media (max-width: 425px) {
     font-size: 14px !important;
   }
 }
@@ -89,60 +89,23 @@ p {
   font-size: 12px;
 }
 
-.botaoBranco {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 40px;
-  background-color: var(--branco);
-  color: var(--azul-escuro);
-  border-radius: 10px;
-  border: none;
-  font-weight: 600;
-  font-size: 12px;
-  box-shadow: var(--drop-shadow);
+hr {
+  width: 50% !important;
+  border: 3px solid var(--branco) !important;
+  border-radius: 10px !important;
+  margin: 0 auto !important;
+  opacity: 1 !important;
 
-  &:hover {
-    box-shadow: var(--drop-shadow-branco-hover);
+  @media (max-width: 768px) {
+    border: 2px solid var(--branco) !important;
   }
 }
 
-.botaoGradiente {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 40px;
-  background: var(--botao);
-  color: var(--branco);
-  border-radius: 10px;
-  border: none;
-  font-weight: 600;
-  font-size: 12px;
-  box-shadow: var(--drop-shadow);
+a, button {
+  cursor: pointer;
 
   &:hover {
-    box-shadow: var(--drop-shadow-azul-hover);
-  }
-}
-
-.botaoAzul {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 40px;
-  background: var(--azul-medio);
-  color: var(--branco);
-  border-radius: 10px;
-  border: none;
-  font-weight: 600;
-  font-size: 12px;
-  box-shadow: var(--drop-shadow);
-
-  &:hover {
-    box-shadow: var(--drop-shadow-azul-hover);
+    transform: scale(1.1);
   }
 }
 
