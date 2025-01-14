@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 export const ContainerIndice = styled.div`
-    width: 200px;
     height: 200px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -13,4 +13,16 @@ export const ContainerIndice = styled.div`
     text-align: center;
     border-radius: 20px;
     box-shadow: var(--drop-shadow);
+
+    @media (max-width: 768px) {
+        height: 150px;
+
+        h2 {
+            font-size: 28px !important;
+        }
+
+        h5 {
+            font-size: 16px !important;
+        }
+    }
 `
