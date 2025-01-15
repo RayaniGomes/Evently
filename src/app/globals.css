@@ -89,8 +89,6 @@ p {
   font-size: 12px;
 }
 
-
-
 a, button {
   cursor: pointer;
 
@@ -101,4 +99,8 @@ a, button {
 
 :focus {
   outline: none;
+}
+
+.modal-footer {
+  border-top: none !important;
 }

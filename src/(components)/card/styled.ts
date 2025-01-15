@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const CardEvento = styled.div`
     display: flex;
+    width: 100%;
     height: 250px;
     background-color: var(--azul-medio);
     box-shadow: var(--drop-shadow);
@@ -10,7 +11,7 @@ export const CardEvento = styled.div`
 
     & img {
         margin: auto 0;
-        margin-left: -2rem;
+        margin-left: -1rem;
         border-radius: 10px;
         object-fit: cover;
         box-shadow: var(--drop-shadow);

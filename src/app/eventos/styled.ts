@@ -1,0 +1,86 @@
+import styled from "styled-components";
+
+export const Pesquisar = styled.div`
+    width: 100%;
+    display: none;
+    align-items: center;
+    padding: 0 1rem;
+    gap: 1rem;
+
+    .form {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        border-radius: 10px;
+        padding: .5rem;
+        box-shadow: var(--drop-shadow);
+
+        input {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            font-size: 12px;
+        }
+
+        button {
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+    
+    .filtro {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: .5rem;
+        border: none;
+        border-radius: 10px;
+        background: var(--gradiente-radial);
+        color: var(--branco);
+    }
+
+    @media (max-width: 768px) {
+        display: flex;
+    }
+`
+
+export const Section = styled.section`
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 7rem 3rem;
+    gap: 1rem;
+
+    .cards {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+        flex-wrap: wrap;
+        gap: 1rem 2rem;
+        margin-top: -1rem;
+    }
+
+    @media (max-width: 1024px) {
+        padding: 5rem 3rem 3rem 2rem;
+
+        .cards {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 5rem 2rem;
+            margin-top: 4rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 2rem 2rem 3rem 1rem;
+        gap: .5rem;
+
+        .cards {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 4rem 1rem;
+        }
+    }
+`
