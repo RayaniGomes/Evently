@@ -9,7 +9,7 @@ export const CardEvento = styled.div`
     border-radius: 10px;
     margin: 1rem;
 
-    & img {
+    img {
         margin: auto 0;
         margin-left: -1rem;
         border-radius: 10px;
@@ -17,7 +17,7 @@ export const CardEvento = styled.div`
         box-shadow: var(--drop-shadow);
     }
     
-    & .box {
+    .box {
         width: 100%;
         display: flex;
         flex-direction: column;
@@ -28,7 +28,12 @@ export const CardEvento = styled.div`
         position: relative;
     }
 
-    & .botoes {
+    .nomeDoEvento {
+        width: 80%;
+        text-transform: uppercase;
+    }
+
+    .botoes {
         display: flex;
         justify-content: end;
         align-items: center;
@@ -60,15 +65,10 @@ export const CardEvento = styled.div`
     }
 
     @media (max-width: 1024px) {
-        & img {
-            margin-left: -2rem;
-        }
-    }
-
-    @media (max-width: 1024px) {
         flex-direction: column;
+        margin: 0 auto;
         
-        & img {
+        img {
             width: 90%;
             height: 70%;
             margin: 0 auto;

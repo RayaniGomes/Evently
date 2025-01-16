@@ -7,6 +7,7 @@ import { useEvento } from "@/stores/eventoStore";
 import { useEffect, useState } from "react";
 import { Pesquisar, Section } from "./styled";
 import FiltroModal from "@/(components)/filtroModal";
+import Footer from "@/(components)/footer";
 
 export default function Eventos() {
     const { eventos, getEventos } = useEvento();
@@ -23,7 +24,7 @@ export default function Eventos() {
     return (
         <main>
             <Navbar />
-            <div style={{ marginTop: "100px" }}>
+            <div style={{ marginTop: "8rem" }}>
                 <Titulo
                     titulo="Eventos"
                     border="--azul-escuro"
@@ -48,6 +49,7 @@ export default function Eventos() {
                     </div>
                 </Section>
             </div>
+            <Footer />
         </main>
     );
 }

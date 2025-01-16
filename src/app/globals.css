@@ -101,6 +101,11 @@ a, button {
   outline: none;
 }
 
+.modal-header {
+  border-bottom: none !important;
+}
+
 .modal-footer {
   border-top: none !important;
 }
+

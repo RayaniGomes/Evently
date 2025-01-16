@@ -2,6 +2,7 @@ export interface Evento {
     id: number;
     nome: string;
     data: string;
+    horario: string;
     qtd: number;
     tipo: string;
     descricao: string;

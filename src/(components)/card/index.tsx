@@ -16,7 +16,7 @@ export default function Card({ evento }: { evento: Evento }) {
             <div className="box">
                 <div>
                     <div className="d-flex justify-content-between">
-                        <h6>{evento.nome}</h6>
+                        <h6 className="nomeDoEvento">{evento.nome}</h6>
                         <Compartilhar
                             $bgColor="--branco"
                             $color="--azul-escuro"
@@ -35,7 +35,7 @@ export default function Card({ evento }: { evento: Evento }) {
 
                 <div className="botoes">
                     <button>Inscreva-se</button>
-                    <Link href={`/detalhes-evento/${evento.id}`}>Detalhes</Link>
+                    <Link href={`/detalhe-evento/${evento.id}`}>Detalhes</Link>
                 </div>
             </div>
         </CardEvento>

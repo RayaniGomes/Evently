@@ -83,7 +83,7 @@ export default function DetalheEvento(props: { params: Params }) {
                                     <h6 className="label">Data:</h6>
                                     <div className="d-flex gap-2">
                                         <i className="bi bi-calendar-event-fill" />
-                                        <h6>{evento.data}</h6>
+                                        <h6>{evento.data}, às {evento.horario}</h6>
                                     </div>
                                 </div>
                                 <div>
@@ -94,6 +94,7 @@ export default function DetalheEvento(props: { params: Params }) {
                                             <h6>{evento.local}</h6>
                                             <h6>{evento.endereco}, {evento.numero} - {evento.bairro}</h6>
                                             <h6>{evento.cidade} - {evento.uf}</h6>
+                                            <h6>{evento.complemento}</h6>
                                         </div>
                                     </div>
                                 </div>

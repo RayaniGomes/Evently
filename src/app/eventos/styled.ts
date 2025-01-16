@@ -52,7 +52,7 @@ export const Section = styled.section`
     align-items: flex-start;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 7rem 3rem;
+    padding: 5rem 3rem 5rem 2rem;
     gap: 1rem;
 
     .cards {
@@ -60,27 +60,30 @@ export const Section = styled.section`
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
         flex-wrap: wrap;
-        gap: 1rem 2rem;
+        gap: 1rem 3rem;
         margin-top: -1rem;
     }
 
     @media (max-width: 1024px) {
-        padding: 5rem 3rem 3rem 2rem;
+        padding: 5rem 2rem;
 
         .cards {
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 5rem 2rem;
-            margin-top: 4rem;
+            gap: 7rem 2rem;
+            margin-top: 5rem;
         }
     }
 
     @media (max-width: 768px) {
-        padding: 2rem 2rem 3rem 1rem;
-        gap: .5rem;
+        flex-direction: column;
+        padding: 1rem;
+        margin: 0 auto;
 
+        
         .cards {
+            justify-content: center;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 4rem 1rem;
+            gap: 7rem 1rem;
         }
     }
 `
