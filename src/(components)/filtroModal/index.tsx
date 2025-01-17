@@ -1,6 +1,9 @@
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Forms } from './styled';
+import InputCheckbox from '../inputCheckbox';
+import SetFiltro from '@/help/filtro';
+import { useEvento } from '@/stores/eventoStore';
 
 interface FiltroModalProps {
     showModal: boolean;
@@ -8,6 +11,9 @@ interface FiltroModalProps {
 }
 
 export default function FiltroModal({ showModal, toggleModal }: FiltroModalProps) {
+    const { estados, cidades, tipos } = SetFiltro();
+    const { filtroData, filtroEstado, filtroCidade, filtroTipo } = useEvento();
+
     return (
         <Modal
             show={showModal}
@@ -21,28 +27,31 @@ export default function FiltroModal({ showModal, toggleModal }: FiltroModalProps
                 <Forms>
                     <div className="item-form">
                         <label htmlFor="">Data: <hr /></label>
-                        <input type="date" />
+                        <input type="date" onChange={(event) => filtroData(event.target.value)} />
                     </div>
                     <div className="item-form">
                         <label htmlFor="">Esatado: <hr /></label>
-                        <label htmlFor="">
-                            <input type="checkbox" />
-                            Estado
-                        </label>
+                        <div className="inputs">
+                            {estados.map((uf) => (
+                                <InputCheckbox key={uf} id={uf} htmlFor={uf} label={uf} onClick={() => filtroEstado(uf)} />
+                            ))}
+                        </div>
                     </div>
                     <div className="item-form">
                         <label htmlFor="">Cidade: <hr /></label>
-                        <label htmlFor="">
-                            <input type="checkbox" />
-                            Estado
-                        </label>
+                        <div className="inputs">
+                            {cidades.map((cidade) => (
+                                <InputCheckbox key={cidade} id={cidade} htmlFor={cidade} label={cidade} onClick={() => filtroCidade(cidade)} />
+                            ))}
+                        </div>
                     </div>
                     <div className="item-form">
                         <label htmlFor="">Tipos: <hr /></label>
-                        <label htmlFor="">
-                            <input type="checkbox" />
-                            Estado
-                        </label>
+                        <div className="inputs">
+                            {tipos.map((tipo) => (
+                                <InputCheckbox key={tipo} id={tipo} htmlFor={tipo} label={tipo} onClick={() => filtroTipo(tipo)} />
+                            ))}
+                        </div>
                     </div>
                 </Forms>
             </Modal.Body>

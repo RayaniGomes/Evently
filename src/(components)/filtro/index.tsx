@@ -1,31 +1,11 @@
 import { useEvento } from "@/stores/eventoStore";
 import InputCheckbox from "../inputCheckbox";
 import { Section } from "./styled";
-import { useEffect } from "react";
-import { Evento } from "@/interfaces";
+import SetFiltro from "@/help/filtro";
 
 export function Filtro() {
-    const { eventos, getEventos } = useEvento();
-
-    useEffect(() => {
-        getEventos();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-
-    const estados = Object.keys(eventos.reduce((acc: { [uf: string]: Evento }, evento) => {
-        acc[evento.uf] = evento;
-        return acc;
-    }, {} as { [uf: string]: Evento })).sort();
-
-    const cidades = Object.keys(eventos.reduce((acc: { [cidade: string]: Evento }, evento) => {
-        acc[evento.cidade] = evento;
-        return acc;
-    }, {} as { [cidade: string]: Evento })).sort();
-
-    const tipos = Object.keys(eventos.reduce((acc: { [tipo: string]: Evento }, evento) => {
-        acc[evento.tipo] = evento;
-        return acc;
-    }, {} as { [tipo: string]: Evento })).sort();
+    const { estados, cidades, tipos } = SetFiltro();
+    const { filtroData, filtroEstado, filtroCidade, filtroTipo } = useEvento();
 
     return (
         <Section>
@@ -34,13 +14,13 @@ export function Filtro() {
             <form action="">
                 <div className="item-form">
                     <label htmlFor="">Data: <hr /></label>
-                    <input type="date" />
+                    <input type="date" onChange={(event) => filtroData(event.target.value)} />
                 </div>
                 <div className="item-form">
                     <label htmlFor="">Esatado: <hr /></label>
                     <div className="inputs">
                         {estados.map((uf) => (
-                            <InputCheckbox key={uf} id={uf} htmlFor={uf} label={uf} />
+                            <InputCheckbox key={uf} id={uf} htmlFor={uf} label={uf} onClick={() => filtroEstado(uf)} />
                         ))}
                     </div>
                 </div>
@@ -48,7 +28,7 @@ export function Filtro() {
                     <label htmlFor="">Cidade: <hr /></label>
                     <div className="inputs">
                         {cidades.map((cidade) => (
-                            <InputCheckbox key={cidade} id={cidade} htmlFor={cidade} label={cidade} />
+                            <InputCheckbox key={cidade} id={cidade} htmlFor={cidade} label={cidade} onClick={() => filtroCidade(cidade)} />
                         ))}
                     </div>
                 </div>
@@ -56,7 +36,7 @@ export function Filtro() {
                     <label htmlFor="">Tipos: <hr /></label>
                     <div className="inputs">
                         {tipos.map((tipo) => (
-                            <InputCheckbox key={tipo} id={tipo} htmlFor={tipo} label={tipo} />
+                            <InputCheckbox key={tipo} id={tipo} htmlFor={tipo} label={tipo} onClick={() => filtroTipo(tipo)} />
                         ))}
                     </div>
                 </div>

@@ -66,26 +66,6 @@ export const Section = styled.section`
     }
     
     @media (max-width: 768px) {
-        width: 100%;
-        gap: 0rem;
-
-        form {
-            width: 100%;
-            flex-direction: row;
-            flex-wrap: wrap;
-        }
-
-        .item-form {
-            width: 25%;
-
-            label, input {
-                font-size: 10px;
-            }
-        }
-
-        .inputs {
-            height: auto;
-            max-height: 100px;
-        }
+        display: none;
     }
 `

@@ -1,11 +1,26 @@
 import { Evento } from "@/interfaces";
 import { dataEventos } from "@/monks/eventos_data.json";
-// import { NextApiRequest, NextApiResponse } from "next";
+import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+    let dataMock: Evento[] = dataEventos.map((evento) => ({
+        ...evento,
+        horario: evento.horario || '',
+    }));
+
+    const data = req.nextUrl.searchParams.get("data");
+    if (data) {
+        dataMock = dataMock.filter((evento) => {
+            const newData = evento.data.replaceAll("/", "-");
+            console.log(data, newData);
+            return data === newData;
+        });
+
+    }
+
     return new Response(
         JSON.stringify({
-            data: dataEventos,
+            data: dataMock,
         }),
         {
             status: 200,
@@ -15,12 +30,12 @@ export async function GET() {
         }
     );
 }
-
 export async function POST() {
     const evento: Evento = {
         id: 6,
         nome: "Evento 6",
         data: "01/01/2022",
+        horario: "12:00",
         qtd: 100,
         tipo: "Show",
         descricao: "Descrição do evento 6",
