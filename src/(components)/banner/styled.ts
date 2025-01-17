@@ -33,7 +33,7 @@ export const Slide = styled.div<{ imagem: string }>`
         justify-content: center;
         width: 500px;
         height: 100%;
-        padding-left: 5rem;
+        padding: 0 5rem;
         color: var(--branco);
         right: 0;
         background: #10335680;
@@ -77,13 +77,18 @@ export const Slide = styled.div<{ imagem: string }>`
         }
     }
 
+    @media (max-width: 1024px) {
+        .conteudo {
+            padding: 0 2rem 0 4rem; 
+        }
+    }
+
     @media (max-width: 768px) {
         height: 350px;
 
         .conteudo {
             width: 100%;
             border-radius: 0;
-            padding-left: 2rem;
             align-items: right;
 
             a {
