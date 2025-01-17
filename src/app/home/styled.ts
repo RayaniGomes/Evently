@@ -29,15 +29,17 @@ export const Section = styled.section`
         gap: 2rem;
 
         .cards {
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 5rem 1rem;
-            padding: 1rem 1rem 0rem 1rem;
+            padding: 0 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 7rem 2rem;
+            margin-top: 5rem;
         }
     }
 
     @media (max-width: 768px) {
         .cards {
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 7rem 1rem;
         }
     }
 

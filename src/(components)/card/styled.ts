@@ -29,7 +29,7 @@ export const CardEvento = styled.div`
     }
 
     .nomeDoEvento {
-        width: 80%;
+        width: 90%;
         text-transform: uppercase;
     }
 
@@ -67,10 +67,12 @@ export const CardEvento = styled.div`
     @media (max-width: 1024px) {
         flex-direction: column;
         margin: 0 auto;
+        height: 100%;
+        justify-content: space-around;
         
         img {
             width: 90%;
-            height: 70%;
+            height: 200px;
             margin: 0 auto;
             margin-top: -5rem;
         }
