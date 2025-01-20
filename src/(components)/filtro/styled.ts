@@ -10,6 +10,31 @@ export const Section = styled.section`
     padding: 1rem;
     border-radius: 10px;
 
+    .header {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        h5 {
+            margin: 0;
+        }
+
+        button {
+            border: none;
+            background-color: var(--branco);
+            color: var(--azul-escuro);
+            font-size: 14px;
+            font-weight: 500;
+            padding: .25rem .5rem;
+            border-radius: 10px;
+
+            &:hover {
+                box-shadow: var(--drop-shadow-branco-hover);
+            }
+        }
+    }
+
     form {
         width: 100%;
         display: flex;
@@ -21,6 +46,7 @@ export const Section = styled.section`
         display: flex;
         flex-direction: column;
         gap: .5rem;
+        
 
         label {
             font-size: 14px;
@@ -47,7 +73,7 @@ export const Section = styled.section`
     }
 
     .inputs {
-        height: 120px;
+        height: 125px;
         overflow: auto;
 
         &::-webkit-scrollbar {
@@ -63,6 +89,14 @@ export const Section = styled.section`
             background-color: gray;
             border-radius: 7px;
         }
+    }
+
+    .uf {
+        text-transform: uppercase;
+    }
+
+    .cidade, .tipo {
+        text-transform: capitalize;
     }
     
     @media (max-width: 768px) {
