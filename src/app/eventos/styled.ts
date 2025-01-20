@@ -52,16 +52,23 @@ export const Section = styled.section`
     align-items: flex-start;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 5rem 3rem 5rem 2rem;
+    padding: 5rem 2rem 5rem 2rem;
     gap: 1rem;
 
+    .container-cards {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
     .cards {
         width: 100%;
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-        flex-wrap: wrap;
         gap: 1rem 3rem;
-        margin-top: -1rem;
+        justify-content: center;
     }
 
     @media (max-width: 1024px) {

@@ -8,10 +8,20 @@ import { useEffect, useState } from "react";
 import { Pesquisar, Section } from "./styled";
 import FiltroModal from "@/(components)/filtroModal";
 import Footer from "@/(components)/footer";
+import Paginacao from "@/(components)/paginacao";
 
 export default function Eventos() {
     const { eventos, getEventos } = useEvento();
     const [showModal, setShowModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedEventos = eventos.slice(startIndex, endIndex);
+    const totalPages = Math.ceil(eventos.length / itemsPerPage);
+
+    const handlePageClick = (page: number) => setCurrentPage(page);
 
     const toggleModal = () => {
         setShowModal(!showModal);
@@ -21,6 +31,7 @@ export default function Eventos() {
         getEventos();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
     return (
         <main>
             <Navbar />
@@ -34,18 +45,21 @@ export default function Eventos() {
                         <input type="search" placeholder="Pesquisar" />
                         <button type="submit" className="bi bi-search" />
                     </div>
-                    <button className="bi bi-funnel-fill filtro" onClick={toggleModal}/>
-                    <FiltroModal 
+                    <button className="bi bi-funnel-fill filtro" onClick={toggleModal} />
+                    <FiltroModal
                         showModal={showModal}
                         toggleModal={toggleModal}
                     />
                 </Pesquisar>
                 <Section>
                     <Filtro />
-                    <div className="cards">
-                        {eventos.map((evento) => (
-                            <Card key={evento.id} evento={evento} />
-                        ))}
+                    <div className="container-cards">
+                        <div className="cards">
+                            {paginatedEventos.map((evento) => (
+                                <Card key={evento.id} evento={evento} />
+                            ))}
+                        </div>
+                        <Paginacao handlePageClick={handlePageClick} currentPage={currentPage} totalPages={totalPages} />
                     </div>
                 </Section>
             </div>
