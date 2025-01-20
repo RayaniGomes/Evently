@@ -7,7 +7,7 @@ export const CardEvento = styled.div`
     background-color: var(--azul-medio);
     box-shadow: var(--drop-shadow);
     border-radius: 10px;
-    margin: 1rem;
+    margin-left: 1rem;
 
     img {
         margin: auto 0;
@@ -26,7 +26,11 @@ export const CardEvento = styled.div`
         padding: 1rem;
         line-height: 0;
         position: relative;
-        text-transform: capitalize;
+        text-transform: lowercase;
+
+        p {
+            text-transform: capitalize;
+        }
 
         span {
             text-transform: uppercase;
