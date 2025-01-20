@@ -1,2 +1,4 @@
-// FORMATAR DATA
-export const dataFormatada = new Intl.DateTimeFormat('pt-BR').format(new Date());
+export const formatarData = (dataISO: string) => {
+    const [ano, mes, dia] = dataISO.split("-");
+    return `${dia}-${mes}-${ano}`;
+};
