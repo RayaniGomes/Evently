@@ -60,7 +60,14 @@ export default function Eventos() {
                                 <Card key={evento.id} evento={evento} />
                             ))}
                         </div>
-                        <Paginacao handlePageClick={handlePageClick} currentPage={currentPage} totalPages={totalPages} />
+
+                        {eventos.length > itemsPerPage && (
+                        <Paginacao
+                            currentPage={currentPage}
+                            totalPages={totalPages}
+                            handlePageClick={handlePageClick}
+                        />
+                    )}
                     </div>
                 </Section>
             </div>
