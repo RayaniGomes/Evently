@@ -54,6 +54,7 @@ export default function Eventos() {
                 <Section>
                     <Filtro />
                     <div className="container-cards">
+                        {eventos.length === 0 && <h2>Nenhum evento encontrado</h2>}
                         <div className="cards">
                             {paginatedEventos.map((evento) => (
                                 <Card key={evento.id} evento={evento} />

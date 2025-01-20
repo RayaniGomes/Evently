@@ -7,8 +7,6 @@ import { formatarData } from "@/help/funcoes";
 export function Filtro() {
     const { estados, cidades, tipos } = SetFiltro();
     const { filtroData, filtroEstado, filtroCidade, filtroTipo } = useEvento();
-
-    console.log(filtroCidade);
     
     const limparFiltro = () => {
         filtroData(" ");
