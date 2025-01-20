@@ -22,13 +22,12 @@ export const useEvento = create<PropEventoStore>((set) => ({
             .then((response) => {
                 set({
                     eventos: response.data.data,
-                    copyEventos: response.data.data
                 })
             })
     },
 
     filtroEstado: async (uf: string) => {
-        if (uf !== "") {
+        if (uf == "") {
             useEvento.getState().getEventos();
             return;
         }
@@ -37,14 +36,13 @@ export const useEvento = create<PropEventoStore>((set) => ({
         .then((response) => {
             set({
                 eventos: response.data.data,
-                copyEventos: response.data.data
             })
             console.log(uf);
             })
     },
 
     filtroCidade: async (cidade: string) => {
-        if (cidade == "") {
+        if (cidade === "") {
             useEvento.getState().getEventos();
             return;
         }
@@ -53,13 +51,12 @@ export const useEvento = create<PropEventoStore>((set) => ({
             .then((response) => {
                 set({
                     eventos: response.data.data,
-                    copyEventos: response.data.data
                 })
             })
     },
 
     filtroTipo: async (tipo: string) => {
-        if (tipo == "") {
+        if (tipo === "") {
             useEvento.getState().getEventos();
             return;
         }
@@ -68,16 +65,23 @@ export const useEvento = create<PropEventoStore>((set) => ({
             .then((response) => {
                 set({
                     eventos: response.data.data,
-                    copyEventos: response.data.data
                 })
             })
     },
 
     filtroData: async (data: string) => {
-        set({
-            eventos: useEvento.getState().eventos.filter((evento: Evento) => evento.data.toLowerCase().includes(data.toLowerCase()))
-        })
-        console.log(data);
+        if (data === "") {            
+            useEvento.getState().getEventos();
+            return;            
+        }
+
+        await api.get(`/eventos?data=${data}`)                  
+            .then((response) => {
+                set({
+                    eventos: response.data.data,
+                })
+                console.log(data);
+            })
     },
 
     filtroNome: async (nome: string) => {
