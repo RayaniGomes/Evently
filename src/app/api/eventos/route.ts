@@ -3,10 +3,7 @@ import { dataEventos } from "@/monks/eventos_data.json";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
-    let dataMock: Evento[] = dataEventos.map((evento) => ({
-        ...evento,
-        horario: evento.horario || '',
-    }));
+    let dataMock: Evento[] = dataEventos;
 
     const data = req.nextUrl.searchParams.get("data");
     if (data) {
@@ -16,6 +13,27 @@ export async function GET(req: NextRequest) {
             return data === newData;
         });
 
+    }
+
+    const uf = req.nextUrl.searchParams.get("uf");
+    if (uf) {
+        dataMock = dataMock.filter((evento) => {
+            return evento.uf.toLowerCase() === uf.toLowerCase();
+        });
+    }
+
+    const cidade = req.nextUrl.searchParams.get("cidade");
+    if (cidade) {
+        dataMock = dataMock.filter((evento) => {
+            return evento.cidade.toLowerCase() === cidade.toLowerCase();
+        });
+    }
+
+    const tipo = req.nextUrl.searchParams.get("tipo");
+    if (tipo) {
+        dataMock = dataMock.filter((evento) => {
+            return evento.tipo.toLowerCase() === tipo.toLowerCase();
+        });
     }
 
     return new Response(
