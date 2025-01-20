@@ -20,7 +20,7 @@ export const Section = styled.section`
         flex-wrap: wrap;
         grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
         margin: 2rem auto;
-        padding: 0 2rem 0rem 4rem;
+        padding: 0 3rem 0rem 2rem;
         gap: 2em;
     }
 
