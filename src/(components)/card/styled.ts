@@ -26,6 +26,11 @@ export const CardEvento = styled.div`
         padding: 1rem;
         line-height: 0;
         position: relative;
+        text-transform: capitalize;
+
+        span {
+            text-transform: uppercase;
+        }
     }
 
     .nomeDoEvento {

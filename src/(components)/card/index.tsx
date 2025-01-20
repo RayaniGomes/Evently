@@ -29,7 +29,7 @@ export default function Card({ evento }: { evento: Evento }) {
                         />
                     </div>
                     <p>{evento.local}</p>
-                    <p>{evento.cidade} / {evento.uf}</p>
+                    <p>{evento.cidade} / <span>{evento.uf}</span></p>
                     <h6>{evento.data}</h6>
                 </div>
 
