@@ -73,7 +73,7 @@ export const Section = styled.section`
     }
     
     .inputs {
-        height: 120px;
+        max-height: 100%;
         overflow: auto;
         text-transform: capitalize;
 
