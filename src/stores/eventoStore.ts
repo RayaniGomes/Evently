@@ -22,6 +22,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
             .then((response) => {
                 set({
                     eventos: response.data.data,
+                    copyEventos: response.data.data
                 })
             })
     },
@@ -79,6 +80,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
             .then((response) => {
                 set({
                     eventos: response.data.data,
+                    copyEventos: response.data.data
                 })
                 console.log(data);
             })
@@ -86,7 +88,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
 
     filtroNome: async (nome: string) => {
         set({
-            eventos: useEvento.getState().eventos.filter((evento) => evento.nome.toLowerCase().includes(nome.toLowerCase()))
+            eventos: useEvento.getState().copyEventos.filter((evento: Evento) => evento.nome.toLowerCase().includes(nome.toLowerCase()))
         })
     }
 }))
