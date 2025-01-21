@@ -14,21 +14,13 @@ export const Forms = styled.div`
         label {
             font-size: 14px;
             font-weight: 500;
-
-            hr {
-                width: 100%;
-                border: 1px solid var(--azul-escuro);
-                opacity: 1;
-                margin: 0;
-                border-radius: 1px;
-            }
         }
 
         input[type="date"] {
             width: 100%;
             height: 30px;
             border: none;
-            border-bottom: 2px solid var(--azul-escuro);
+            border-bottom: 1px solid rgb(212, 212, 212);
             border-radius: 10px;
             padding: .5rem;
             font-size: 12px;
@@ -40,5 +32,34 @@ export const Forms = styled.div`
         }
     }
 
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+        max-height: 120px;
+        text-transform: capitalize;
+        overflow: auto;
+
+        &::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: rgb(212, 212, 212);
+            border-radius: 7px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: gray;
+            border-radius: 7px;
+        }
+    }
+
+    .uf {
+        text-transform: uppercase;
+    }
+
+    
     
 `

@@ -107,5 +107,30 @@ a, button {
 
 .modal-footer {
   border-top: none !important;
+  gap: .5rem;
+}
+
+.btn-primary {
+  --bs-btn-bg: var(--azul-escuro) !important;
+  --bs-btn-border-color: none !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+
+  &:hover {
+    box-shadow: var(--drop-shadow-azul-hover);
+    --bs-btn-hover-bg: var(--azul-escuro) !important;
+  }
+}
+
+.btn-secondary {
+  --bs-btn-bg: var(--azul-claro) !important;
+  --bs-btn-border-color: none !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+
+  &:hover {
+    box-shadow: var(--drop-shadow-azul-hover);
+    --bs-btn-hover-bg: var(--azul-claro) !important;
+  }
 }
 
