@@ -4,7 +4,7 @@ export const Pesquisar = styled.div`
     width: 100%;
     display: none;
     align-items: center;
-    padding: 0 1rem;
+    padding: 2rem 1rem;
     gap: 1rem;
 
     .form {

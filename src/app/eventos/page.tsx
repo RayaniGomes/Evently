@@ -11,7 +11,7 @@ import Footer from "@/(components)/footer";
 import Paginacao from "@/(components)/paginacao";
 
 export default function Eventos() {
-    const { eventos, getEventos } = useEvento();
+    const { eventos, getEventos, filtroNome } = useEvento();
     const [showModal, setShowModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10
@@ -42,7 +42,11 @@ export default function Eventos() {
                 />
                 <Pesquisar>
                     <div className="form">
-                        <input type="search" placeholder="Pesquisar" />
+                        <input 
+                            type="search" 
+                            placeholder="Pesquise pelo nome do seu evento" 
+                            onChange={(e) => filtroNome(e.target.value)}
+                        />
                         <button type="submit" className="bi bi-search" />
                     </div>
                     <button className="bi bi-funnel-fill filtro" onClick={toggleModal} />
