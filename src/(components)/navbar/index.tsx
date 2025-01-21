@@ -4,8 +4,10 @@ import Link from "next/link";
 import { ButtonMenuHamburger, Form, Login, Menu, Nav, NavMobile } from "./styled";
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useState } from "react";
+import { useEvento } from "@/stores/eventoStore";
 
 export default function Navbar() {
+    const { filtroNome } = useEvento();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -25,7 +27,11 @@ export default function Navbar() {
             </Link>
 
             <Form>
-                <input type="search" placeholder="Pesquisar" />
+                <input 
+                    type="search" 
+                    placeholder="Pesquise pelo nome do seu evento" 
+                    onChange={(e) => filtroNome(e.target.value)}
+                />
                 <button type="submit">
                     <i className="bi bi-search"></i>
                 </button>

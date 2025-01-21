@@ -141,7 +141,7 @@ export const Login = styled.div`
         border: none;
         border-radius: 50%;
         background-color: var(--branco);
-        font-size: 35px;
+        font-size: 35px !important;
         color: var(--azul-medio);
 
         &:hover {
@@ -171,7 +171,7 @@ export const Login = styled.div`
         .btn-primary {
             width: 35px;
             height: 35px;
-            font-size: 28px;
+            font-size: 25px !important;
         }
 
         .dropdown-menu a {
