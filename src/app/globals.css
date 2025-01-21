@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 :root {
-  --azul-escuro: #0B233B;
+  --azul-escuro: #06121E;
   --azul-medio: #103356;
   --azul-claro: #085EB3;
   --branco: #F4F4F4;
@@ -94,6 +94,7 @@ a, button {
 
   &:hover {
     transform: scale(1.1);
+    transition: .5s ease-in-out;
   }
 }
 
@@ -133,4 +134,5 @@ a, button {
     --bs-btn-hover-bg: var(--azul-claro) !important;
   }
 }
+
 
