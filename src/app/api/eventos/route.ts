@@ -5,6 +5,13 @@ import { NextRequest } from "next/server";
 export async function GET(req: NextRequest) {
     let dataMock: Evento[] = dataEventos;
 
+    const nome = req.nextUrl.searchParams.get("nome");
+    if (nome) {
+        dataMock = dataMock.filter((evento) => {
+            return evento.nome.toLowerCase().includes(nome.toLowerCase());
+        });
+    }
+
     const data = req.nextUrl.searchParams.get("data");
     if (data) {
         dataMock = dataMock.filter((evento) => {
