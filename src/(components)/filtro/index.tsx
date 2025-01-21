@@ -7,7 +7,7 @@ import { formatarData } from "@/help/funcoes";
 export function Filtro() {
     const { estados, cidades, tipos } = SetFiltro();
     const { filtroData, filtroEstado, filtroCidade, filtroTipo } = useEvento();
-    
+
     const limparFiltro = () => {
         filtroData(" ");
         filtroEstado("");
@@ -46,6 +46,7 @@ export function Filtro() {
                                 id={uf}
                                 htmlFor={uf}
                                 label={uf}
+                                color='--branco'
                                 onClick={() => filtroEstado(uf)}
                             />
                         ))}
@@ -58,11 +59,12 @@ export function Filtro() {
                     <div className="inputs cidade">
                         {cidades.map((cidade) => (
                             <InputCheckbox
-                            key={cidade}
-                            id={cidade}
-                            htmlFor={cidade}
-                            label={cidade}
-                            onClick={() => filtroCidade(cidade)}
+                                key={cidade}
+                                id={cidade}
+                                htmlFor={cidade}
+                                label={cidade}
+                                color='--branco'
+                                onClick={() => filtroCidade(cidade)}
                             />
                         ))}
                     </div>
@@ -78,6 +80,7 @@ export function Filtro() {
                                 id={tipo}
                                 htmlFor={tipo}
                                 label={tipo}
+                                color='--branco'
                                 onClick={() => filtroTipo(tipo)}
                             />
                         ))}

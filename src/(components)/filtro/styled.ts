@@ -69,12 +69,13 @@ export const Section = styled.section`
             padding: .5rem;
             font-size: 12px;
         }
-
+        
     }
-
+    
     .inputs {
-        height: 125px;
+        height: 120px;
         overflow: auto;
+        text-transform: capitalize;
 
         &::-webkit-scrollbar {
             width: 5px;
@@ -93,10 +94,6 @@ export const Section = styled.section`
 
     .uf {
         text-transform: uppercase;
-    }
-
-    .cidade, .tipo {
-        text-transform: capitalize;
     }
     
     @media (max-width: 768px) {
