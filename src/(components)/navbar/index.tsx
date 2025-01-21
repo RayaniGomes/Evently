@@ -83,7 +83,7 @@ export default function Navbar() {
                         <i className="bi bi-person-fill" />
                     </Dropdown.Toggle>
                     <Dropdown.Menu className="dropdown-menu">
-                        <Dropdown.Item href="">Perfil</Dropdown.Item>
+                        <Dropdown.Item href="/perfil">Perfil</Dropdown.Item>
                         <Dropdown.Item href="">Sair</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>

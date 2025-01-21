@@ -164,6 +164,7 @@ export const Login = styled.div`
             font-size: 14px;
             font-weight: 500;
             color: var(--azul-escuro);
+            background-color: transparent;
         }
     }
 
