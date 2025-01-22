@@ -45,7 +45,7 @@ export const Botoes = styled.div`
   }
 `;
 
-export const ContainerPerfil = styled.form`
+export const ContainerPerfil = styled.div`
   width: 80%;
   min-height: 100vh;
   display: flex;
@@ -56,35 +56,4 @@ export const ContainerPerfil = styled.form`
   border-radius: 0 10px 10px 10px;
   padding: 5rem 0;
   gap: 1rem;
-
-  .senha {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 3rem;
-
-    h5 {
-      width: 80%;
-      text-align: left;
-      margin: 0;
-    }
-  }
-
-  .btnForm {
-    width: 200px;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    background-color: var(--branco);
-    color: var(--azul-escuro);
-    margin-top: 5rem;
-
-    &:hover {
-      box-shadow: var(--drop-shadow-branco-hover);
-    }
-  }
 `;
