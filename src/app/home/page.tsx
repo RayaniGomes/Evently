@@ -7,26 +7,26 @@ import { useEffect } from "react";
 import { Section } from "./styled";
 
 export default function Home() {
-    const { eventos, getEventos } = useEvento();
+  const { eventos, getEventos } = useEvento();
 
-    useEffect(() => {
-        getEventos();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+  useEffect(() => {
+    getEventos();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    return (
-        <main>
-            <Navbar />
-            <Banner />
-            <Section>
-                <h2>Eventos da semana</h2>
-                <div className="cards">
-                    {eventos.slice(0, 4).map((evento) => (
-                        <Card key={evento.id} evento={evento} />
-                    ))}
-                </div>
-            </Section>
-            <Footer />
-        </main>
-    );
+  return (
+    <main>
+      <Navbar />
+      <Banner />
+      <Section>
+        <h2>Eventos da semana</h2>
+        <div className="cards">
+          {eventos.slice(0, 4).map((evento) => (
+            <Card key={evento.id} evento={evento} />
+          ))}
+        </div>
+      </Section>
+      <Footer />
+    </main>
+  );
 }
