@@ -1,39 +1,12 @@
 import { useForm } from "react-hook-form";
 import { Form, GrupoInput } from "./styled";
 import { useState } from "react";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const createFormUsuario = z
-  .object({
-    nome: z.string().min(1, "O nome é obrigatório"),
-    data: z
-    .string()
-    .date()
-    .min(8, "A data de nascimento é obrigatória")
-    .refine((data) => data <= new Date(), {
-      message: "Data inválida, insira uma data anterior a hoje",
-    }),
-    email: z.string().email("E-mail inválido"),
-    senha: z.string().min(1, "A senha é obrigatória"),
-    confirmarSenha: z.string().min(1, "A confirmação de senha é obrigatória"),
-  })
-  .refine(({ senha, confirmarSenha }) => senha === confirmarSenha, {
-    message: "A senha não corresponde",
-    path: ["confirmarSenha"],
-  });
-
-type createDataUsuario = z.infer<typeof createFormUsuario>;
+import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
 
 export default function FormUsuario() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<createDataUsuario>({
-    resolver: zodResolver(createFormUsuario),
-  });
+  const { register, handleSubmit, formState: { errors } } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
 
   const toggleMostrarSenha = () => {
       setMostrarSenha(!mostrarSenha);

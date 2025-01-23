@@ -27,7 +27,12 @@ export const Form = styled.form`
     width: 100%;
     text-align: left;
     font-weight: bold;
+    font-size: 12px;
+    padding: .25rem .5rem;
+    border-radius: 7px;
     margin-top: -.5rem;
+    background-color:rgb(243, 191, 191);
+    color: #9E0000;
   }
 
   .btnForm {
@@ -69,6 +74,8 @@ export const GrupoInput = styled.div`
     border: none;
     font-size: 14px;
     color: var(--branco);
+    border-radius: 10px;
+    padding: .25rem .5rem;
 
     &::placeholder {
       color: var(--branco);
