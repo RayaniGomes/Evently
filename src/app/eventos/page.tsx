@@ -9,6 +9,7 @@ import { Pesquisar, Section } from "./styled";
 import FiltroModal from "@/(components)/filtroModal";
 import Footer from "@/(components)/footer";
 import Paginacao from "@/(components)/paginacao";
+import { Container } from "react-bootstrap";
 
 export default function Eventos() {
   const { eventos, getEventos, filtroNome } = useEvento();
@@ -35,7 +36,7 @@ export default function Eventos() {
   return (
     <main>
       <Navbar />
-      <div style={{ marginTop: "8rem" }}>
+      <Container style={{ marginTop: "8rem" }}>
         <Titulo titulo="Eventos" border="--azul-escuro" />
         <Pesquisar>
           <div className="form">
@@ -68,7 +69,7 @@ export default function Eventos() {
             )}
           </div>
         </Section>
-      </div>
+      </Container>
       <Footer />
     </main>
   );

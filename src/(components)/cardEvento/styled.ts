@@ -3,13 +3,15 @@ import styled from "styled-components";
 export const CardEvento = styled.div`
   display: flex;
   width: 100%;
-  height: 250px;
+  height: 200px;
   background-color: var(--azul-medio);
   box-shadow: var(--drop-shadow);
   border-radius: 10px;
   margin-left: 1rem;
 
   img {
+    min-width: 200px;
+    height: 175px;
     margin: auto 0;
     margin-left: -1rem;
     border-radius: 10px;
@@ -37,7 +39,7 @@ export const CardEvento = styled.div`
     }
   }
 
-  .nomeDoEvento {
+  .nome-evento {
     width: 90%;
     text-transform: uppercase;
   }

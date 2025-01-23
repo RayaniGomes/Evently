@@ -4,14 +4,24 @@ import Link from "next/link";
 import Compartilhar from "../compartinhar";
 import { Evento } from "@/interfaces";
 
+interface CardProps {
+  evento: Evento;
+  bgColor: string;
+  color: string;
+  button: {
+    text: string;
+    b: string;
+  };
+}
+
 export default function Card({ evento }: { evento: Evento }) {
   return (
     <CardEvento>
-      <Image src={evento.imagem} alt={evento.nome} width={200} height={218} />
+      <Image src={evento.imagem} alt={evento.nome} width={200} height={175} />
       <div className="box">
         <div>
           <div className="d-flex justify-content-between">
-            <h6 className="nomeDoEvento">{evento.nome}</h6>
+            <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
               $bgColor="--branco"
               $color="--azul-escuro"
