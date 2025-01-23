@@ -1,5 +1,18 @@
 import styled from "styled-components";
 
+export const Main = styled.main` 
+  width: 100%;
+
+  .container-home {
+    width: 100%;
+    height: 90vh;
+
+    @media (max-width: 1400px) {
+      width: 100vw;
+    }
+  }
+`;
+
 export const Section = styled.section`
   width: 100%;
   display: flex;
@@ -18,7 +31,7 @@ export const Section = styled.section`
     display: grid;
     justify-content: center;
     flex-wrap: wrap;
-    grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
     margin: 2rem auto;
     padding: 0 3rem 0rem 2rem;
     gap: 2em;

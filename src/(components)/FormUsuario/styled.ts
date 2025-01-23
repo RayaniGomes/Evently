@@ -35,7 +35,7 @@ export const Form = styled.form`
     color: #9E0000;
   }
 
-  .btnForm {
+  .btn-form {
     width: 200px;
     height: 40px;
     border: none;

@@ -1,10 +1,8 @@
 import styled from "styled-components";
 
 export const Nav = styled.nav`
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
   width: 100%;
+  display: flex;
   height: 5rem;
   background-color: var(--azul-medio);
   position: fixed;
@@ -12,10 +10,19 @@ export const Nav = styled.nav`
   left: 0;
   z-index: 10;
 
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   @media (max-width: 768px) {
-    display: grid;
-    grid-template-columns: 14fr auto 1fr;
-    padding: 0 1rem;
+
+    .container {
+      display: grid;
+      grid-template-columns: 14fr auto 1fr;
+      padding: 0 1rem;
+    }
 
     img {
       width: 100px;
@@ -27,6 +34,7 @@ export const Nav = styled.nav`
 export const Form = styled.form`
   max-width: 400px;
   width: 80%;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;

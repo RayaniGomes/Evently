@@ -14,6 +14,7 @@ export const Section = styled.section`
   gap: 2rem;
 
   h5 {
+    max-width: 1000px;
     width: 70%;
   }
 

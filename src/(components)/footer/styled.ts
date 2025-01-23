@@ -3,11 +3,17 @@ import styled from "styled-components";
 export const FooterContainer = styled.footer`
   display: flex;
   align-items: center;
-  flex-direction: column;
   background-color: var(--azul-medio);
-  padding: 1rem 1rem 0.5rem 1rem;
-  gap: 2rem;
+  padding: 1rem;
   color: var(--branco);
+
+  .container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
   P {
     font-size: 12px;
@@ -48,7 +54,6 @@ export const FooterContainer = styled.footer`
   @media (max-width: 768px) {
     .info {
       flex-wrap: wrap;
-      flex-direction: column;
       gap: 1rem;
     }
 

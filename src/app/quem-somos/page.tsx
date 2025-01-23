@@ -1,5 +1,5 @@
 'use client';
-import Indice from "@/(components)/indece";
+import Indice from "@/(components)/indice";
 import Navbar from "@/(components)/navbar";
 import Sobre from "@/(components)/sobreNos";
 import { Container } from "./styled";

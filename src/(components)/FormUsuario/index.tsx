@@ -69,7 +69,7 @@ export default function FormUsuario() {
         {errors.confirmarSenha && <span>{errors.confirmarSenha.message}</span>}
       </div>
 
-      <button type="submit" className="btnForm">
+      <button type="submit" className="btn-form">
         Atualizar
       </button>
     </Form>

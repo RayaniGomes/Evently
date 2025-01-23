@@ -51,8 +51,8 @@ export const Section = styled.section`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  padding: 5rem 0;
   margin: 0 auto;
-  padding: 5rem 2rem 5rem 2rem;
   gap: 1rem;
 
   .container-cards {
@@ -66,8 +66,8 @@ export const Section = styled.section`
   .cards {
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    gap: 1rem 3rem;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1rem 2rem;
     justify-content: center;
   }
 
