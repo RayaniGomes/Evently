@@ -1,5 +1,5 @@
 import Banner from "@/(components)/banner";
-import Card from "@/(components)/card";
+import Card from "@/(components)/cardEvento";
 import Footer from "@/(components)/footer";
 import Navbar from "@/(components)/navbar";
 import { useEvento } from "@/stores/eventoStore";

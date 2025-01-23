@@ -1,5 +1,5 @@
 "use client";
-import Card from "@/(components)/card";
+import Card from "@/(components)/cardEvento";
 import { Filtro } from "@/(components)/filtro";
 import Navbar from "@/(components)/navbar";
 import Titulo from "@/(components)/titulo";
