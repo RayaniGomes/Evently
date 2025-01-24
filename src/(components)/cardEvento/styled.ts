@@ -1,11 +1,17 @@
 import styled from "styled-components";
 
-export const CardEvento = styled.div`
+interface StyledCard {
+  $bgColor: string;
+  $color: string;
+  $hover: string;
+}
+
+export const ContainerCard = styled.div<StyledCard>`
   display: flex;
   width: 100%;
   height: 200px;
-  background-color: var(--azul-medio);
-  box-shadow: var(--drop-shadow);
+  background-color: var(${(props) => props.$bgColor});
+  box-shadow: var(--drop);
   border-radius: 10px;
   margin-left: 1rem;
 
@@ -24,7 +30,7 @@ export const CardEvento = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    color: var(--branco);
+    color: var(${(props) => props.$color});
     padding: 1rem;
     line-height: 0;
     position: relative;
@@ -52,8 +58,8 @@ export const CardEvento = styled.div`
 
     button,
     a {
-      background-color: var(--branco);
-      color: var(--azul-escuro);
+      background-color: var(${(props) => props.$color});
+      color: var(${(props) => props.$bgColor});
       border-radius: 10px;
       border: none;
       font-weight: 600;
@@ -64,7 +70,7 @@ export const CardEvento = styled.div`
 
       &:hover {
         transform: scale(1.1);
-        box-shadow: var(--drop-shadow-branco-hover);
+        box-shadow: var(${(props) => props.$hover});
       }
     }
 

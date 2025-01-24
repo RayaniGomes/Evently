@@ -1,36 +1,33 @@
 import Image from "next/image";
-import { CardEvento } from "./styled";
+import { ContainerCard } from "./styled";
 import Link from "next/link";
 import Compartilhar from "../compartinhar";
 import { Evento } from "@/interfaces";
 
-interface CardProps {
+export interface CardProps {
   evento: Evento;
   bgColor: string;
   color: string;
-  button: {
-    text: string;
-    b: string;
-  };
+  hover: string;
 }
 
-export default function Card({ evento }: { evento: Evento }) {
+export default function Card({ evento, bgColor, color, hover }: CardProps) {
   return (
-    <CardEvento>
+    <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
       <Image src={evento.imagem} alt={evento.nome} width={200} height={175} />
       <div className="box">
         <div>
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
-              $bgColor="--branco"
-              $color="--azul-escuro"
+              $bgColor={color}
+              $color={bgColor}
               $tamanho={25}
               $fontSize={12}
               $padding=".4rem"
               $top={1}
               $right={1}
-              $hover="--drop-shadow-branco-hover"
+              $hover={hover}
             />
           </div>
           <p>{evento.local}</p>
@@ -45,6 +42,6 @@ export default function Card({ evento }: { evento: Evento }) {
           <Link href={`/detalhe-evento/${evento.id}`}>Detalhes</Link>
         </div>
       </div>
-    </CardEvento>
+    </ContainerCard>
   );
 }

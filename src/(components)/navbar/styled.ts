@@ -17,7 +17,6 @@ export const Nav = styled.nav`
   }
 
   @media (max-width: 768px) {
-
     .container {
       display: grid;
       grid-template-columns: 14fr auto 1fr;
@@ -173,6 +172,10 @@ export const Login = styled.div`
       font-weight: 500;
       color: var(--azul-escuro);
       background-color: transparent;
+
+      &::before {
+        display: none;
+      }
     }
   }
 

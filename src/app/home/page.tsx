@@ -24,7 +24,13 @@ export default function Home() {
           <h2>Eventos da semana</h2>
           <div className="cards">
             {eventos.slice(0, 4).map((evento) => (
-              <Card key={evento.id} evento={evento} />
+              <Card
+                key={evento.id}
+                evento={evento}
+                bgColor="--azul-medio"
+                color="--branco"
+                hover="--drop-shadow-branco-hover"
+              />
             ))}
           </div>
         </Section>
