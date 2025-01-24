@@ -10,20 +10,18 @@ import FiltroModal from "@/(components)/filtroModal";
 import Footer from "@/(components)/footer";
 import Paginacao from "@/(components)/paginacao";
 import { Container } from "react-bootstrap";
+import FuncaoPaginacao from "@/help/funcaoPaginacao";
 
 export default function Eventos() {
   const { eventos, getEventos, filtroNome } = useEvento();
   const [showModal, setShowModal] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedEventos = eventos.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(eventos.length / itemsPerPage);
-
-  const handlePageClick = (page: number) => setCurrentPage(page);
-
+  const {
+    paginatedEventos,
+    totalPages,
+    currentPage,
+    handlePageClick,
+    itemsPerPage,
+  } = FuncaoPaginacao();
   const toggleModal = () => {
     setShowModal(!showModal);
   };
@@ -53,15 +51,26 @@ export default function Eventos() {
         <Section>
           <Filtro />
           <div className="container-cards">
-            {eventos.length === 0 && <h2>Nenhum evento encontrado</h2>}
-            <div className="cards">
-              {paginatedEventos.map((evento) => (
-                <Card key={evento.id} evento={evento} />
-              ))}
-            </div>
+            {eventos.length > 0 ? (
+              <div className="cards">
+                {paginatedEventos.map((evento) => (
+                  <Card
+                    key={evento.id}
+                    evento={evento}
+                    bgColor="--azul-medio"
+                    color="--branco"
+                    hover="--drop-shadow-branco-hover"
+                  />
+                ))}
+              </div>
+            ) : (
+              <h2>Nenhum evento encontrado</h2>
+            )}
 
             {eventos.length > itemsPerPage && (
               <Paginacao
+                color="--azul-escuro"
+                colorHover="--branco"
                 currentPage={currentPage}
                 totalPages={totalPages}
                 handlePageClick={handlePageClick}

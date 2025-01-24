@@ -4,15 +4,19 @@ interface PaginacaoProps {
   handlePageClick: (page: number) => void;
   currentPage: number;
   totalPages: number;
+  color: string;
+  colorHover: string;
 }
 
 export default function Paginacao({
   handlePageClick,
   currentPage,
   totalPages,
+  color,
+  colorHover
 }: PaginacaoProps) {
   return (
-    <ContainerPaginacao>
+    <ContainerPaginacao $color={color} $colorHover={colorHover}>
       <button
         className="bi bi-chevron-double-left"
         onClick={() => handlePageClick(1)}
