@@ -1,7 +1,7 @@
 import { useEvento } from "@/stores/eventoStore";
 import InputCheckbox from "../inputCheckbox";
 import { Section } from "./styled";
-import SetFiltro from "@/help/filtro";
+import SetFiltro from "@/help/funcaoFiltro";
 import { formatarData } from "@/help/funcoes";
 
 export function Filtro() {

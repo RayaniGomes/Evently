@@ -1,6 +1,20 @@
 import { useEvento } from "@/stores/eventoStore";
 import { useEffect } from "react";
 
+/**
+ * Função que retorna um objeto com arrays de strings contendo
+ * todos os estados, cidades e tipos de eventos cadastrados
+ * em ordem alfabetica e sem duplicados.
+ *
+ * @returns um objeto com as seguintes propriedades:
+ * - estados: array de strings com os nomes dos estados,
+ *   sem duplicados e em ordem alfab tica.
+ * - cidades: array de strings com os nomes das cidades,
+ *   sem duplicados e em ordem alfab tica.
+ * - tipos: array de strings com os nomes dos tipos de eventos,
+ *   sem duplicados e em ordem alfab tica.
+ */
+
 export default function SetFiltro() {
   const { eventos, getEventos } = useEvento();
 

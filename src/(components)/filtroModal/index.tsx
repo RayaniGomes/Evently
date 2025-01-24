@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Forms } from "./styled";
 import InputCheckbox from "../inputCheckbox";
-import SetFiltro from "@/help/filtro";
+import SetFiltro from "@/help/funcaoFiltro";
 import { useEvento } from "@/stores/eventoStore";
 import { formatarData } from "@/help/funcoes";
 
