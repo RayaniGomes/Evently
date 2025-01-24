@@ -54,6 +54,6 @@ export const ContainerPerfil = styled.div`
   background: var(--gradiente-radial);
   color: var(--branco);
   border-radius: 0 10px 10px 10px;
-  padding: 5rem 0;
+  padding: 3rem 0rem;
   gap: 1rem;
 `;
