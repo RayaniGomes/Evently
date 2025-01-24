@@ -65,8 +65,7 @@ export const ContainerCard = styled.div<StyledCard>`
       font-weight: 600;
       font-size: 12px;
       box-shadow: var(--drop-shadow);
-      width: 100px;
-      height: 40px;
+      padding: 1rem;
 
       &:hover {
         transform: scale(1.1);

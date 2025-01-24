@@ -38,7 +38,11 @@ export default function Card({ evento, bgColor, color, hover }: CardProps) {
         </div>
 
         <div className="botoes">
-          <button>Inscreva-se</button>
+          {window.location.pathname === "/perfil" ? (
+            <button>Cancelar inscrição</button>
+          ) : (
+            <button>Inscrever-se</button>
+          )}
           <Link href={`/detalhe-evento/${evento.id}`}>Detalhes</Link>
         </div>
       </div>
