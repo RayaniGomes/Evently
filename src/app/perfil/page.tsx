@@ -6,6 +6,7 @@ import Footer from "@/(components)/footer";
 import FormUsuario from "@/(components)/FormUsuario";
 import { useState } from "react";
 import MinhasInscrições from "@/(components)/minhasInscrições";
+import MeusEventos from "@/(components)/meusEventos";
 
 export default function Perfil() {
   const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
@@ -49,7 +50,7 @@ export default function Perfil() {
           <ContainerPerfil>
             {isAtivar === "Dados Pessoais" && <FormUsuario />}
             {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
-            {isAtivar === "Meus Eventos" && <h2>Meus Eventos</h2>}
+            {isAtivar === "Meus Eventos" && <MeusEventos />}
             {isAtivar === "Criar Evento" && <h2>Criar Evento</h2>}
           </ContainerPerfil>
         </div>
