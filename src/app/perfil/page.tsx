@@ -3,7 +3,7 @@ import Navbar from "@/(components)/navbar";
 import Titulo from "@/(components)/titulo";
 import { Botoes, ContainerPerfil, Section } from "./styled";
 import Footer from "@/(components)/footer";
-import FormUsuario from "@/(components)/formularios/FormUsuario";
+import FormUsuario from "@/(components)/formularios/formUsuario";
 import { useState } from "react";
 import MinhasInscrições from "@/(components)/minhasInscrições";
 import MeusEventos from "@/(components)/meusEventos";

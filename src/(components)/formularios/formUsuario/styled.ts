@@ -50,6 +50,31 @@ export const Form = styled.form`
       box-shadow: var(--drop-shadow-branco-hover);
     }
   }
+
+  .google {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 3rem;
+    gap: .5rem;
+
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      border-radius: 10px;
+      font-size: 30px;
+      background-color: var(--branco);
+      color: var(--azul-escuro);
+      padding: 1rem;
+      text-decoration: none;
+
+      &:hover {
+        box-shadow: var(--drop-shadow-branco-hover);
+      }
+    }
+  }
 `;
 
 export const GrupoInput = styled.div`

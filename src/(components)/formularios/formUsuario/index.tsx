@@ -3,6 +3,7 @@ import { Form, GrupoInput } from "./styled";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
+import InputCheckbox from "@/(components)/inputCheckbox";
 
 export default function FormUsuario() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
@@ -37,8 +38,15 @@ export default function FormUsuario() {
       </GrupoInput>
       {errors.email && <span>{errors.email.message}</span>}
 
-      <div className="senha">
-        <h5>Alterar Senha</h5>
+      <div
+        className={
+          window.location.pathname === "/perfil"
+            ? "senha"
+            : "w-100 d-flex flex-column gap-3"
+        }
+      >
+        {window.location.pathname === "/perfil" && <h5>Alterar Senha</h5>}
+
         <GrupoInput>
           <i className="bi bi-lock-fill" />
           <input
@@ -71,11 +79,40 @@ export default function FormUsuario() {
           </button>
         </GrupoInput>
         {errors.confirmarSenha && <span>{errors.confirmarSenha.message}</span>}
+
+        {window.location.pathname === "/login" && (
+          <div>
+            <label htmlFor="">Deseja ser um criador de eventos?</label>
+            <div className="d-flex gap-3 mt-1">
+              <InputCheckbox
+                id="criador"
+                htmlFor="criador"
+                label="Sim"
+                color="--branco"
+                onClick={() => {}}
+              />
+              <InputCheckbox
+                id="comum"
+                htmlFor="comum"
+                label="Não"
+                color="--branco"
+                onClick={() => {}}
+              />
+            </div>
+          </div>
+        )}
       </div>
 
-      <button type="submit" className="btn-form">
-        Atualizar
-      </button>
+      {window.location.pathname === "/perfil" ? (
+        <button type="submit" className="btn-form">
+          Atualizar
+        </button>
+      ): (
+        <button type="submit" className="btn-form">
+          Enviar
+        </button>
+      )
+    }
     </Form>
   );
 }
