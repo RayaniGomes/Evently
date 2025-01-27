@@ -1,20 +1,8 @@
 import styled from "styled-components";
 
-export const Main = styled.main` 
-  width: 100%;
-
-  .container-home {
-    width: 100%;
-    height: 90vh;
-
-    @media (max-width: 1400px) {
-      width: 100vw;
-    }
-  }
-`;
-
 export const Section = styled.section`
   width: 100%;
+  min-height: 50vh;
   display: flex;
   flex-direction: column;
   margin: 5rem auto;

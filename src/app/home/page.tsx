@@ -4,7 +4,7 @@ import Footer from "@/(components)/footer";
 import Navbar from "@/(components)/navbar";
 import { useEvento } from "@/stores/eventoStore";
 import { useEffect } from "react";
-import { Main, Section } from "./styled";
+import { Section } from "./styled";
 import { Container } from "react-bootstrap";
 
 export default function Home() {
@@ -16,11 +16,10 @@ export default function Home() {
   }, []);
 
   return (
-    <Main>
+    <main>
       <Navbar />
       <Banner />
-      <Container className="container-home">
-        <Section>
+        <Container as={Section}>
           <h2>Eventos da semana</h2>
           <div className="cards">
             {eventos.slice(0, 4).map((evento) => (
@@ -33,9 +32,8 @@ export default function Home() {
               />
             ))}
           </div>
-        </Section>
-      </Container>
+        </Container>
       <Footer />
-    </Main>
+    </main>
   );
 }

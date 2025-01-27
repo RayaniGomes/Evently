@@ -1,10 +1,23 @@
 import styled from "styled-components";
 
-export const CntainerBanner = styled.section`
+export const ContainerBanner = styled.section`
   width: 100%;
   display: flex;
   margin-top: 5rem;
-  overflow: hidden;
+  
+  .container {
+    width: 100%;
+    display: flex;
+    max-width: 1320px !important;
+    overflow: hidden;
+    --bs-gutter-x: 0
+  }
+
+  @media (width <= 1440px) {
+    .container {
+      max-width: 100% !important;
+    }
+  }
 `;
 
 export const Slide = styled.div<{ imagem: string }>`
@@ -84,6 +97,7 @@ export const Slide = styled.div<{ imagem: string }>`
   }
 
   @media (max-width: 768px) {
+    width: 100%;
     height: 350px;
 
     .conteudo {
