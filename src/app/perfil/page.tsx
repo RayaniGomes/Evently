@@ -3,10 +3,12 @@ import Navbar from "@/(components)/navbar";
 import Titulo from "@/(components)/titulo";
 import { Botoes, ContainerPerfil, Section } from "./styled";
 import Footer from "@/(components)/footer";
-import FormUsuario from "@/(components)/FormUsuario";
+import FormUsuario from "@/(components)/formularios/FormUsuario";
 import { useState } from "react";
 import MinhasInscrições from "@/(components)/minhasInscrições";
 import MeusEventos from "@/(components)/meusEventos";
+import FormCriarEvento from "@/(components)/formularios/formCriarEvento";
+import { Container } from "react-bootstrap";
 
 export default function Perfil() {
   const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
@@ -18,43 +20,43 @@ export default function Perfil() {
   return (
     <main>
       <Navbar />
-      <Section>
-        <Titulo titulo="Meu perfil" border="--azul-escuro" />
-        <div className="perfil">
-          <Botoes>
-            <button
-              className={isAtivar === "Dados Pessoais" ? "active" : ""}
-              onClick={() => handleIsAtivar("Dados Pessoais")}
-            >
-              Dados Pessoais
-            </button>
-            <button
-              className={isAtivar === "Minhas Inscrições" ? "active" : ""}
-              onClick={() => handleIsAtivar("Minhas Inscrições")}
-            >
-              Minhas Inscrições
-            </button>
-            <button
-              className={isAtivar === "Meus Eventos" ? "active" : ""}
-              onClick={() => handleIsAtivar("Meus Eventos")}
-            >
-              Meus Eventos
-            </button>
-            <button
-              className={isAtivar === "Criar Evento" ? "active" : ""}
-              onClick={() => handleIsAtivar("Criar Evento")}
-            >
-              Criar Evento
-            </button>
-          </Botoes>
-          <ContainerPerfil>
-            {isAtivar === "Dados Pessoais" && <FormUsuario />}
-            {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
-            {isAtivar === "Meus Eventos" && <MeusEventos />}
-            {isAtivar === "Criar Evento" && <h2>Criar Evento</h2>}
-          </ContainerPerfil>
-        </div>
-      </Section>
+      <Container as={Section}>
+          <Titulo titulo="Meu perfil" border="--azul-escuro" />
+          <div className="perfil">
+            <Botoes>
+              <button
+                className={isAtivar === "Dados Pessoais" ? "active" : ""}
+                onClick={() => handleIsAtivar("Dados Pessoais")}
+              >
+                Dados Pessoais
+              </button>
+              <button
+                className={isAtivar === "Minhas Inscrições" ? "active" : ""}
+                onClick={() => handleIsAtivar("Minhas Inscrições")}
+              >
+                Minhas Inscrições
+              </button>
+              <button
+                className={isAtivar === "Meus Eventos" ? "active" : ""}
+                onClick={() => handleIsAtivar("Meus Eventos")}
+              >
+                Meus Eventos
+              </button>
+              <button
+                className={isAtivar === "Criar Evento" ? "active" : ""}
+                onClick={() => handleIsAtivar("Criar Evento")}
+              >
+                Criar Evento
+              </button>
+            </Botoes>
+            <ContainerPerfil>
+              {isAtivar === "Dados Pessoais" && <FormUsuario />}
+              {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
+              {isAtivar === "Meus Eventos" && <MeusEventos />}
+              {isAtivar === "Criar Evento" && <FormCriarEvento />}
+            </ContainerPerfil>
+          </div>
+      </Container>
       <Footer />
     </main>
   );

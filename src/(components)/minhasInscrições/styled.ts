@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Inscricoes = styled.div`
-  width: 80%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -17,7 +17,7 @@ export const ContainerTitulo = styled.div<border>`
     opacity: 1 !important;
 
     @media (max-width: 768px) {
-      border: 2px solid var(--branco) !important;
+      border: 2px solid var(${(props) => props.color}) !important;
     }
   }
 `;

@@ -6,10 +6,14 @@ import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
 
 export default function FormUsuario() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
 
   const toggleMostrarSenha = () => {
-      setMostrarSenha(!mostrarSenha);
+    setMostrarSenha(!mostrarSenha);
   };
 
   const onSubmit = (data: createDataUsuario) => {
