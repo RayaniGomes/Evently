@@ -44,6 +44,18 @@ export const FormEvento = styled.form`
     }
   }
 
+  span {
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    font-size: 12px;
+    padding: .25rem .5rem;
+    border-radius: 7px;
+    margin-top: -.5rem;
+    background-color:rgb(243, 191, 191);
+    color: #9E0000;
+  }
+
   @media (max-width: 768px) {
     padding: 0 1rem;
     .input-duplo {
@@ -69,13 +81,19 @@ export const GrupoInput = styled.div`
     gap: 1rem;
 
     input,
-    textarea {
+    textarea,
+    select {
       color: var(--branco);
       width: 100%;
       height: 100%;
-      padding: 0.25rem;
+      padding: .25rem .5rem;
       background-color: transparent;
       border: none;
+      border-radius: 10px;
+    }
+
+    option {
+      color: var(--azul-escuro);
     }
 
     ::placeholder {
@@ -84,6 +102,11 @@ export const GrupoInput = styled.div`
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    font-size: 20px;
+  }
+
+  input[type="time"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     font-size: 20px;
   }

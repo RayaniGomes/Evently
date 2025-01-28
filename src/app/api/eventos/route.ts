@@ -1,5 +1,6 @@
 import { Evento } from "@/interfaces";
 import { dataEventos } from "@/monks/eventos_data.json";
+import { eventoSchema } from "@/schema/evento.schema";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -54,36 +55,37 @@ export async function GET(req: NextRequest) {
     }
   );
 }
-export async function POST() {
-  const evento: Evento = {
-    id: 6,
-    nome: "Evento 6",
-    data: "01/01/2022",
-    horario: "12:00",
-    qtd: 100,
-    tipo: "Show",
-    descricao: "Descrição do evento 6",
-    local: "Local do evento 6",
-    endereco: "Endereço do evento 6",
-    numero: "123",
-    bairro: "Bairro do evento 6",
-    cidade: "Cidade do evento 6",
-    uf: "UF do evento 6",
-    complemento: "Complemento do evento 6",
-    imagem: "https://encurtador.com.br/apsS6",
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const novoEvento: Evento = {
+    id: dataEventos.length + 1, // Gera um ID único
+    ...body,
   };
+  dataEventos.push(novoEvento);
 
-  dataEventos.push(evento);
-
-  return new Response(
-    JSON.stringify({
-      data: "Inserido com sucesso",
-    }),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  if (!novoEvento) {
+    return new Response(
+      JSON.stringify({
+        data: "Erro ao criar o evento",
+      }),
+      {
+        status: 500,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  } else {
+    return new Response(
+      JSON.stringify({
+        data: "Inserido com sucesso",
+      }),
+      {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  }
 }
