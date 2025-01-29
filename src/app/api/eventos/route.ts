@@ -1,7 +1,6 @@
 import { Evento } from "@/interfaces";
 import { dataEventos } from "@/monks/eventos_data.json";
-import { eventoSchema } from "@/schema/evento.schema";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
   let dataMock: Evento[] = dataEventos;
@@ -55,37 +54,29 @@ export async function GET(req: NextRequest) {
     }
   );
 }
-export async function POST(req: NextRequest) {
-  const body = await req.json();
-  const novoEvento: Evento = {
-    id: dataEventos.length + 1, // Gera um ID único
-    ...body,
-  };
-  dataEventos.push(novoEvento);
 
-  if (!novoEvento) {
-    return new Response(
-      JSON.stringify({
-        data: "Erro ao criar o evento",
-      }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  } else {
-    return new Response(
-      JSON.stringify({
-        data: "Inserido com sucesso",
-      }),
-      {
-        status: 200,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-  }
+function gerarId(eventos: Evento[]): number {
+  const maiorId = eventos.length > 0 ? Math.max(...eventos.map(evento => evento.id)) : 0;
+  return maiorId + 1;
+}
+
+export async function POST(req: NextRequest) {
+  const dataMock: Evento[] = [...dataEventos];
+  
+  const novoEvento: Evento = await req.json();
+  
+  novoEvento.id = gerarId(dataMock);
+  
+  dataMock.push(novoEvento);
+  console.log(dataMock);
+
+  return NextResponse.json({
+    data: novoEvento,
+    message: 'Evento criado com sucesso!'
+  }, {
+    status: 201,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }

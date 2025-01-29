@@ -28,6 +28,7 @@ export default function Eventos() {
 
   useEffect(() => {
     getEventos();
+    console.log(paginatedEventos);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -53,9 +54,9 @@ export default function Eventos() {
           <div className="container-cards">
             {eventos.length > 0 ? (
               <div className="cards">
-                {paginatedEventos.map((evento) => (
+                {paginatedEventos.map((evento, index) => (
                   <Card
-                    key={evento.id}
+                    key={index}
                     evento={evento}
                     bgColor="--azul-medio"
                     color="--branco"

@@ -23,13 +23,15 @@ export default function SetFiltro() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const normalizarEOrdenar = (array: string[]) => {
-    const mapaNormalizado = new Map();
+  const normalizarEOrdenar = (array: (string | undefined)[]) => {
+    const mapaNormalizado = new Map<string, string>();
 
     array.forEach((item) => {
-      const chaveNormalizada = item.toLowerCase();
-      if (!mapaNormalizado.has(chaveNormalizada)) {
-        mapaNormalizado.set(chaveNormalizada, item);
+      if (item !== undefined) {
+        const chaveNormalizada = item.toLowerCase();
+        if (!mapaNormalizado.has(chaveNormalizada)) {
+          mapaNormalizado.set(chaveNormalizada, item);
+        }
       }
     });
 
@@ -39,9 +41,7 @@ export default function SetFiltro() {
   };
 
   const estados = normalizarEOrdenar(eventos.map((evento) => evento.uf));
-
   const cidades = normalizarEOrdenar(eventos.map((evento) => evento.cidade));
-
   const tipos = normalizarEOrdenar(eventos.map((evento) => evento.tipo));
 
   return { estados, cidades, tipos };

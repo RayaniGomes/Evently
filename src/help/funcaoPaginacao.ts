@@ -15,8 +15,8 @@ import { useState } from "react";
  */
 
 export default function FuncaoPaginacao() {
- const { eventos } = useEvento();
- const [currentPage, setCurrentPage] = useState(1);
+  const { eventos } = useEvento();
+  const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = window.location.pathname === "/eventos" ? 10 : 5;
 
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -26,11 +26,11 @@ export default function FuncaoPaginacao() {
 
   const handlePageClick = (page: number) => setCurrentPage(page);
 
- return {
-  paginatedEventos,
-  totalPages,
-  currentPage,
-  handlePageClick,
-  itemsPerPage
- };
+  return {
+    paginatedEventos,
+    totalPages,
+    currentPage,
+    handlePageClick,
+    itemsPerPage,
+  };
 }

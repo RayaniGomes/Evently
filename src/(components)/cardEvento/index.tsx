@@ -14,7 +14,7 @@ export interface CardProps {
 export default function Card({ evento, bgColor, color, hover }: CardProps) {
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
-      <Image src={evento.imagem} alt={evento.nome} width={200} height={175} />
+      <Image src={evento.imagem === "" ? "/sem-imagem.svg" : evento.imagem} alt={evento.nome} width={200} height={175} />
       <div className="box">
         <div>
           <div className="d-flex justify-content-between">

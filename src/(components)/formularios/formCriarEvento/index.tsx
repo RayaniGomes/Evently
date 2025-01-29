@@ -6,8 +6,7 @@ import {
 import { FormEvento, GrupoInput } from "./styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import api from "@/service/api";
-import { toast } from "react-toastify";
+import { useEvento } from "@/stores/eventoStore";
 
 export default function FormCriarEvento() {
   const {
@@ -15,9 +14,10 @@ export default function FormCriarEvento() {
     handleSubmit,
     formState: { errors },
   } = useForm<createDataEvento>({ resolver: zodResolver(eventoSchema) });
+  const { criarEvento } = useEvento();
 
   const onSubmit = (data: createDataEvento) => {
-    
+    criarEvento(data);
   };
 
   return (
@@ -29,21 +29,21 @@ export default function FormCriarEvento() {
             id="nomeEvento"
             type="text"
             placeholder="Nome do Evento"
-            {...register("nomeEvento")}
+            {...register("nome")}
           />
         </div>
       </GrupoInput>
-      {errors.nomeEvento && <span>{errors.nomeEvento.message}</span>}
+      {errors.nome && <span>{errors.nome.message}</span>}
 
       <div className="input-duplo">
         <div className="w-100 d-flex flex-column gap-3">
           <GrupoInput>
             <label htmlFor="dataEvento">Data do evento</label>
             <div className="input">
-              <input id="dataEvento" type="date" {...register("dataEvento")} />
+              <input id="dataEvento" type="date" {...register("data")} />
             </div>
           </GrupoInput>
-          {errors.dataEvento && <span>{errors.dataEvento.message}</span>}
+          {errors.data && <span>{errors.data.message}</span>}
         </div>
 
         <div className="w-100 d-flex flex-column gap-3">
@@ -65,11 +65,11 @@ export default function FormCriarEvento() {
                 type="number"
                 placeholder="2000"
                 min="1"
-                {...register("qtdPessoas")}
+                {...register("qtd")}
               />
             </div>
           </GrupoInput>
-          {errors.qtdPessoas && <span>{errors.qtdPessoas.message}</span>}
+          {errors.qtd && <span>{errors.qtd.message}</span>}
         </div>
       </div>
 
@@ -82,11 +82,11 @@ export default function FormCriarEvento() {
                 id="tipoEvento"
                 type="text"
                 placeholder="Show"
-                {...register("tipoEvento")}
+                {...register("tipo")}
               />
             </div>
           </GrupoInput>
-          {errors.tipoEvento && <span>{errors.tipoEvento.message}</span>}
+          {errors.tipo && <span>{errors.tipo.message}</span>}
         </div>
 
         <div className="w-100 d-flex flex-column gap-3">
@@ -97,17 +97,17 @@ export default function FormCriarEvento() {
                 id="linkImagem"
                 type="text"
                 placeholder="https://exemplo.com"
-                {...register("linkImagem")}
+                {...register("imagem")}
               />
             </div>
           </GrupoInput>
-          {errors.linkImagem && <span>{errors.linkImagem.message}</span>}
+          {errors.imagem && <span>{errors.imagem.message}</span>}
         </div>
       </div>
 
       <GrupoInput>
         <label htmlFor="descricao">Descrição</label>
-        <div className="input">
+        <div className="descricao">
           <textarea
             id="descricao"
             placeholder="Descrição do Evento"

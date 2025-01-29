@@ -39,8 +39,8 @@ const nonEmptyString = (fieldName: string) =>
     });
 
 export const eventoSchema = z.object({
-  nomeEvento: nonEmptyString("O nome do evento"),
-  dataEvento: z
+  nome: nonEmptyString("O nome do evento"),
+  data: z
     .string()
     .refine((data) => !isNaN(Date.parse(data)), {
       message: "A data de nascimento deve ser uma data válida.",
@@ -60,7 +60,7 @@ export const eventoSchema = z.object({
       },
       { message: "Hora inválida. Verifique os valores de hora e minuto." }
     ),
-  qtdPessoas: z
+  qtd: z
     .string()
     .transform((value) => Number(value))
     .refine((value) => !isNaN(value), {
@@ -69,23 +69,12 @@ export const eventoSchema = z.object({
     .refine((value) => value > 0, {
       message: "A quantidade de pessoas deve ser maior que zero.",
     }),
-  tipoEvento: nonEmptyString("O tipo do evento"),
-  linkImagem: z.string().url("A URL fornecida não é válida."),
+  tipo: nonEmptyString("O tipo do evento"),
+  imagem: z.string().url("A URL fornecida não é válida."),
   descricao: nonEmptyString("A descrição do evento"),
   local: nonEmptyString("O local do evento"),
   endereco: nonEmptyString("O endereço do evento"),
-  numero: z
-    .string()
-    .transform((value) => Number(value))
-    .refine((value) => !isNaN(value), {
-      message: "O numero deve ser um número válido.",
-    })
-    .refine((value) => value > 0, {
-      message: "O numero deve ser maior que zero.",
-    })
-    .refine((value) => Number.isInteger(value), {
-      message: "O numero deve ser um inteiro.",
-    }),
+  numero: nonEmptyString("O número do endereço do evento"),
   bairro: nonEmptyString("O bairro do evento"),
   cidade: nonEmptyString("A cidade do evento"),
   uf: z

@@ -81,7 +81,6 @@ export const GrupoInput = styled.div`
     gap: 1rem;
 
     input,
-    textarea,
     select {
       color: var(--branco);
       width: 100%;
@@ -96,10 +95,31 @@ export const GrupoInput = styled.div`
       color: var(--azul-escuro);
     }
 
-    ::placeholder {
-      color: var(--branco);
-    }
   }
+  
+  ::placeholder {
+    color: var(--branco);
+  }
+  
+  .descricao {
+      width: 100%;
+      height: 100px;
+      background-color: transparent;
+      border-bottom: 1px solid var(--branco);
+      border-left: 1px solid var(--branco);
+      border-right: 1px solid var(--branco);
+      border-radius: 0 0 10px 10px;
+      
+      textarea {
+        width: 100%;
+        height: 100%;
+        padding: .25rem .5rem;
+        background-color: transparent;
+        border: none;
+        border-radius: 10px;
+        color: var(--branco);
+      }
+    }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
