@@ -44,7 +44,7 @@ export const Form = styled.form`
     font-weight: 600;
     background-color: var(--branco);
     color: var(--azul-escuro);
-    margin-top: 5rem;
+    margin-top: 4rem;
 
     &:hover {
       box-shadow: var(--drop-shadow-branco-hover);

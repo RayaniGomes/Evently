@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
 export const Section = styled.section`
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: auto;
   display: flex;
-  margin: 5rem auto;
-  margin-top: 10rem;
+  margin: 10rem auto 5rem auto;
   background: var(--gradiente-radial);
   border-radius: 10px;
+  padding: 3rem;
   gap: 3rem;
   color: var(--branco);
 
@@ -19,13 +19,13 @@ export const Section = styled.section`
     border: 1px solid var(--branco);
   }
 
-  .form-login,
-  .form-cadastre {
+  .form,
+  .ativado {
     width: 50%;
     display: flex;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 3rem;
     color: var(--branco);
     gap: 3rem;
 
@@ -60,28 +60,21 @@ export const Section = styled.section`
   }
 
   @media (max-width: 768px) {
-    width: 100%;
-    height: 100%;
-    
-    .form-login{
-      display: flex;
-      width: 100%;
+    width: 90%;
+    padding: 2rem;
+    gap: 2rem;
+
+    .form {
+      display: none;
     }
 
-    .form-cadastre {
-      display: none;
+    .ativado {
+      width: 100%;
+      display: flex;
     }
 
     .hr {
       display: none;
-    }
-
-    .ativar .form-login {
-      display: none; 
-    }
-    
-    .ativar .form-cadastre {
-      display: flex;
     }
 
     .btn-cadastre,
