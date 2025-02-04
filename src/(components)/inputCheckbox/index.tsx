@@ -5,19 +5,19 @@ interface CheckboxProps {
   htmlFor: string;
   label: string;
   color: string;
-  onClick: () => void;
+  onChange: () => void;
 }
 
 export default function InputCheckbox({
   id,
   htmlFor,
   label,
-  onClick,
+  onChange,
   color,
 }: CheckboxProps) {
   return (
     <Checkbox $color={color}>
-      <input type="checkbox" id={id} onClick={onClick} />
+      <input type="checkbox" id={id} onChange={onChange}/>
       <label htmlFor={htmlFor}>{label}</label>
     </Checkbox>
   );

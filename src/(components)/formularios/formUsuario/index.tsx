@@ -1,25 +1,57 @@
+'use client';
 import { useForm } from "react-hook-form";
 import { Form, GrupoInput } from "./styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
 import InputCheckbox from "@/(components)/inputCheckbox";
-
+import { toast } from "react-toastify";
+import router from "next/router";
+import api from "@/service/api";
 export default function FormUsuario() {
-  const [mostrarSenha, setMostrarSenha] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
+  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const methods = useForm<createDataUsuario>({
+    resolver: zodResolver(usuarioSchema),
+  });
+  const [isPagePerfil, setIsPagePerfil] = useState(false);
+  const [isPageLogin, setIsPageLogin] = useState(false);
 
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
 
-  const onSubmit = (data: createDataUsuario) => {
+  const onSubmit = async (data: createDataUsuario) => {
     console.log(data);
+    const req = await api
+      .post("/usuarios", data)
+      .then((response) => {
+        return response;
+      })
+      .catch((error) => {
+        return error;
+      });
+
+    const res = await req.json();
+
+    console.log("user register:", res);
+
+    if (!req.ok) {
+      toast.error(res.message);
+    } else {
+      console.log(res);
+      router.push("/");
+    }
   };
+
+  useEffect(() => {
+    setIsPagePerfil(window.location.pathname === "/perfil");
+    setIsPageLogin(window.location.pathname === "/login");
+  }, []);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
@@ -39,13 +71,9 @@ export default function FormUsuario() {
       {errors.email && <span>{errors.email.message}</span>}
 
       <div
-        className={
-          window.location.pathname === "/perfil"
-            ? "senha"
-            : "w-100 d-flex flex-column gap-3"
-        }
+        className={isPagePerfil ? "senha" : "w-100 d-flex flex-column gap-3"}
       >
-        {window.location.pathname === "/perfil" && <h5>Alterar Senha</h5>}
+        {isPagePerfil && <h5>Alterar Senha</h5>}
 
         <GrupoInput>
           <i className="bi bi-lock-fill" />
@@ -80,39 +108,39 @@ export default function FormUsuario() {
         </GrupoInput>
         {errors.confirmarSenha && <span>{errors.confirmarSenha.message}</span>}
 
-        {window.location.pathname === "/login" && (
+        {isPageLogin && (
           <div>
-            <label htmlFor="">Deseja ser um criador de eventos?</label>
+            <label htmlFor="criador">Deseja ser um criador de eventos?</label>
             <div className="d-flex gap-3 mt-1">
               <InputCheckbox
-                id="criador"
-                htmlFor="criador"
+                id="criadorSim"
+                htmlFor="criadorSim"
                 label="Sim"
                 color="--branco"
-                onClick={() => {}}
+                onChange={() => methods.setValue("criador", true)}
               />
               <InputCheckbox
-                id="comum"
-                htmlFor="comum"
+                id="criadorNao"
+                htmlFor="criadorNao"
                 label="Não"
                 color="--branco"
-                onClick={() => {}}
+                onChange={() => methods.setValue("criador", false)}
               />
             </div>
           </div>
         )}
+        {errors.criador && <span>{errors.criador.message}</span>}
       </div>
 
-      {window.location.pathname === "/perfil" ? (
+      {isPagePerfil ? (
         <button type="submit" className="btn-form">
           Atualizar
         </button>
-      ): (
+      ) : (
         <button type="submit" className="btn-form">
           Enviar
         </button>
-      )
-    }
+      )}
     </Form>
   );
 }

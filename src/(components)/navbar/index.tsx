@@ -10,17 +10,27 @@ import {
   NavMobile,
 } from "./styled";
 import Dropdown from "react-bootstrap/Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useEvento } from "@/stores/eventoStore";
 import { Container } from "react-bootstrap";
 
 export default function Navbar() {
   const { filtroNome } = useEvento();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [itemAtivo, setItemAtivo] = useState("home");
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  useEffect(() => {
+    const path = window.location.pathname;
+    if (path === "/") {
+      setItemAtivo("home");
+    } else {
+      setItemAtivo(path.slice(1));
+    }
+  }, []);
 
   return (
     <Nav>
@@ -49,21 +59,22 @@ export default function Navbar() {
         <Menu>
           <Link
             href="/"
-            className={window.location.pathname === "/" ? "active" : ""}
+            className={itemAtivo === "home" ? "active" : ""}
+            onClick={() => setItemAtivo("home")}
           >
             HOME
           </Link>
           <Link
             href="/quem-somos"
-            className={
-              window.location.pathname === "/quem-somos" ? "active" : ""
-            }
+            className={itemAtivo === "quem-somos" ? "active" : ""}
+            onClick={() => setItemAtivo("quem-somos")}
           >
             QUEM SOMOS
           </Link>
           <Link
             href="/eventos"
-            className={window.location.pathname === "/eventos" ? "active" : ""}
+            className={itemAtivo === "eventos" ? "active" : ""}
+            onClick={() => setItemAtivo("eventos")}
           >
             EVENTOS
           </Link>
@@ -72,7 +83,8 @@ export default function Navbar() {
         <Login>
           <Link
             href="/login"
-            className={window.location.pathname === "/login" ? "active" : ""}
+            className={itemAtivo === "login" ? "active" : ""}
+            onClick={() => setItemAtivo("login")}
           >
             LOGIN
           </Link>
@@ -93,33 +105,38 @@ export default function Navbar() {
             <div>
               <Link
                 href="/"
-                className={window.location.pathname === "/" ? "active" : ""}
+                className={itemAtivo === "home" ? "active" : ""}
+                onClick={() => setItemAtivo("home")}
               >
                 HOME
               </Link>
             </div>
             <div>
-              <Link href="/quem-somos" className="active">
+              <Link
+                href="/quem-somos"
+                className={itemAtivo === "quem-somos" ? "active" : ""}
+                onClick={() => setItemAtivo("quem-somos")}
+              >
                 QUEM SOMOS
               </Link>
             </div>
             <div>
-              {window.location.pathname === "/eventos" ? (
-                <Link href="/eventos" className="active">
-                  EVENTOS
-                </Link>
-              ) : (
-                <Link href="/eventos">EVENTOS</Link>
-              )}
+              <Link
+                href="/eventos"
+                className={itemAtivo === "eventos" ? "active" : ""}
+                onClick={() => setItemAtivo("eventos")}
+              >
+                EVENTOS
+              </Link>
             </div>
             <div>
-              {window.location.pathname === "/login" ? (
-                <Link href="/login" className="active">
-                  LOGIN
-                </Link>
-              ) : (
-                <Link href="/login">LOGIN</Link>
-              )}
+              <Link
+                href="/login"
+                className={itemAtivo === "login" ? "active" : ""}
+                onClick={() => setItemAtivo("login")}
+              >
+                LOGIN
+              </Link>
             </div>
             <form className="search-mobile">
               <input type="search" placeholder="Pesquisar" />

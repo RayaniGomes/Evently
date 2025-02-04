@@ -18,13 +18,20 @@ export const authOptions: NextAuthOptions = {
       name: "Credentials",
       credentials: {
         name: { label: "Name", type: "text" },
+        dataNascimento: { label: "Data de Nascimento", type: "date" },
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        criador: { label: "Criador", type: "checkbox" },
       },
 
       async authorize(credentials, req): Promise<Usuario> {
         console.log("Authorize", credentials);
-        const user: Usuario = { id: "1", name: "User", email: "I4qgU@example.com", password: "password" };
+
+        const user: Usuario = {
+          name: "User",
+          email: "I4qgU@example.com",
+          password: "password",
+        };
         return user;
       },
     }),

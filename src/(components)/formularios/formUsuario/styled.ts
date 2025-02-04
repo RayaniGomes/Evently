@@ -58,7 +58,7 @@ export const Form = styled.form`
     margin-top: 3rem;
     gap: .5rem;
 
-    a {
+    button {
       display: flex;
       align-items: center;
       justify-content: center;

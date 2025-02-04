@@ -26,10 +26,12 @@ export const usuarioSchema = z
         message: "A senha não pode conter apenas espaços em branco.",
       }),
     confirmarSenha: z.string().min(6, "A confirmação de senha deve conter no mínimo 6 caracteres e ser igual à senha."),
+    criador: z.boolean().optional(),
   })
   .refine(({ senha, confirmarSenha }) => senha === confirmarSenha, {
     message: "A senha não corresponde",
     path: ["confirmarSenha"],
   });
+
 
 export type createDataUsuario = z.infer<typeof usuarioSchema>;

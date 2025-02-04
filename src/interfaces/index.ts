@@ -17,10 +17,12 @@ export interface Evento {
 }
 
 export interface Usuario {
-  id: string;
-  name: string;
+  id?: string;
+  name?: string;
   email: string;
   password: string;
+  dataNascimento: string;
+  criador: boolean;
 }
 
 export interface StyledCompartilhar {
