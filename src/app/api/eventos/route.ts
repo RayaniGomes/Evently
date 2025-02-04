@@ -1,82 +1,44 @@
-import { Evento } from "@/interfaces";
-import { dataEventos } from "@/monks/eventos_data.json";
 import { NextRequest, NextResponse } from "next/server";
+import { Evento } from "@/interfaces";
+import Model_Evento from "@/models/evento";
 
 export async function GET(req: NextRequest) {
-  let dataMock: Evento[] = dataEventos;
 
-  const nome = req.nextUrl.searchParams.get("nome");
-  if (nome) {
-    dataMock = dataMock.filter((evento) => {
-      return evento.nome.toLowerCase().includes(nome.toLowerCase());
-    });
+  const searchParams = req.nextUrl.searchParams;
+  const query: Partial<Record<keyof Evento, string | object>> = {};
+
+  if (searchParams.has("nome")) {
+    query.nome = { $regex: new RegExp(searchParams.get("nome")!, "i") };
+  }
+  if (searchParams.has("data")) {
+    query.data = searchParams.get("data")!;
+  }
+  if (searchParams.has("uf")) {
+    query.uf = searchParams.get("uf")!;
+  }
+  if (searchParams.has("cidade")) {
+    query.cidade = searchParams.get("cidade")!;
+  }
+  if (searchParams.has("tipo")) {
+    query.tipo = searchParams.get("tipo")!;
   }
 
-  const data = req.nextUrl.searchParams.get("data");
-  if (data) {
-    dataMock = dataMock.filter((evento) => {
-      const newData = evento.data.replaceAll("/", "-");
-      console.log(data, newData);
-      return data === newData;
-    });
+  const eventos = await Model_Evento.find(query).lean();
+  
+  if (eventos.length === 0) {
+    return NextResponse.json({ message: "Nenhum evento encontrado." }, { status: 404 });
   }
 
-  const uf = req.nextUrl.searchParams.get("uf");
-  if (uf) {
-    dataMock = dataMock.filter((evento) => {
-      return evento.uf.toLowerCase() === uf.toLowerCase();
-    });
-  }
-
-  const cidade = req.nextUrl.searchParams.get("cidade");
-  if (cidade) {
-    dataMock = dataMock.filter((evento) => {
-      return evento.cidade.toLowerCase() === cidade.toLowerCase();
-    });
-  }
-
-  const tipo = req.nextUrl.searchParams.get("tipo");
-  if (tipo) {
-    dataMock = dataMock.filter((evento) => {
-      return evento.tipo.toLowerCase() === tipo.toLowerCase();
-    });
-  }
-
-  return new Response(
-    JSON.stringify({
-      data: dataMock,
-    }),
-    {
-      status: 200,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-}
-
-function gerarId(eventos: Evento[]): number {
-  const maiorId = eventos.length > 0 ? Math.max(...eventos.map(evento => evento.id)) : 0;
-  return maiorId + 1;
+  return NextResponse.json({ data: eventos });
 }
 
 export async function POST(req: NextRequest) {
-  const dataMock: Evento[] = [...dataEventos];
-  
-  const novoEvento: Evento = await req.json();
-  
-  novoEvento.id = gerarId(dataMock);
-  
-  dataMock.push(novoEvento);
-  console.log(dataMock);
 
-  return NextResponse.json({
-    data: novoEvento,
-    message: 'Evento criado com sucesso!'
-  }, {
-    status: 201,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  const novoEvento: Evento = await req.json();
+
+  const eventoCriado = await Model_Evento.create(novoEvento);
+  return NextResponse.json(
+    { data: eventoCriado, message: "Evento criado com sucesso!" },
+    { status: 201 }
+  );
 }

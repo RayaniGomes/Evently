@@ -5,7 +5,9 @@ import { create } from "zustand";
 
 interface PropEventoStore {
   eventos: Evento[];
+  loading: boolean;
   copyEventos: Evento[];
+  error: string | null;
   getEventos: () => void;
   filtroEstado: (uf: string) => void;
   filtroCidade: (cidade: string) => void;
@@ -18,6 +20,8 @@ interface PropEventoStore {
 export const useEvento = create<PropEventoStore>((set) => ({
   eventos: [],
   copyEventos: [],
+  loading: false,
+  error: null,
 
   getEventos: async () => {
     await api.get("/eventos").then((response) => {
@@ -27,6 +31,24 @@ export const useEvento = create<PropEventoStore>((set) => ({
       });
       console.log(response);
     });
+  },
+
+  criarEvento: async (evento) => {
+    set({ loading: true, error: null });
+    
+    const response = await api.post('/eventos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(evento),
+    });
+    
+    const data = response.data;
+    
+    if (response.status === 201) {
+      set((state) => ({ eventos: [...state.eventos, data.data], loading: false }));
+    } else {
+      set({ loading: false, error: data.message });
+    }
   },
 
   filtroEstado: (uf: string) => {
@@ -98,20 +120,5 @@ export const useEvento = create<PropEventoStore>((set) => ({
         evento.nome?.toLowerCase().includes(nome.toLowerCase())
       ),
     }));
-  },
-
-  criarEvento: async (novoEvento: createDataEvento) => {
-    await api
-      .post("/eventos", novoEvento)
-      .then((response) => {
-        set((state) => ({
-          eventos: [...state.eventos, response.data],
-          copyEventos: [...state.copyEventos, response.data],
-        }));
-        console.log("Evento criado com sucesso!", response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao criar evento:", error);
-      });
   },
 }));

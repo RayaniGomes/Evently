@@ -1,5 +1,5 @@
 export interface Evento {
-  id: number;
+  id: string;
   nome: string;
   data: string;
   horario: string;
@@ -14,6 +14,13 @@ export interface Evento {
   uf: string;
   complemento: string;
   imagem: string;
+}
+
+export interface Usuario {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
 }
 
 export interface StyledCompartilhar {
