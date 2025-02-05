@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import { ContainerBanner, Slide } from "./styled";
 import { useEvento } from "@/stores/eventoStore";
@@ -17,13 +18,13 @@ export default function Banner() {
       <Container>
         {eventos.slice(0, 4).map((evento) => {
           return (
-            <Slide key={evento.id} imagem={evento.imagem}>
+            <Slide key={evento._id} imagem={evento.imagem}>
               <div className="imagem" />
               <div className="conteudo">
-                <h3>{evento.nome}</h3>
+                <h3>{evento.name}</h3>
                 <h4>{evento.data}</h4>
                 <h4>{evento.local}</h4>
-                <Link href={`/detalhes-evento/${evento.id}`}>Detalhes</Link>
+                <Link href={`/detalhes-evento/${evento._id}`}>Detalhes</Link>
               </div>
             </Slide>
           );

@@ -1,30 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Evento } from "@/interfaces";
-import Model_Evento from "@/models/evento";
+import { db } from "@/lib/db";
+
+interface Filters {
+  name?: string;
+  data?: string;
+  uf?: string;
+  cidade?: string;
+  tipo_evento?: string;
+}
 
 export async function GET(req: NextRequest) {
-
   const searchParams = req.nextUrl.searchParams;
-  const query: Partial<Record<keyof Evento, string | object>> = {};
+  const filters: Filters = {};
 
   if (searchParams.has("nome")) {
-    query.nome = { $regex: new RegExp(searchParams.get("nome")!, "i") };
+    filters.name = searchParams.get("nome")!;
   }
   if (searchParams.has("data")) {
-    query.data = searchParams.get("data")!;
+    filters.data = searchParams.get("data")!;
   }
   if (searchParams.has("uf")) {
-    query.uf = searchParams.get("uf")!;
+    filters.uf = searchParams.get("uf")!;
   }
   if (searchParams.has("cidade")) {
-    query.cidade = searchParams.get("cidade")!;
+    filters.cidade = searchParams.get("cidade")!;
   }
   if (searchParams.has("tipo")) {
-    query.tipo = searchParams.get("tipo")!;
+    filters.tipo_evento = searchParams.get("tipo")!;
   }
 
-  const eventos = await Model_Evento.find(query).lean();
-  
+  const eventos = await db.event.findMany({ where: filters });
+
   if (eventos.length === 0) {
     return NextResponse.json({ message: "Nenhum evento encontrado." }, { status: 404 });
   }
@@ -33,10 +39,14 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const body = await req.json().catch(() => null); 
 
-  const novoEvento: Evento = await req.json();
+  if (!body) {
+    return NextResponse.json({ error: "Corpo da requisição inválido." }, { status: 400 });
+  }
 
-  const eventoCriado = await Model_Evento.create(novoEvento);
+  const eventoCriado = await db.event.create({ data: body });
+
   return NextResponse.json(
     { data: eventoCriado, message: "Evento criado com sucesso!" },
     { status: 201 }

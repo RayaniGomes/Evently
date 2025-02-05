@@ -1,6 +1,5 @@
-'use client';
+"use client";
 import Indice from "@/(components)/indice";
-import Navbar from "@/(components)/navbar";
 import Sobre from "@/(components)/sobreNos";
 import { Container } from "./styled";
 import Image from "next/image";
@@ -8,7 +7,6 @@ import Image from "next/image";
 export default function QuemSomos() {
     return (
         <main>
-            <Navbar />
             <Sobre />
             <Container>
                 <div className="indices">

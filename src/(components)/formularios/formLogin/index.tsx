@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import { Form, GrupoInput } from "../formUsuario/styled";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";

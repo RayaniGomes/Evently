@@ -1,3 +1,4 @@
+"use client";
 import { useEvento } from "@/stores/eventoStore";
 import { useState } from "react";
 

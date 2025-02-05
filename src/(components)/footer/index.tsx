@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { FooterContainer } from "./styled";
 import Link from "next/link";

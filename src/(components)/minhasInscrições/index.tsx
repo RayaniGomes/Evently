@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from "react";
 import { useEvento } from "@/stores/eventoStore";
 import { Inscricoes } from "./styled";
@@ -7,7 +8,13 @@ import FuncaoPaginacao from "@/help/funcaoPaginacao";
 
 export default function MinhasInscrições() {
   const { eventos, getEventos } = useEvento();
-  const { paginatedEventos, totalPages, currentPage, handlePageClick, itemsPerPage } = FuncaoPaginacao();
+  const {
+    paginatedEventos,
+    totalPages,
+    currentPage,
+    handlePageClick,
+    itemsPerPage,
+  } = FuncaoPaginacao();
 
   useEffect(() => {
     getEventos();
@@ -22,7 +29,7 @@ export default function MinhasInscrições() {
       {eventos.length > 0 ? (
         paginatedEventos.map((evento) => (
           <Card
-            key={evento.id}
+            key={evento._id}
             evento={evento}
             bgColor="--branco"
             color="--azul-escuro"

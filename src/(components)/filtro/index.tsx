@@ -1,3 +1,4 @@
+"use client";
 import { useEvento } from "@/stores/eventoStore";
 import InputCheckbox from "../inputCheckbox";
 import { Section } from "./styled";
@@ -47,7 +48,7 @@ export function Filtro() {
                 htmlFor={uf}
                 label={uf}
                 color="--branco"
-                onClick={() => filtroEstado(uf)}
+                onChange={() => filtroEstado(uf)}
               />
             ))}
           </div>
@@ -64,7 +65,7 @@ export function Filtro() {
                 htmlFor={cidade}
                 label={cidade}
                 color="--branco"
-                onClick={() => filtroCidade(cidade)}
+                onChange={() => filtroCidade(cidade)}
               />
             ))}
           </div>
@@ -81,7 +82,7 @@ export function Filtro() {
                 htmlFor={tipo}
                 label={tipo}
                 color="--branco"
-                onClick={() => filtroTipo(tipo)}
+                onChange={() => filtroTipo(tipo)}
               />
             ))}
           </div>

@@ -5,6 +5,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Bounce, ToastContainer } from "react-toastify";
+import Navbar from "@/(components)/navbar";
+import Footer from "@/(components)/footer";
 
 export const metadata: Metadata = {
   title: "Evently",
@@ -36,7 +38,9 @@ export default function RootLayout({
           transition={Bounce}
         />
         <StyledComponentsRegistry>
+          <Navbar />
           {children}
+          <Footer />
         </StyledComponentsRegistry>
       </body>
     </html>

@@ -1,6 +1,4 @@
 "use client";
-import Footer from "@/(components)/footer";
-import Navbar from "@/(components)/navbar";
 import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { Detalhe, Section } from "./styled";
@@ -34,19 +32,18 @@ export default function DetalheEvento(props: { params: Params }) {
 
   return (
     <main>
-      <Navbar />
-      {evento.id == null ? (
+      {evento._id == null ? (
         <Section>
           <h2 className="">Evento não encontrado</h2>
         </Section>
       ) : (
         <Section>
-          <h1>{evento.nome}</h1>
+          <h1>{evento.name}</h1>
           <Detalhe>
             <div className="img-container">
               <Image
                 src={evento.imagem}
-                alt={evento.nome}
+                alt={evento.name}
                 width={500}
                 height={500}
                 priority={true}
@@ -75,10 +72,10 @@ export default function DetalheEvento(props: { params: Params }) {
                       width={30}
                       height={30}
                     />
-                    <h6>{evento.tipo}</h6>
+                    <h6>{evento.tipo_evento}</h6>
                   </div>
                   {window.location.pathname ===
-                  `/detalhes-evento/${evento.id}` ? (
+                  `/detalhes-evento/${evento._id}` ? (
                     <h6 className="label">Compartilhe:</h6>
                   ) : (
                     ""
@@ -120,7 +117,7 @@ export default function DetalheEvento(props: { params: Params }) {
                   <h6 className="label">Qtd. máxima de pessoas:</h6>
                   <div className="d-flex gap-2">
                     <i className="bi bi-people-fill" />
-                    <h6>{evento.qtd}</h6>
+                    <h6>{evento.qtd_max_pessoa}</h6>
                   </div>
                 </div>
               </div>
@@ -129,7 +126,6 @@ export default function DetalheEvento(props: { params: Params }) {
           </Detalhe>
         </Section>
       )}
-      <Footer />
     </main>
   );
 }

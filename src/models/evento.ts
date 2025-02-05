@@ -2,11 +2,11 @@ import { Evento } from "@/interfaces";
 import mongoose, { Schema } from "mongoose";
 
 const EventoSchema = new Schema<Evento>({
-  nome: { type: String, required: true },
+  name: { type: String, required: true },
   data: { type: String, required: true },
   horario: { type: String, required: true },
-  qtd: { type: Number, required: true },
-  tipo: { type: String, required: true },
+  qtd_max_pessoa: { type: Number, required: true },
+  tipo_evento: { type: String, required: true },
   descricao: { type: String, required: true },
   local: { type: String, required: true },
   endereco: { type: String, required: true },

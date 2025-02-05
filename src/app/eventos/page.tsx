@@ -1,13 +1,11 @@
 "use client";
 import Card from "@/(components)/cardEvento";
 import { Filtro } from "@/(components)/filtro";
-import Navbar from "@/(components)/navbar";
 import Titulo from "@/(components)/titulo";
 import { useEvento } from "@/stores/eventoStore";
 import { useEffect, useState } from "react";
 import { Pesquisar, Section } from "./styled";
 import FiltroModal from "@/(components)/filtroModal";
-import Footer from "@/(components)/footer";
 import Paginacao from "@/(components)/paginacao";
 import { Container } from "react-bootstrap";
 import FuncaoPaginacao from "@/help/funcaoPaginacao";
@@ -34,7 +32,6 @@ export default function Eventos() {
 
   return (
     <main>
-      <Navbar />
       <Container style={{ marginTop: "8rem" }}>
         <Titulo titulo="Eventos" border="--azul-escuro" />
         <Pesquisar>
@@ -80,7 +77,6 @@ export default function Eventos() {
           </div>
         </Section>
       </Container>
-      <Footer />
     </main>
   );
 }

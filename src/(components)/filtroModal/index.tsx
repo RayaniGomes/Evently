@@ -1,3 +1,4 @@
+"use client";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Forms } from "./styled";
@@ -53,7 +54,7 @@ export default function FiltroModal({
                   htmlFor={uf}
                   label={uf}
                   color="--azul-escuro"
-                  onClick={() => filtroEstado(uf)}
+                  onChange={() => filtroEstado(uf)}
                 />
               ))}
             </div>
@@ -68,7 +69,7 @@ export default function FiltroModal({
                   htmlFor={cidade}
                   label={cidade}
                   color="--azul-escuro"
-                  onClick={() => filtroCidade(cidade)}
+                  onChange={() => filtroCidade(cidade)}
                 />
               ))}
             </div>
@@ -83,7 +84,7 @@ export default function FiltroModal({
                   htmlFor={tipo}
                   label={tipo}
                   color="--azul-escuro"
-                  onClick={() => filtroTipo(tipo)}
+                  onChange={() => filtroTipo(tipo)}
                 />
               ))}
             </div>

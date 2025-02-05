@@ -1,3 +1,4 @@
+"use client";
 import { useEvento } from "@/stores/eventoStore";
 import { useEffect } from "react";
 
@@ -42,7 +43,7 @@ export default function SetFiltro() {
 
   const estados = normalizarEOrdenar(eventos.map((evento) => evento.uf));
   const cidades = normalizarEOrdenar(eventos.map((evento) => evento.cidade));
-  const tipos = normalizarEOrdenar(eventos.map((evento) => evento.tipo));
+  const tipos = normalizarEOrdenar(eventos.map((evento) => evento.tipo_evento));
 
   return { estados, cidades, tipos };
 }

@@ -1,6 +1,4 @@
 "use client";
-import Footer from "@/(components)/footer";
-import Navbar from "@/(components)/navbar";
 import { Section } from "./styled";
 import { Container } from "react-bootstrap";
 import FormLogin from "@/(components)/formularios/formLogin";
@@ -22,7 +20,6 @@ export default function Login() {
 
   return (
     <main>
-      <Navbar />
         <Container as={Section}>
           <div
             className={ativarcadastro ? "form" : "ativado"}
@@ -61,7 +58,6 @@ export default function Login() {
             </button>
           </div>
         </Container>
-      <Footer />
     </main>
   );
 }

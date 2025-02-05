@@ -1,8 +1,6 @@
 "use client";
-import Navbar from "@/(components)/navbar";
 import Titulo from "@/(components)/titulo";
 import { Botoes, ContainerPerfil, Section } from "./styled";
-import Footer from "@/(components)/footer";
 import FormUsuario from "@/(components)/formularios/formUsuario";
 import { useState } from "react";
 import MinhasInscrições from "@/(components)/minhasInscrições";
@@ -19,7 +17,6 @@ export default function Perfil() {
 
   return (
     <main>
-      <Navbar />
       <Container as={Section}>
           <Titulo titulo="Meu perfil" border="--azul-escuro" />
           <div className="perfil">
@@ -57,7 +54,6 @@ export default function Perfil() {
             </ContainerPerfil>
           </div>
       </Container>
-      <Footer />
     </main>
   );
 }

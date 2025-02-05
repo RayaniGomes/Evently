@@ -1,10 +1,10 @@
 export interface Evento {
-  id: string;
-  nome: string;
+  _id: string;
+  name: string;
   data: string;
   horario: string;
-  qtd: number;
-  tipo: string;
+  qtd_max_pessoa: number;
+  tipo_evento: string;
   descricao: string;
   local: string;
   endereco: string;

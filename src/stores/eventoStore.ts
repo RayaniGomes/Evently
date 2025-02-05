@@ -1,6 +1,8 @@
+"use client";
 import { Evento } from "@/interfaces";
 import { createDataEvento } from "@/schema/evento.schema";
 import api from "@/service/api";
+import axios from "axios";
 import { create } from "zustand";
 
 interface PropEventoStore {
@@ -24,7 +26,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
   error: null,
 
   getEventos: async () => {
-    await api.get("/eventos").then((response) => {
+    await axios.get("/api/eventos").then((response) => {
       set({
         eventos: response.data.data,
         copyEventos: response.data.data,
@@ -35,17 +37,20 @@ export const useEvento = create<PropEventoStore>((set) => ({
 
   criarEvento: async (evento) => {
     set({ loading: true, error: null });
-    
-    const response = await api.post('/eventos', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+
+    const response = await api.post("/eventos", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(evento),
     });
-    
+
     const data = response.data;
-    
+
     if (response.status === 201) {
-      set((state) => ({ eventos: [...state.eventos, data.data], loading: false }));
+      set((state) => ({
+        eventos: [...state.eventos, data.data],
+        loading: false,
+      }));
     } else {
       set({ loading: false, error: data.message });
     }
@@ -89,7 +94,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
 
     useEvento.setState((state) => ({
       eventos: state.copyEventos.filter(
-        (evento) => evento.tipo?.toLowerCase() === tipo.toLowerCase()
+        (evento) => evento.tipo_evento?.toLowerCase() === tipo.toLowerCase()
       ),
     }));
   },
@@ -117,7 +122,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
 
     useEvento.setState((state) => ({
       eventos: state.copyEventos.filter((evento) =>
-        evento.nome?.toLowerCase().includes(nome.toLowerCase())
+        evento.name?.toLowerCase().includes(nome.toLowerCase())
       ),
     }));
   },
