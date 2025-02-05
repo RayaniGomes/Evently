@@ -1,51 +1,39 @@
-'use client';
+"use client";
 import { useForm } from "react-hook-form";
 import { Form, GrupoInput } from "./styled";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
 import InputCheckbox from "@/(components)/inputCheckbox";
-import { toast } from "react-toastify";
-import router from "next/router";
-import api from "@/service/api";
+import { useUsuario } from "@/stores/usuarioStore";
+import { Usuario } from "@/interfaces";
+import { Role } from "@prisma/client";
 export default function FormUsuario() {
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
   const [mostrarSenha, setMostrarSenha] = useState(false);
-  const methods = useForm<createDataUsuario>({
-    resolver: zodResolver(usuarioSchema),
-  });
   const [isPagePerfil, setIsPagePerfil] = useState(false);
   const [isPageLogin, setIsPageLogin] = useState(false);
-
+  const { criarUsuario } = useUsuario();
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
 
   const onSubmit = async (data: createDataUsuario) => {
-    console.log(data);
-    const req = await api
-      .post("/usuarios", data)
-      .then((response) => {
-        return response;
-      })
-      .catch((error) => {
-        return error;
-      });
-
-    const res = await req.json();
-
-    console.log("user register:", res);
-
-    if (!req.ok) {
-      toast.error(res.message);
-    } else {
-      console.log(res);
-      router.push("/");
-    }
+    const novoUsuario: Usuario = {
+      nome: data.nome,
+      dataNascimento: data.data,
+      email: data.email,
+      senha: data.senha,
+      role: data.criador ? Role.CRIADOR : Role.COMUM,
+      eventos: [],
+    };
+    criarUsuario(novoUsuario);
   };
 
   useEffect(() => {
@@ -91,22 +79,6 @@ export default function FormUsuario() {
           </button>
         </GrupoInput>
         {errors.senha && <span>{errors.senha.message}</span>}
-        <GrupoInput>
-          <i className="bi bi-lock-fill" />
-          <input
-            type={mostrarSenha ? "text" : "password"}
-            placeholder="Confirmar Senha"
-            {...register("confirmarSenha")}
-          />
-          <button type="button" onClick={toggleMostrarSenha}>
-            {mostrarSenha ? (
-              <i className="bi bi-eye-slash-fill" />
-            ) : (
-              <i className="bi bi-eye-fill" />
-            )}
-          </button>
-        </GrupoInput>
-        {errors.confirmarSenha && <span>{errors.confirmarSenha.message}</span>}
 
         {isPageLogin && (
           <div>
@@ -114,17 +86,17 @@ export default function FormUsuario() {
             <div className="d-flex gap-3 mt-1">
               <InputCheckbox
                 id="criadorSim"
-                htmlFor="criadorSim"
                 label="Sim"
                 color="--branco"
-                onChange={() => methods.setValue("criador", true)}
+                onChange={() => setValue("criador", Role.CRIADOR)}
+                register={register}
               />
               <InputCheckbox
                 id="criadorNao"
-                htmlFor="criadorNao"
                 label="Não"
                 color="--branco"
-                onChange={() => methods.setValue("criador", false)}
+                onChange={() => setValue("criador", Role.COMUM)}
+                register={register}
               />
             </div>
           </div>

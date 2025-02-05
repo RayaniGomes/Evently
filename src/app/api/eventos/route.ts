@@ -1,54 +1,82 @@
-import { NextRequest, NextResponse } from "next/server";
+// api/eventos.ts
+
+import { Evento } from "@/interfaces";
 import { db } from "@/lib/db";
+import { NextApiRequest, NextApiResponse } from "next";
 
-interface Filters {
-  name?: string;
-  data?: string;
-  uf?: string;
-  cidade?: string;
-  tipo_evento?: string;
-}
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  if (req.method === "POST") {
+    const dataEvento: Evento = req.body;
 
-export async function GET(req: NextRequest) {
-  const searchParams = req.nextUrl.searchParams;
-  const filters: Filters = {};
+    const CriarEvento = await db.evento
+      .create({
+        data: {
+          nome: dataEvento.nome,
+          data: new Date(dataEvento.data),
+          horario: dataEvento.horario,
+          maxPessoas: dataEvento.maxPessoas,
+          tipo: dataEvento.tipo,
+          descricao: dataEvento.descricao,
+          local: dataEvento.local,
+          endereco: dataEvento.endereco,
+          numero: dataEvento.numero,
+          bairro: dataEvento.bairro,
+          cidade: dataEvento.cidade,
+          uf: dataEvento.uf,
+          complemento: dataEvento.complemento,
+          imagem: dataEvento.imagem,
+          criadorId: dataEvento.criadorId,
+        },
+      })
+      .catch((error) => {
+        if (error.status === 500) {
+          return res.status(500).json({ message: "Erro ao criar o evento" });
+        }
+      });
 
-  if (searchParams.has("nome")) {
-    filters.name = searchParams.get("nome")!;
-  }
-  if (searchParams.has("data")) {
-    filters.data = searchParams.get("data")!;
-  }
-  if (searchParams.has("uf")) {
-    filters.uf = searchParams.get("uf")!;
-  }
-  if (searchParams.has("cidade")) {
-    filters.cidade = searchParams.get("cidade")!;
-  }
-  if (searchParams.has("tipo")) {
-    filters.tipo_evento = searchParams.get("tipo")!;
-  }
-
-  const eventos = await db.event.findMany({ where: filters });
-
-  if (eventos.length === 0) {
-    return NextResponse.json({ message: "Nenhum evento encontrado." }, { status: 404 });
-  }
-
-  return NextResponse.json({ data: eventos });
-}
-
-export async function POST(req: NextRequest) {
-  const body = await req.json().catch(() => null); 
-
-  if (!body) {
-    return NextResponse.json({ error: "Corpo da requisição inválido." }, { status: 400 });
+      if (CriarEvento) {
+        return res.status(201).json({ message: 'Usuário criado com sucesso!' });
+      }
+  } else {
+    res.setHeader("Allow", ["GET", "POST", "PUT", "DELETE"]);
+    res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
-  const eventoCriado = await db.event.create({ data: body });
+  if (req.method === "PUT") {
+    const { id, ...eventoData } = req.body;
 
-  return NextResponse.json(
-    { data: eventoCriado, message: "Evento criado com sucesso!" },
-    { status: 201 }
-  );
+    const atualizarEvento = await db.evento
+      .update({
+        where: { id: id },
+        data: {
+          nome: eventoData.nome ?? undefined,
+          data: eventoData.data ? new Date(eventoData.data) : undefined,
+          horario: eventoData.horario ?? undefined,
+          maxPessoas: eventoData.maxPessoas ?? undefined,
+          tipo: eventoData.tipo ?? undefined,
+          descricao: eventoData.descricao ?? undefined,
+          local: eventoData.localNome ?? undefined,
+          endereco: eventoData.endereco ?? undefined,
+          numero: eventoData.numero ?? undefined,
+          bairro: eventoData.bairro ?? undefined,
+          cidade: eventoData.cidade ?? undefined,
+          uf: eventoData.uf ?? undefined,
+          complemento: eventoData.complemento ?? undefined,
+          imagem: eventoData.imagem ?? undefined,
+          criadorId: eventoData.criadorId ?? undefined,
+        },
+      })
+      .catch((error) => {
+        if (error.status === 500) {
+          return res.status(500).json({ message: "Erro ao criar o evento" });
+        }
+      });
+
+    if (atualizarEvento) {
+      res.status(200).json(atualizarEvento);
+    }
+  }
 }

@@ -13,52 +13,37 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
+enum Role {
+  CRIADOR
+  COMUM
+}
+model Usuario {
   id String @id @default (auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  type String
-  provider String
-  providerAccountId String
-  refresh_token String? @db.String
-  access_token String? @db.String
-  expires_at Int?
-  token_type String?
-  scope String?
-  id_token String? @db.String
-  session_state String?
-
-  user User @relation (fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@unique([provider, providerAccountId])
+  nome      String
+  dataNascimento DateTime
+  email     String   @unique
+  senha     String
+  role      Role
+  eventos   Evento[]
 }
 
-model User {
+model Evento {
   id String @id @default (auto()) @map("_id") @db.ObjectId
-  name String?
-  email String? @unique
-  emailVerified DateTime?
-  Password String?
-  createdAt DateTime @default (now())
-  updatedAt DateTime @updatedAt
-  accounts Account[]
-}
-
-model event {
-  id String @id @default (auto()) @map("_id") @db.ObjectId
-  name String
-  data String
-  horario String
-  qtd_max_pessoa Int
-  tipo_evento String
-  descricao String
-  local String?
-  endereco String?
-  numero Int?
-  bairro String?
-  cidade String?
-  uf String?
+  nome        String
+  data        DateTime
+  horario     String
+  maxPessoas  Int
+  tipo        String
+  descricao   String
+  local   String
+  endereco    String
+  numero      Int
+  bairro      String
+  cidade      String
+  uf          String
   complemento String?
-  imagem String?
-
-  @@map("event")
+  imagem      String?
+  criadorId   String   @db.ObjectId
+  criador     Usuario  @relation(fields: [criadorId], references: [id])
 }
+

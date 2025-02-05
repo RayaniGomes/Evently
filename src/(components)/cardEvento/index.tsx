@@ -15,15 +15,15 @@ export default function Card({ evento, bgColor, color, hover }: CardProps) {
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
       <Image
-        src={evento.imagem === "" ? "/sem-imagem.svg" : evento.imagem}
-        alt={evento.name}
+        src={evento.imagem ?? "/sem-imagem.svg"}
+        alt={evento.nome}
         width={200}
         height={175}
       />
       <div className="box">
         <div>
           <div className="d-flex justify-content-between">
-            <h6 className="nome-evento">{evento.name}</h6>
+            <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
               $bgColor={color}
               $color={bgColor}

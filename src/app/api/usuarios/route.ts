@@ -1,31 +1,30 @@
-import { db as prisma } from "@/lib/db";
-import { NextRequest, NextResponse } from "next/server";
-import bcrypt from "bcrypt";
-// import { hashPassword } from '@prisma/client/runtime/library';
+import { db } from '@/lib/db';
+import { NextApiRequest, NextApiResponse } from 'next';
+import { Usuario } from '@/interfaces';
+import { Role } from '@prisma/client';
 
-export async function POST(req: NextRequest) {
-  const data = await req.json();
-  const { name, email, password } = data;
-  console.log("ROUTE HANDLER", data);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'POST') {
+    const dataUsuario: Usuario = req.body;
 
-  const isUserExists = await prisma.user.findUnique({
-    where: {
-      email: email,
-    },
-  });
+    const CriarUsuario = await db.usuario
+      .create({
+        data: {
+          nome: dataUsuario.nome,
+          dataNascimento: dataUsuario.dataNascimento,
+          email: dataUsuario.email,
+          senha: dataUsuario.senha,
+          role: dataUsuario.role === 'criador' ? Role.CRIADOR : Role.COMUM,
+        },
+      })
+      .catch((error) => {
+        if (error.status === 500) {
+          return res.status(500).json({ message: 'Erro ao criar o usuário' });
+        }
+      });
 
-  if (isUserExists) {
-    return NextResponse.json({error: "E-mail já cadastrado!"}, {status: 400});
+    if (CriarUsuario) {
+      return res.status(201).json({ message: 'Usuário criado com sucesso!' });
+    }
   }
-
-const hashedPassword = await bcrypt.hash(password, 10);
-const user = await prisma.user.create({
-  data: {
-    name,
-    email,
-    hashedPassword,
-  },
-});
-
-  return NextResponse.json(user);
 }
