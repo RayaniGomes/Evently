@@ -35,11 +35,8 @@ export const useEvento = create<PropEventoStore>((set) => ({
           eventos: response.data.data,
           copyEventos: response.data.data,
         });
+        console.log(response);
       })
-      .catch((error) => {
-        set({ loading: false, error: error.message });
-        toast.error("Erro ao buscar eventos, tente novamente!");
-      });
   },
 
   criarEvento: async (evento) => {
@@ -58,6 +55,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
         toast.error("Erro ao criar o evento, tente novamente!");
       });
   },
+
   // filtroEstado: (uf: string) => {
   //   if (!uf) {
   //     useEvento.getState().getEventos();

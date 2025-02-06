@@ -16,19 +16,26 @@ export default function Banner() {
   return (
     <ContainerBanner>
       <Container>
-        {eventos.slice(0, 4).map((evento) => {
-          return (
-            <Slide key={evento._id} imagem={evento.imagem}>
-              <div className="imagem" />
-              <div className="conteudo">
-                <h3>{evento.name}</h3>
-                <h4>{evento.data}</h4>
-                <h4>{evento.local}</h4>
-                <Link href={`/detalhes-evento/${evento._id}`}>Detalhes</Link>
-              </div>
-            </Slide>
-          );
-        })}
+        {eventos.length > 0 ? (
+          eventos.slice(0, 4).map((evento) => {
+            return (
+              <Slide
+                key={evento._id}
+                imagem={evento.imagem ?? "/sem-imagem.svg"}
+              >
+                <div className="imagem" />
+                <div className="conteudo">
+                  <h3>{evento.nome}</h3>
+                  <h4>{evento.data}</h4>
+                  <h4>{evento.local}</h4>
+                  <Link href={`/detalhes-evento/${evento._id}`}>Detalhes</Link>
+                </div>
+              </Slide>
+            );
+          })
+        ) : (
+          <h2 className="text-center w-100 mt-5">Nenhum evento encontrado</h2>
+        )}
       </Container>
     </ContainerBanner>
   );
