@@ -1,36 +1,22 @@
-// models/EventoModel.ts
+import { Evento } from "@/interfaces";
+import mongoose, { Schema } from "mongoose";
 
-import { Evento } from '@/interfaces';
-import { PrismaClient } from '@prisma/client';
+const EventoModel = new Schema<Evento>({
+  nome: { type: String, required: true },
+  data: { type: String, required: true },
+  horario: { type: String, required: true },
+  maxPessoas: { type: Number, required: true },
+  tipo: { type: String, required: true },
+  descricao: { type: String, required: true },
+  local: { type: String, required: true },
+  endereco: { type: String, required: true },
+  numero: { type: Number, required: true },
+  bairro: { type: String, required: true },
+  cidade: { type: String, required: true },
+  uf: { type: String, required: true },
+  complemento: { type: String, required: true },
+  imagem: { type: String, required: true },
+  criadorId: { type: String, required: true },
+});
 
-class EventoModel {
-  private prisma: PrismaClient;
-
-  constructor(prisma: PrismaClient) {
-    this.prisma = prisma;
-  }
-
-  async criarEvento(data: Evento) {
-    return this.prisma.evento.create({
-      data: {
-        nome: data.nome,
-        data: data.data,
-        horario: data.horario,
-        maxPessoas: data.maxPessoas,
-        tipo: data.tipo,
-        descricao: data.descricao,
-        local: data.local,
-        endereco: data.endereco,
-        numero: data.numero,
-        bairro: data.bairro,
-        cidade: data.cidade,
-        uf: data.uf,
-        complemento: data.complemento || null,
-        imagem: data.imagem || null,
-        criadorId: data.criadorId,
-      },
-    });
-  }
-}
-
-export default EventoModel;
+export default mongoose.model("Evento", EventoModel);

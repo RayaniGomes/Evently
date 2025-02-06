@@ -14,7 +14,7 @@ export interface Evento {
   uf: string;
   complemento?: string;
   imagem?: string;
-  criadorId: string;
+  criadorId?: string;
 }
 
 export interface Usuario {

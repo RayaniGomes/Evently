@@ -30,10 +30,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
     await api.get("/eventos")
       .then((response) => {
         set({
-          loading: false,
-          error: null,
-          eventos: response.data.data,
-          copyEventos: response.data.data,
+          eventos: response.data,
         });
         console.log(response);
       })
@@ -46,7 +43,7 @@ export const useEvento = create<PropEventoStore>((set) => ({
         set({
           loading: false,
           error: null,
-          eventos: response.data.data,
+          eventos: response.data,
         });
         toast.success("Evento criado com sucesso!");
       })
