@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id                String         @id @default(auto()) @map("_id") @db.ObjectId
+  nome              String
+  email             String         @unique
+  senha             String?
+  dataNasc          DateTime
+  role              Role           @default(COMUM)
+  meusEventos       Evento[]       
+  minhasInscricoes  Inscricoes[]
+}
+
+enum Role {
+  COMUM
+  CRIADOR
+}
+
+model Evento {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  nome              String
+  date              String
+  horario           String
+  maxPessoas        Int
+  tipoEvento        String
+  descricao         String
+  imagemUrl         String?
+  enderecoId        String          @db.ObjectId
+  endereco          Endereco?
+  criador           Usuario         @relation(fields: [criadorId], references: [id])
+  criadorId         String          @db.ObjectId
+  inscritos         Inscricoes[]
+}
+
+model Endereco {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  local             String
+  endereco          String
+  numero            String
+  bairro            String
+  cidade            String
+  uf                String          @db.String
+  complemento       String?
+  evento            Evento          @relation(fields: [eventoId], references: [id])
+  eventoId          String          @unique @db.ObjectId
+}
+
+model Inscricoes {
+  id                String          @id @default(auto()) @map("_id") @db.ObjectId
+  Usuario           Usuario         @relation(fields: [UsuarioId], references: [id])
+  UsuarioId         String          @db.ObjectId
+  evento            Evento          @relation(fields: [eventoId], references: [id])
+  eventoId          String          @db.ObjectId
+}
