@@ -27,7 +27,7 @@ export default function RootLayout({
         <ToastContainer
           position="top-right"
           autoClose={5000}
-          hideProgressBar={false}
+          hideProgressBar={true}
           newestOnTop={false}
           closeOnClick
           rtl={false}
@@ -36,6 +36,7 @@ export default function RootLayout({
           pauseOnHover
           theme="dark"
           transition={Bounce}
+          limit={1}
         />
         <StyledComponentsRegistry>
           <Navbar />

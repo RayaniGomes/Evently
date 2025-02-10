@@ -1,5 +1,5 @@
 export interface Evento {
-  _id?: string;
+  _id: string;
   nome: string;
   data: string;
   horario: string;
@@ -14,17 +14,19 @@ export interface Evento {
   uf: string;
   complemento?: string;
   imagem?: string;
-  criadorId?: string;
+  criador?: Usuario;
+  inscritos?: Usuario[];
 }
 
 export interface Usuario {
-  _id?: string;
+  _id: string;
   nome: string;
-  dataNascimento: string;
   email: string;
+  data_de_nascimento: string;
   senha: string;
-  role: string;
-  eventos: Evento[];
+  criador: boolean;
+  eventos?: Evento[];
+  minhasInscricoes?: Evento[];
 }
 
 export interface StyledCompartilhar {

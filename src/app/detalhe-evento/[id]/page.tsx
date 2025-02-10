@@ -12,23 +12,22 @@ type Params = Promise<{ id: string }>;
 export default function DetalheEvento(props: { params: Params }) {
   const urlParams = use(props.params);
   const [evento, setEvento] = useState<Evento>({} as Evento);
-  const eventoID = parseInt(urlParams.id);
 
-  const getEventoDetalhe = async (id: number) => {
+  const getEventoDetalhe = async () => {
     await api
-      .get(`/eventos/${id}/`)
+      .get(`/eventos/${urlParams.id}/`)
       .then((response) => {
-        setEvento(response.data.data);
+        setEvento(response.data);
       })
-      .catch((error) => {
-        toast.error(error.response.data.message);
+      .catch(() => {
+        toast.error("Erro ao buscar o evento, tente novamente!");
       });
   };
 
   useEffect(() => {
-    getEventoDetalhe(eventoID);
+    getEventoDetalhe();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [urlParams.id]);
 
   return (
     <main>
@@ -38,12 +37,12 @@ export default function DetalheEvento(props: { params: Params }) {
         </Section>
       ) : (
         <Section>
-          <h1>{evento.name}</h1>
+          <h1>{evento.nome}</h1>
           <Detalhe>
             <div className="img-container">
               <Image
-                src={evento.imagem}
-                alt={evento.name}
+                src={evento.imagem ?? "/sem-imagem.svg"}
+                alt={evento.nome}
                 width={500}
                 height={500}
                 priority={true}
@@ -72,14 +71,8 @@ export default function DetalheEvento(props: { params: Params }) {
                       width={30}
                       height={30}
                     />
-                    <h6>{evento.tipo_evento}</h6>
+                    <h6>{evento.tipo}</h6>
                   </div>
-                  {window.location.pathname ===
-                  `/detalhes-evento/${evento._id}` ? (
-                    <h6 className="label">Compartilhe:</h6>
-                  ) : (
-                    ""
-                  )}
                 </div>
                 <div>
                   <h6 className="label">Data:</h6>
@@ -117,7 +110,7 @@ export default function DetalheEvento(props: { params: Params }) {
                   <h6 className="label">Qtd. máxima de pessoas:</h6>
                   <div className="d-flex gap-2">
                     <i className="bi bi-people-fill" />
-                    <h6>{evento.qtd_max_pessoa}</h6>
+                    <h6>{evento.maxPessoas}</h6>
                   </div>
                 </div>
               </div>
