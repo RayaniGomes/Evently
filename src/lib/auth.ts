@@ -1,44 +1,29 @@
-import { PrismaAdapter } from "@auth/prisma-adapter";
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { db } from "@/lib/db";
-import { PrismaClient } from "@prisma/client/extension";
-import { Usuario } from "@/interfaces";
-import GoogleProvider from "next-auth/providers/google";
+import type { NextAuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(db as PrismaClient),
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-    }),
-
-    CredentialsProvider({
-      name: "Credentials",
-      credentials: {
-        name: { label: "Name", type: "text" },
-        dataNascimento: { label: "Data de Nascimento", type: "date" },
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-        criador: { label: "Criador", type: "checkbox" },
-      },
-
-      async authorize(credentials, req): Promise<Usuario> {
-        console.log("Authorize", credentials);
-
-        const user: Usuario = {
-          name: "User",
-          email: "I4qgU@example.com",
-          password: "password",
-        };
-        return user;
-      },
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
-  session: {
-    strategy: "jwt",
+  pages: {
+    signIn: "/login",
   },
-  secret: process.env.SECRET,
-  debug: process.env.NODE_ENV === "development",
-};
+  callbacks: {
+    async session({ session, token }) {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.sub,
+        },
+      }
+    },
+    async jwt({ token }) {
+      return token
+    },
+  },
+}
+

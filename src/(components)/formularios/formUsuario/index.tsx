@@ -8,6 +8,10 @@ import InputCheckbox from "@/(components)/inputCheckbox";
 import { useUsuario } from "@/stores/usuarioStore";
 import { Usuario } from "@/interfaces";
 import { Role } from "@prisma/client";
+import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
+import { toast } from "react-toastify";
+import api from "@/service/api";
 export default function FormUsuario() {
   const {
     control,
@@ -19,22 +23,27 @@ export default function FormUsuario() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [isPagePerfil, setIsPagePerfil] = useState(false);
   const [isPageLogin, setIsPageLogin] = useState(false);
-  const { criarUsuario } = useUsuario();
+  const router = useRouter()
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
 
   const onSubmit = async (data: createDataUsuario) => {
-    const novoUsuario: Usuario = {
-      nome: data.nome,
-      dataNascimento: data.data,
-      email: data.email,
-      senha: data.senha,
-      role: data.criador ? Role.CRIADOR : Role.COMUM,
-      eventos: [],
-    };
-    criarUsuario(novoUsuario);
-  };
+    await api.post("/usuarios", data)
+      .then(() => {
+        toast.success("Usuarios criado com sucesso!");
+        signIn("credentials", {
+          email: data.email,
+          password: data.senha,
+          redirect: false,
+        });
+        router.push("/perfil");
+      })
+      .catch(() => {
+        toast.error("Erro ao criar o usuario, tente novamente!");
+        router.push("/login");
+      });    
+  }
 
   useEffect(() => {
     setIsPagePerfil(window.location.pathname === "/perfil");
@@ -86,17 +95,9 @@ export default function FormUsuario() {
             <div className="d-flex gap-3 mt-1">
               <InputCheckbox
                 id="criadorSim"
-                label="Sim"
+                label="Sim, quero ser um criador de eventos"
                 color="--branco"
-                onChange={() => setValue("criador", Role.CRIADOR)}
-                register={register}
-              />
-              <InputCheckbox
-                id="criadorNao"
-                label="Não"
-                color="--branco"
-                onChange={() => setValue("criador", Role.COMUM)}
-                register={register}
+                {...register("true")}
               />
             </div>
           </div>
