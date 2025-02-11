@@ -5,16 +5,11 @@ import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
 import InputCheckbox from "@/(components)/inputCheckbox";
-import { useUsuario } from "@/stores/usuarioStore";
-import { Usuario } from "@/interfaces";
-import { Role } from "@prisma/client";
-import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import api from "@/service/api";
 export default function FormUsuario() {
   const {
-    control,
     register,
     handleSubmit,
     formState: { errors },

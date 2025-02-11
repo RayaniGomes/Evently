@@ -1,238 +1,102 @@
-"use client";
-import {
-  createDataEvento,
-  eventoSchema,
-  UFS_VALIDAS,
-} from "@/schema/evento.schema";
-import { FormEvento, GrupoInput } from "./styled";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { useEvento } from "@/stores/eventoStore";
+import { z } from "zod";
 
-export default function FormCriarEvento() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<createDataEvento>({ resolver: zodResolver(eventoSchema) });
-  const { criarEvento } = useEvento();
+export const UFS_VALIDAS = [
+  "AC",
+  "AL",
+  "AP",
+  "AM",
+  "BA",
+  "CE",
+  "DF",
+  "ES",
+  "GO",
+  "MA",
+  "MT",
+  "MS",
+  "MG",
+  "PA",
+  "PB",
+  "PR",
+  "PE",
+  "PI",
+  "RJ",
+  "RN",
+  "RS",
+  "RO",
+  "RR",
+  "SC",
+  "SP",
+  "SE",
+  "TO",
+];
 
-  const onSubmit = (data: createDataEvento) => {
-    criarEvento(data);
-  };
+const nonEmptyString = (fieldName: string) =>
+  z
+    .string()
+    .min(1, `${fieldName} é obrigatório.`)
+    .refine((value) => !/^\s+$/g.test(value), {
+      message: `${fieldName} não pode conter apenas espaços em branco.`,
+    });
 
-  return (
-    <FormEvento onSubmit={handleSubmit(onSubmit)}>
-      <GrupoInput>
-        <label htmlFor="nomeEvento">Nome do evento</label>
-        <div className="input">
-          <input
-            id="nomeEvento"
-            type="text"
-            placeholder="Nome do Evento"
-            {...register("nome")}
-          />
-        </div>
-      </GrupoInput>
-      {errors.nome && <span>{errors.nome.message}</span>}
+export const eventoSchema = z.object({
+  nomeEvento: nonEmptyString("O nome do evento"),
+  dataEvento: z
+    .string()
+    .refine((data) => !isNaN(Date.parse(data)), {
+      message: "A data de nascimento deve ser uma data válida.",
+    })
+    .refine((data) => new Date(data) >= new Date(), {
+      message: "Você não pode cadastrar um evento no passado.",
+    }),
+  horario: z
+    .string()
+    .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, {
+      message: "Formato de hora inválido. Use o formato HH:MM.",
+    })
+    .refine(
+      (value) => {
+        const [hora, minuto] = value.split(":").map(Number);
+        return hora >= 0 && hora <= 23 && minuto >= 0 && minuto <= 59;
+      },
+      { message: "Hora inválida. Verifique os valores de hora e minuto." }
+    ),
+  qtdPessoas: z
+    .string()
+    .transform((value) => Number(value))
+    .refine((value) => !isNaN(value), {
+      message: "A quantidade de pessoas deve ser um número válido.",
+    })
+    .refine((value) => value > 0, {
+      message: "A quantidade de pessoas deve ser maior que zero.",
+    }),
+  tipoEvento: nonEmptyString("O tipo do evento"),
+  linkImagem: z.string().url("A URL fornecida não é válida."),
+  descricao: nonEmptyString("A descrição do evento"),
+  local: nonEmptyString("O local do evento"),
+  endereco: nonEmptyString("O endereço do evento"),
+  numero: z
+    .string()
+    .transform((value) => Number(value))
+    .refine((value) => !isNaN(value), {
+      message: "O numero deve ser um número válido.",
+    })
+    .refine((value) => value > 0, {
+      message: "O numero deve ser maior que zero.",
+    })
+    .refine((value) => Number.isInteger(value), {
+      message: "O numero deve ser um inteiro.",
+    }),
+  bairro: nonEmptyString("O bairro do evento"),
+  cidade: nonEmptyString("A cidade do evento"),
+  uf: z
+    .string()
+    .length(2, { message: "A UF deve ter exatamente 2 caracteres." })
+    .refine((value) => UFS_VALIDAS.includes(value), {
+      message: "UF inválida. Insira uma sigla de estado brasileiro válida.",
+    }),
+  complemento: z
+    .string()
+    .max(255, { message: "O complemento pode ter no máximo 255 caracteres." }),
+});
 
-      <div className="input-duplo">
-        <div className="w-100 d-flex flex-column gap-3">
-          <GrupoInput>
-            <label htmlFor="dataEvento">Data do evento</label>
-            <div className="input">
-              <input id="dataEvento" type="date" {...register("data")} />
-            </div>
-          </GrupoInput>
-          {errors.data && <span>{errors.data.message}</span>}
-        </div>
-
-        <div className="w-100 d-flex flex-column gap-3">
-          <GrupoInput>
-            <label htmlFor="horario">Hora do evento</label>
-            <div className="input">
-              <input id="horario" type="time" {...register("horario")} />
-            </div>
-          </GrupoInput>
-          {errors.horario && <span>{errors.horario.message}</span>}
-        </div>
-
-        <div className="w-100 d-flex flex-column gap-3">
-          <GrupoInput>
-            <label htmlFor="qtdPessoas">Qtd. maxima de pessoas</label>
-            <div className="input">
-              <input
-                id="qtdPessoas"
-                type="number"
-                placeholder="2000"
-                min="1"
-                {...register("qtd")}
-              />
-            </div>
-          </GrupoInput>
-          {errors.qtd && <span>{errors.qtd.message}</span>}
-        </div>
-      </div>
-
-      <div className="input-duplo">
-        <div className="w-100 d-flex flex-column gap-3">
-          <GrupoInput>
-            <label htmlFor="tipoEvento">tipo de evento</label>
-            <div className="input">
-              <input
-                id="tipoEvento"
-                type="text"
-                placeholder="Show"
-                {...register("tipo")}
-              />
-            </div>
-          </GrupoInput>
-          {errors.tipo && <span>{errors.tipo.message}</span>}
-        </div>
-
-        <div className="w-100 d-flex flex-column gap-3">
-          <GrupoInput>
-            <label htmlFor="linkImagem">Link da imagem do evento</label>
-            <div className="input">
-              <input
-                id="linkImagem"
-                type="text"
-                placeholder="https://exemplo.com"
-                {...register("imagem")}
-              />
-            </div>
-          </GrupoInput>
-          {errors.imagem && <span>{errors.imagem.message}</span>}
-        </div>
-      </div>
-
-      <GrupoInput>
-        <label htmlFor="descricao">Descrição</label>
-        <div className="descricao">
-          <textarea
-            id="descricao"
-            placeholder="Descrição do Evento"
-            {...register("descricao")}
-          />
-        </div>
-      </GrupoInput>
-      {errors.descricao && <span>{errors.descricao.message}</span>}
-
-      <div className="endereco">
-        <h5>Endereço do local do evento</h5>
-
-        <GrupoInput>
-          <label htmlFor="local">Local do evento</label>
-          <div className="input">
-            <input
-              id="local"
-              type="text"
-              placeholder="Local do Evento"
-              {...register("local")}
-            />
-          </div>
-        </GrupoInput>
-        {errors.local && <span>{errors.local.message}</span>}
-
-        <div className="input-duplo">
-          <div className="w-100 d-flex flex-column gap-3">
-            <GrupoInput>
-              <label htmlFor="endereco">Endereço</label>
-              <div className="input">
-                <input
-                  id="endereco"
-                  type="text"
-                  placeholder="R. do Evento"
-                  {...register("endereco")}
-                />
-              </div>
-            </GrupoInput>
-            {errors.endereco && <span>{errors.endereco.message}</span>}
-          </div>
-
-          <div className="w-100 d-flex flex-column gap-3">
-            <GrupoInput>
-              <label htmlFor="numero">Número</label>
-              <div className="input">
-                <input type="text" placeholder="123" {...register("numero")} />
-              </div>
-            </GrupoInput>
-            {errors.numero && <span>{errors.numero.message}</span>}
-          </div>
-        </div>
-
-        <div className="input-duplo">
-          <div className="w-100 d-flex flex-column gap-3">
-            <GrupoInput>
-              <label htmlFor="bairro">Bairro</label>
-              <div className="input">
-                <input
-                  id="bairro"
-                  type="text"
-                  placeholder="Bairro do Evento"
-                  {...register("bairro")}
-                />
-              </div>
-            </GrupoInput>
-            {errors.bairro && <span>{errors.bairro.message}</span>}
-          </div>
-
-          <div className="w-100 d-flex flex-column gap-3">
-            <GrupoInput>
-              <label htmlFor="cidade">Cidade</label>
-              <div className="input">
-                <input
-                  id="cidade"
-                  type="text"
-                  placeholder="Cidade do Evento"
-                  {...register("cidade")}
-                />
-              </div>
-            </GrupoInput>
-            {errors.cidade && <span>{errors.cidade.message}</span>}
-          </div>
-        </div>
-
-        <div className="input-duplo">
-          <div className="w-100 d-flex flex-column gap-3">
-            <GrupoInput>
-              <label htmlFor="uf">Estado</label>
-              <div className="input">
-                <select id="uf" defaultValue="" {...register("uf")}>
-                  <option value="" disabled>
-                    Selecionar
-                  </option>
-                  {UFS_VALIDAS.map((uf) => (
-                    <option key={uf} value={uf}>
-                      {uf}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </GrupoInput>
-            {errors.uf && <span>{errors.uf.message}</span>}
-          </div>
-
-          <div className="w-100 d-flex flex-column gap-3">
-            <GrupoInput>
-              <label htmlFor="complemento">Complemento</label>
-              <div className="input">
-                <input
-                  id="complemento"
-                  type="text"
-                  placeholder="Proximo..."
-                  {...register("complemento")}
-                />
-              </div>
-            </GrupoInput>
-            {errors.complemento && <span>{errors.complemento.message}</span>}
-          </div>
-        </div>
-      </div>
-
-      <button type="submit" className="btn-form">
-        Enviar
-      </button>
-    </FormEvento>
-  );
-}
+export type createDataEvento = z.infer<typeof eventoSchema>;

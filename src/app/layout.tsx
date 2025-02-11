@@ -38,11 +38,9 @@ export default function RootLayout({
           transition={Bounce}
           limit={1}
         />
-        <StyledComponentsRegistry>
-          <Navbar />
-          {children}
-          <Footer />
-        </StyledComponentsRegistry>
+        <Navbar />
+        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        <Footer />
       </body>
     </html>
   );

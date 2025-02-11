@@ -5,7 +5,6 @@ import FormUsuario from "@/(components)/formularios/formUsuario";
 import { useState } from "react";
 import MinhasInscrições from "@/(components)/minhasInscrições";
 import MeusEventos from "@/(components)/meusEventos";
-import FormCriarEvento from "@/(components)/formularios/formCriarEvento";
 import { Container } from "react-bootstrap";
 
 export default function Perfil() {
