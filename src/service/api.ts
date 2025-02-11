@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://crud-evently.onrender.com",
+  baseURL: process.env.API_URL,
 });
 
 export default api;

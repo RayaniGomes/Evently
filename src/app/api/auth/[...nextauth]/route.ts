@@ -1,78 +1,74 @@
-// import NextAuth from "next-auth"
-// import GoogleProvider from "next-auth/providers/google"
-// import CredentialsProvider from "next-auth/providers/credentials"
-// import { PrismaAdapter } from "@auth/prisma-adapter"
-// import { PrismaClient } from "@prisma/client"
-// import bcrypt from "bcryptjs"
+import NextAuth from "next-auth"
+import GoogleProvider from "next-auth/providers/google"
+import CredentialsProvider from "next-auth/providers/credentials"
+import { Usuario } from "@/interfaces";
+import { Session } from 'next-auth';
 
-// const prisma = new PrismaClient()
+interface Token {
+  token: Usuario;
+  user: Usuario;
+}
 
-// export const authOptions = {
-//   adapter: PrismaAdapter(prisma),
-//   providers: [
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID!,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-//     }),
-//     CredentialsProvider({
-//       name: "Credentials",
-//       credentials: {
-//         email: { label: "Email", type: "text" },
-//         password: { label: "Password", type: "password" },
-//       },
-//       async authorize(credentials) {
-//         if (!credentials?.email || !credentials?.password) {
-//           return null
-//         }
+export const authOptions = {
+  providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          return null
+        }
 
-//         const user = await prisma.user.findUnique({
-//           where: {
-//             email: credentials.email,
-//           },
-//         })
+        // Aqui você faria uma chamada para sua API para autenticar o usuário
+        const res = await fetch(`${process.env.API_URL}/auth`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: credentials.email,
+            senha: credentials.password,
+            
+          }),
+        })
 
-//         if (!user || !user.senha) {
-//           return null
-//         }
+        const user = await res.json()
 
-//         const isPasswordValid = await bcrypt.compare(credentials.password, user.senha)
+        if (res.ok && user) {
+          return user
+        }
+        return null
+      },
+    }),
+  ],
+  callbacks: {
+    async jwt({ token, user }: Token ) {
+      if (user) {
+        token.criador = user.criador
+      }
+      return token
+    },
+    async session({ session, token }: { session: Session, token: Token }) {
+      if (session?.user) {
+        session.user.criador = token.criador
+      }
+      return session
+    },
+  },
+  pages: {
+    signIn: "/login",
+  },
+  session: {
+    strategy: "jwt",
+  },
+}
 
-//         if (!isPasswordValid) {
-//           return null
-//         }
+const handler = NextAuth(authOptions)
 
-//         return {
-//           id: user.id,
-//           email: user.email,
-//           name: user.nome,
-//           role: user.criador,
-//         }
-//       },
-//     }),
-//   ],
-//   callbacks: {
-//     async jwt({ token, user }) {
-//       if (user) {
-//         token.role = user.role
-//       }
-//       return token
-//     },
-//     async session({ session, token }) {
-//       if (session?.user) {
-//         session.user.role = token.role
-//       }
-//       return session
-//     },
-//   },
-//   pages: {
-//     signIn: "/login",
-//   },
-//   session: {
-//     strategy: "jwt",
-//   },
-// }
-
-// const handler = NextAuth(authOptions)
-
-// export { handler as GET, handler as POST }
+export { handler as GET, handler as POST }
 

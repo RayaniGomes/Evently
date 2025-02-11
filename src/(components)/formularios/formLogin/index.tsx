@@ -6,7 +6,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
-import router from "next/router";
 export default function FormLogin() {
   const {
     register,
@@ -28,7 +27,7 @@ export default function FormLogin() {
     if (res?.error) {
       toast.error(res.error);
     } else {
-      router.push("/");
+      toast.success("Login efetuado com sucesso!");
     }
   }
 

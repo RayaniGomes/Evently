@@ -20,19 +20,18 @@ export const Form = styled.form`
       text-align: left;
       margin: 0;
     }
-
   }
-  
+
   span {
     width: 100%;
     text-align: left;
     font-weight: bold;
     font-size: 12px;
-    padding: .25rem .5rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 7px;
-    margin-top: -.5rem;
-    background-color:rgb(243, 191, 191);
-    color: #9E0000;
+    margin-top: -0.5rem;
+    background-color: rgb(243, 191, 191);
+    color: #9e0000;
   }
 
   .btn-form {
@@ -51,12 +50,31 @@ export const Form = styled.form`
     }
   }
 
+  .criador {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    select {
+      color: var(--branco);
+      width: 100%;
+      height: 100%;
+      background-color: transparent;
+      border: none;
+
+      option {
+        color: var(--azul-escuro);
+      }
+    }
+  }
+
   .google {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-top: 3rem;
-    gap: .5rem;
+    gap: 0.5rem;
 
     button {
       display: flex;
@@ -100,7 +118,7 @@ export const GrupoInput = styled.div`
     font-size: 14px;
     color: var(--branco);
     border-radius: 10px;
-    padding: .25rem .5rem;
+    padding: 0.25rem 0.5rem;
 
     &::placeholder {
       color: var(--branco);

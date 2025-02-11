@@ -17,7 +17,7 @@ export default function InputCheckbox({
 }: CheckboxProps) {
   return (
     <Checkbox $color={color}>
-      <input type="checkbox" id={id} onChange={onChange} {...register}/>
+      <input type="checkbox" id={id} onChange={onChange}/>
       <label htmlFor={htmlFor}>{label}</label>
     </Checkbox>
   );

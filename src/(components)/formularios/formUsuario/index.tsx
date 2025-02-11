@@ -4,7 +4,6 @@ import { Form, GrupoInput } from "./styled";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
-import InputCheckbox from "@/(components)/inputCheckbox";
 import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import api from "@/service/api";
@@ -13,12 +12,11 @@ export default function FormUsuario() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [isPagePerfil, setIsPagePerfil] = useState(false);
   const [isPageLogin, setIsPageLogin] = useState(false);
-  const router = useRouter()
+  const [isCriador, setIsCriador] = useState('');
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
@@ -32,11 +30,9 @@ export default function FormUsuario() {
           password: data.senha,
           redirect: false,
         });
-        router.push("/perfil");
       })
       .catch(() => {
         toast.error("Erro ao criar o usuario, tente novamente!");
-        router.push("/login");
       });    
   }
 
@@ -85,19 +81,16 @@ export default function FormUsuario() {
         {errors.senha && <span>{errors.senha.message}</span>}
 
         {isPageLogin && (
-          <div>
+          <div className="criador" >
             <label htmlFor="criador">Deseja ser um criador de eventos?</label>
-            <div className="d-flex gap-3 mt-1">
-              <InputCheckbox
-                id="criadorSim"
-                label="Sim, quero ser um criador de eventos"
-                color="--branco"
-                {...register("true")}
-              />
+            <div className="input">
+              <select {...register("criador")} >
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+              </select>
             </div>
           </div>
         )}
-        {errors.criador && <span>{errors.criador.message}</span>}
       </div>
 
       {isPagePerfil ? (
