@@ -13,6 +13,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import { useEffect, useState } from "react";
 import { useEvento } from "@/stores/eventoStore";
 import { Container } from "react-bootstrap";
+import { signOut } from "next-auth/react";
 
 export default function Navbar() {
   const { filtroNome } = useEvento();
@@ -95,7 +96,7 @@ export default function Navbar() {
             </Dropdown.Toggle>
             <Dropdown.Menu className="dropdown-menu">
               <Dropdown.Item href="/perfil">Perfil</Dropdown.Item>
-              <Dropdown.Item href="">Sair</Dropdown.Item>
+              <button type="button" onClick={() => signOut()}>Sair</button>
             </Dropdown.Menu>
           </Dropdown>
         </Login>

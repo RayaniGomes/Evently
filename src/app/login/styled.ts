@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Section = styled.section`
   width: 80%;
-  height: auto;
+  min-height: 700px;
   display: flex;
   margin: 10rem auto 5rem auto;
   background: var(--gradiente-radial);

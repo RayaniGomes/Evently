@@ -1,58 +1,15 @@
-"use client";
-import Titulo from "@/(components)/titulo";
-import { Botoes, ContainerPerfil, Section } from "./styled";
-import FormUsuario from "@/(components)/formularios/formUsuario";
-import { useState } from "react";
-import MinhasInscrições from "@/(components)/minhasInscrições";
-import MeusEventos from "@/(components)/meusEventos";
-import { Container } from "react-bootstrap";
+// app/perfil/page.js (Server Component)
+import PerfilContainer from "@/(components)/perfilContainer";
+import { SessionProp } from "@/interfaces";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-export default function Perfil() {
-  const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
+export default async function Perfil() {
+  const session: SessionProp | null = await getServerSession();
 
-  const handleIsAtivar = (botao: string) => {
-    setIsAtivar(botao);
-  };
+  if (!session) {
+    redirect("/login");
+  }
 
-  return (
-    <main>
-      <Container as={Section}>
-          <Titulo titulo="Meu perfil" border="--azul-escuro" />
-          <div className="perfil">
-            <Botoes>
-              <button
-                className={isAtivar === "Dados Pessoais" ? "active" : ""}
-                onClick={() => handleIsAtivar("Dados Pessoais")}
-              >
-                Dados Pessoais
-              </button>
-              <button
-                className={isAtivar === "Minhas Inscrições" ? "active" : ""}
-                onClick={() => handleIsAtivar("Minhas Inscrições")}
-              >
-                Minhas Inscrições
-              </button>
-              <button
-                className={isAtivar === "Meus Eventos" ? "active" : ""}
-                onClick={() => handleIsAtivar("Meus Eventos")}
-              >
-                Meus Eventos
-              </button>
-              <button
-                className={isAtivar === "Criar Evento" ? "active" : ""}
-                onClick={() => handleIsAtivar("Criar Evento")}
-              >
-                Criar Evento
-              </button>
-            </Botoes>
-            <ContainerPerfil>
-              {isAtivar === "Dados Pessoais" && <FormUsuario />}
-              {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
-              {isAtivar === "Meus Eventos" && <MeusEventos />}
-              {isAtivar === "Criar Evento" && <FormCriarEvento />}
-            </ContainerPerfil>
-          </div>
-      </Container>
-    </main>
-  );
+  return <PerfilContainer session={session} />;
 }

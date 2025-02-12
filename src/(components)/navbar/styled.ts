@@ -167,11 +167,17 @@ export const Login = styled.div`
     background-color: var(--branco);
     border: none;
 
-    & a {
+    a, button {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
       font-size: 14px;
       font-weight: 500;
       color: var(--azul-escuro);
       background-color: transparent;
+      border: none;
+      padding: 0.5rem 1rem !important;
 
       &::before {
         display: none;

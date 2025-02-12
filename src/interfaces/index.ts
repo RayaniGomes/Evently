@@ -29,6 +29,12 @@ export interface Usuario {
   minhasInscricoes?: Evento[];
 }
 
+export interface SessionProp {
+  user: {
+    name: string;
+  };
+}
+
 export interface StyledCompartilhar {
   $bgColor: string;
   $color: string;

@@ -54,18 +54,23 @@ export const Form = styled.form`
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
     select {
-      color: var(--branco);
-      width: 100%;
-      height: 100%;
-      background-color: transparent;
+      color: var(--azul-escuro);
+      background-color: var(--branco);
       border: none;
-
+      border-radius: 5px;
+      margin-left: .5rem;
+      
       option {
         color: var(--azul-escuro);
       }
+    }
+
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      justify-content: left;
+      align-items: flex-start;
     }
   }
 

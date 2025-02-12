@@ -16,13 +16,14 @@ export default function FormUsuario() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [isPagePerfil, setIsPagePerfil] = useState(false);
   const [isPageLogin, setIsPageLogin] = useState(false);
-  const [isCriador, setIsCriador] = useState('');
+  const [isCriador, setIsCriador] = useState("");
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
 
   const onSubmit = async (data: createDataUsuario) => {
-    await api.post("/usuarios", data)
+    await api
+      .post("/usuarios", data)
       .then(() => {
         toast.success("Usuarios criado com sucesso!");
         signIn("credentials", {
@@ -33,8 +34,8 @@ export default function FormUsuario() {
       })
       .catch(() => {
         toast.error("Erro ao criar o usuario, tente novamente!");
-      });    
-  }
+      });
+  };
 
   useEffect(() => {
     setIsPagePerfil(window.location.pathname === "/perfil");
@@ -81,14 +82,14 @@ export default function FormUsuario() {
         {errors.senha && <span>{errors.senha.message}</span>}
 
         {isPageLogin && (
-          <div className="criador" >
-            <label htmlFor="criador">Deseja ser um criador de eventos?</label>
-            <div className="input">
-              <select {...register("criador")} >
+          <div className="criador">
+            <label htmlFor="criador">
+              Deseja ser um criador de eventos?
+              <select {...register("criador")}>
                 <option value="true">Sim</option>
                 <option value="false">Não</option>
               </select>
-            </div>
+            </label>
           </div>
         )}
       </div>
