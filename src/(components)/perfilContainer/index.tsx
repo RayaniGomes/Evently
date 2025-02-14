@@ -1,15 +1,17 @@
 "use client";
-import Titulo from "@/(components)/titulo";
-import FormUsuario from "@/(components)/formularios/formUsuario";
 import { useState } from "react";
-import MinhasInscrições from "@/(components)/minhasInscrições";
-import MeusEventos from "@/(components)/meusEventos";
 import { Container } from "react-bootstrap";
 import { Botoes, ContainerPerfil, Section } from "./styled";
 import { SessionProp } from "@/interfaces";
+import Titulo from "../titulo";
+import FormUsuario from "../formularios/formUsuario";
+import MinhasInscrições from "../minhasInscrições";
+import MeusEventos from "../meusEventos";
 
 export default function PerfilContainer({ session }: { session: SessionProp }) {
   const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
+
+  
 
   const handleIsAtivar = (botao: string) => {
     setIsAtivar(botao);
@@ -18,7 +20,7 @@ export default function PerfilContainer({ session }: { session: SessionProp }) {
   return (
     <main>
       <Container as={Section}>
-        <Titulo titulo={`Olá, ${session.user?.name}`} border="--branca" />
+        <Titulo titulo="Meu Perfil" border="--azul-escuro" />
         <div className="perfil">
           <Botoes>
             <button

@@ -56,10 +56,12 @@ export const Form = styled.form`
     align-items: center;
 
     select {
-      color: var(--azul-escuro);
-      background-color: var(--branco);
+      color: var(--branco);
+      background-color: transparent;
       border: none;
-      border-radius: 5px;
+      border-bottom: 1px solid var(--branco);
+      border-radius: 10px;
+      padding: .25rem;
       margin-left: .5rem;
       
       option {
@@ -109,7 +111,7 @@ export const GrupoInput = styled.div`
   align-items: center;
   border-bottom: 1px solid var(--branco);
   border-radius: 10px;
-  gap: 1rem;
+  gap: .5rem;
   position: relative;
 
   i {
@@ -139,7 +141,7 @@ export const GrupoInput = styled.div`
   }
 
   input[type="date"] {
-    margin-left: 2.25rem;
+    margin-left: 1.75rem;
   }
 
   input[type="date"]::-webkit-calendar-picker-indicator {

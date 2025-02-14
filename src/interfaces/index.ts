@@ -22,7 +22,7 @@ export interface Usuario {
   _id: string;
   nome: string;
   email: string;
-  data_de_nascimento: string;
+  dataNascimento: string;
   senha: string;
   criador: boolean;
   eventos?: Evento[];
@@ -31,7 +31,9 @@ export interface Usuario {
 
 export interface SessionProp {
   user: {
+    id: string;
     name: string;
+    criador: boolean;
   };
 }
 

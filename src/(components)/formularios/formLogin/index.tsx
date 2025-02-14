@@ -4,8 +4,9 @@ import { Form, GrupoInput } from "../formUsuario/styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
+import { redirect, useRouter, useSearchParams } from "next/navigation";
 import { createDataLogin, loginSchema } from "@/schema/login.schema";
+import { toast } from "react-toastify";
 export default function FormLogin() {
   const {
     register,
@@ -14,25 +15,36 @@ export default function FormLogin() {
   } = useForm<createDataLogin>({ resolver: zodResolver(loginSchema) });
 
   const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
   const searchParams = useSearchParams();
   const error = searchParams.get("error");
+  const callbackUrl = searchParams.get("from") || "/perfil";
 
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
 
   const onSubmit: SubmitHandler<createDataLogin> = async (data) => {
-    console.log(data);
+    setIsLoading(true);
 
-    const dataLogin = {
+    const dataLogin = await signIn("credentials", {
       email: data.email,
       password: data.senha,
-    };
-
-    await signIn("credentials", {
-      ...dataLogin,
-      callbackUrl: "/perfil",
+      redirect: false,
     });
+
+    if (dataLogin?.error) {
+      if (dataLogin.error !== "register_required") {
+        toast.error("Usuário não encontrado. Por favor, cadastre-se.");
+      } else {
+        toast.error("Erro ao logar, tente novamente.");
+      }
+    } else {
+      router.push(callbackUrl);
+    }
+
+    setIsLoading(false);
   };
 
   return (
@@ -43,7 +55,12 @@ export default function FormLogin() {
         )}
         <GrupoInput>
           <i className="bi bi-person-fill" />
-          <input type="email" placeholder="Email" {...register("email")} />
+          <input
+            type="email"
+            placeholder="Email"
+            {...register("email")}
+            disabled={isLoading}
+          />
         </GrupoInput>
         {errors.email && <span>{errors.email.message}</span>}
 
@@ -53,8 +70,13 @@ export default function FormLogin() {
             type={mostrarSenha ? "text" : "password"}
             placeholder="Senha"
             {...register("senha")}
+            disabled={isLoading}
           />
-          <button type="button" onClick={toggleMostrarSenha}>
+          <button
+            type="button"
+            onClick={toggleMostrarSenha}
+            disabled={isLoading}
+          >
             {mostrarSenha ? (
               <i className="bi bi-eye-slash-fill" />
             ) : (
@@ -64,14 +86,17 @@ export default function FormLogin() {
         </GrupoInput>
         {errors.senha && <span>{errors.senha.message}</span>}
 
-        <button type="submit" className="btn-form">
-          Login
+        <button type="submit" className="btn-form" disabled={isLoading}>
+          {isLoading ? "Entrando..." : "Login"}
         </button>
+
         <div className="google">
           <h6>Login com o Google</h6>
           <button
+            type="button"
             className="bi bi-google"
-            onClick={() => signIn("google", { callbackUrl: "/" })}
+            onClick={() => signIn("google", { callbackUrl })}
+            disabled={isLoading}
           />
         </div>
       </Form>

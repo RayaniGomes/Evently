@@ -5,7 +5,7 @@ import { Detalhe, Section } from "./styled";
 import { toast } from "react-toastify";
 import { Evento } from "@/interfaces";
 import api from "@/service/api";
-import Compartilhar from "@/(components)/compartinhar";
+import Compartilhar from "@/components/compartinhar";
 
 type Params = Promise<{ id: string }>;
 

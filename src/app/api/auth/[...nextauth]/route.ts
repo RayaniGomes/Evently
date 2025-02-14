@@ -1,123 +1,71 @@
-import NextAuth from "next-auth"
-import CredentialsProvider from "next-auth/providers/credentials"
+import NextAuth, { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
+import api from "@/service/api";
 
-const handler = NextAuth({
+interface Credentials {
+  email: string;
+  password: string;
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "Email" },
-        password: { label: "Password", type: "password" }
+        email: { label: "Email", type: "email" },
+        password: { label: "Senha", type: "password" },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials: Credentials | undefined) {
         if (!credentials?.email || !credentials?.password) {
           return null
         }
-
-        if (credentials.email === "rayani@gomes.com" && credentials.password === "123456") {
-          return {
-            id: "1",
-            name: "Rayani Gomes",
-            email: "rayani@gomes..com",
-            image: "https://github.com/rayani-gomes.png",
-            criador: true
-          }
+        
+        const response = await api.get(`/usuarios?email=${credentials.email}`)
+        const usuario = response.data[0]
+        if (!usuario) {
+          throw new Error("register_required")
         }
-        // Aqui voce faria uma chamada para sua API para autenticar o usuario
-        // const res = await fetch("/your/endpoint", {
-        //   method: 'POST',
-        //   body: JSON.stringify(credentials),
-        //   headers: { "Content-Type": "application/json" }
-        // })
-        // const user = await res.json()
-  
-        // if (res.ok && user) {
-        //   return user
-        // }
-        console.log(credentials)
-        return null
-      }
 
-    })
+        if (usuario.senha !== credentials.password) {
+          throw new Error("invalid_credentials")
+        }
+
+        return {
+          id: usuario.id,
+          name: usuario.nome,
+          email: usuario.email,
+        }
+      },
+    }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
   ],
-  pages: {
-    signIn: "/login"
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.email = user.email
+        token.name = user.name
+      }
+      return token
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.name = token.name as string
+        session.user.email = token.email as string
+      }
+      return session
+    },
   },
-})
+  pages: {
+    signIn: "/login",
+  },
+  session: {
+    strategy: "jwt",
+  },
+}
 
+const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
-
-// import NextAuth from "next-auth"
-// import GoogleProvider from "next-auth/providers/google"
-// import CredentialsProvider from "next-auth/providers/credentials"
-// import { Usuario } from "@/interfaces";
-// import { Session } from 'next-auth';
-
-// interface Token {
-//   token: Usuario;
-//   user: Usuario;
-// }
-
-// export const authOptions = {
-//   providers: [
-//     CredentialsProvider({
-//       name: "Credentials",
-//       credentials: {
-//         email: { label: "Email", type: "text" },
-//         password: { label: "Password", type: "password" },
-//       },
-//       async authorize(credentials) {
-//         if (!credentials?.email || !credentials?.password) {
-//           return null
-//         }
-
-//         // Aqui você faria uma chamada para sua API para autenticar o usuário
-//         const res = await fetch(`${process.env.API_URL}/auth`, {
-//           method: "POST",
-//           headers: { "Content-Type": "application/json" },
-//           body: JSON.stringify({
-//             email: credentials.email,
-//             senha: credentials.password,
-            
-//           }),
-//         })
-
-//         const user = await res.json()
-
-//         if (res.ok && user) {
-//           return user
-//         }
-//         return null
-//       },
-//     }),
-//     GoogleProvider({
-//       clientId: process.env.GOOGLE_CLIENT_ID!,
-//       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-//     }),
-//   ],
-//   callbacks: {
-//     async jwt({ token, user }: Token ) {
-//       if (user) {
-//         token.criador = user.criador
-//       }
-//       return token
-//     },
-//     async session({ session, token }: { session: Session, token: Token }) {
-//       if (session?.user) {
-//         session.user.criador = token.criador
-//       }
-//       return session
-//     },
-//   },
-//   pages: {
-//     signIn: "/login",
-//   },
-//   session: {
-//     strategy: "jwt",
-//   },
-// }
-
-// const handler = NextAuth(authOptions)
-
-// export { handler as GET, handler as POST }
-
