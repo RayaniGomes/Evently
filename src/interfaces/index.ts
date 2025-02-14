@@ -39,10 +39,16 @@ export interface Usuario {
   dataNascimento: string;
   senha: string;
   criador: boolean;
+  fotoPerfil?: string;
   eventos?: Evento[];
   minhasInscricoes?: Evento[];
 }
 
+export interface SesseionProps {
+  user: Usuario;
+  id: string
+  criador: boolean
+}
 export interface CardProps {
   evento: Evento;
   bgColor: string;

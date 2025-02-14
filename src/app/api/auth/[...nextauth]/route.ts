@@ -32,6 +32,8 @@ export const authOptions: NextAuthOptions = {
           name: usuario.nome,
           email: usuario.email,
           criador: usuario.criador,
+          senha: usuario.senha,
+          image: usuario.fotoPerfil
         }
       },
     }),
