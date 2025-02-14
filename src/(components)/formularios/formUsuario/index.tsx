@@ -41,39 +41,18 @@ export default function FormUsuario() {
   const onSubmit = async (data: createDataUsuario) => {
     setIsLoading(true);
 
-    const dadosFormatados = {
+    const dadosFormatados =  {
       ...data,
       fotoPerfil: isFotoPerfil,
       dataNascimento: formatarData(data.dataNascimento),
     };
 
-    api
-      .get(`/usuarios?email=${dadosFormatados.email}`)
+    await api.post("/usuarios", dadosFormatados)
       .then((response) => {
-        if (response.data.length > 0) {
-          toast.error("Já existe um usuário com esse e-mail!");
-          setIsLoading(false);
-          return;
-        }
-
-        return api.post("/usuarios", dadosFormatados);
-      })
-      
-      .then(async (response) => {
-        if (!response || response.status !== 201) return;
-
-        toast.success("Usuário criado com sucesso!");
-
-        const dataUsuario = await signIn("credentials", {
-          email: dadosFormatados.email,
-          password: dadosFormatados.senha,
-          redirect: false,
-        });
-
-        if (dataUsuario?.ok) {
-          router.push("/perfil");
+        if (response.status === 201) {
+          toast.success("Usuário criado com sucesso! Agora você pode logar.");
         } else {
-          toast.error("Erro ao autenticar o usuário, tente novamente!");
+          toast.error("Erro ao criar o usuário, tente novamente!");
         }
       })
       .catch(() => {
@@ -120,29 +99,18 @@ export default function FormUsuario() {
 
       <GrupoInput>
         <i className="bi bi-person-fill" />
-        <input
-          type="text"
-          placeholder="Nome Completo"
-          {...register("nome")}
-        />
+        <input type="text" placeholder="Nome Completo" {...register("nome")} />
       </GrupoInput>
       {errors.nome && <span>{errors.nome.message}</span>}
 
       <GrupoInput>
-        <input
-          type="date"
-          {...register("dataNascimento")}
-        />
+        <input type="date" {...register("dataNascimento")} />
       </GrupoInput>
       {errors.dataNascimento && <span>{errors.dataNascimento.message}</span>}
 
       <GrupoInput>
         <i className="bi bi-envelope-fill" />
-        <input
-          type="email"
-          placeholder="Email"
-          {...register("email")}
-        />
+        <input type="email" placeholder="Email" {...register("email")} />
       </GrupoInput>
       {errors.email && <span>{errors.email.message}</span>}
 
@@ -158,10 +126,7 @@ export default function FormUsuario() {
             placeholder="Senha"
             {...register("senha")}
           />
-          <button
-            type="button"
-            onClick={toggleMostrarSenha}
-          >
+          <button type="button" onClick={toggleMostrarSenha}>
             {mostrarSenha ? (
               <i className="bi bi-eye-slash-fill" />
             ) : (

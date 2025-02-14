@@ -15,9 +15,9 @@ export const authOptions: NextAuthOptions = {
         if (!credentials?.email || !credentials?.password) {
           return null
         }
-        
-        const response = await api.get(`/usuarios?email=${credentials.email}`)
-        const usuario = response.data[0]
+
+        const response = await api.get(`/usuarios/email?email=${credentials.email}`)
+        const usuario = response.data
 
         if (!usuario) {
           throw new Error("register_required")
@@ -32,7 +32,6 @@ export const authOptions: NextAuthOptions = {
           name: usuario.nome,
           email: usuario.email,
           criador: usuario.criador,
-          fotoPerfil: usuario.fotoPerfil
         }
       },
     }),
@@ -46,7 +45,6 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.email = user.email
         token.name = user.name
-        token.image = user.image
       }
       return token
     },
@@ -54,7 +52,6 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.name = token.name as string
         session.user.email = token.email as string
-        session.user.image = token.image as string
       }
       return session
     },

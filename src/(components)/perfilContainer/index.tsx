@@ -2,16 +2,13 @@
 import { useState } from "react";
 import { Container } from "react-bootstrap";
 import { Botoes, ContainerPerfil, Section } from "./styled";
-import { SessionProp } from "@/interfaces";
 import Titulo from "../titulo";
 import FormUsuario from "../formularios/formUsuario";
 import MinhasInscrições from "../minhasInscrições";
 import MeusEventos from "../meusEventos";
 
-export default function PerfilContainer({ session }: { session: SessionProp }) {
+export default function PerfilContainer() {
   const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
-
-  
 
   const handleIsAtivar = (botao: string) => {
     setIsAtivar(botao);

@@ -24,6 +24,7 @@ export const usuarioSchema = z
         message: "A senha não pode conter apenas espaços em branco.",
       }),
     criador: z.string(),
+    fotoPerfil: z.string().optional(),
   });
 
 export type createDataUsuario = z.infer<typeof usuarioSchema>;
