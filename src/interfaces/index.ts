@@ -39,6 +39,7 @@ export interface Usuario {
   dataNascimento: string;
   senha: string;
   criador: boolean;
+  fotoPerfil?: string;
   eventos?: Evento[];
   minhasInscricoes?: Evento[];
 }

@@ -3,11 +3,6 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import api from "@/service/api";
 
-interface Credentials {
-  email: string;
-  password: string;
-}
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -16,13 +11,14 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Senha", type: "password" },
       },
-      async authorize(credentials: Credentials | undefined) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null
         }
         
         const response = await api.get(`/usuarios?email=${credentials.email}`)
         const usuario = response.data[0]
+
         if (!usuario) {
           throw new Error("register_required")
         }
@@ -35,6 +31,8 @@ export const authOptions: NextAuthOptions = {
           id: usuario.id,
           name: usuario.nome,
           email: usuario.email,
+          criador: usuario.criador,
+          fotoPerfil: usuario.fotoPerfil
         }
       },
     }),
@@ -48,6 +46,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.email = user.email
         token.name = user.name
+        token.image = user.image
       }
       return token
     },
@@ -55,6 +54,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         session.user.name = token.name as string
         session.user.email = token.email as string
+        session.user.image = token.image as string
       }
       return session
     },

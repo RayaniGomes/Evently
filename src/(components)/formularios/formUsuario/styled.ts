@@ -43,7 +43,7 @@ export const Form = styled.form`
     font-weight: 600;
     background-color: var(--branco);
     color: var(--azul-escuro);
-    margin-top: 4rem;
+    margin-top: 3rem;
 
     &:hover {
       box-shadow: var(--drop-shadow-branco-hover);
@@ -61,9 +61,9 @@ export const Form = styled.form`
       border: none;
       border-bottom: 1px solid var(--branco);
       border-radius: 10px;
-      padding: .25rem;
-      margin-left: .5rem;
-      
+      padding: 0.25rem;
+      margin-left: 0.5rem;
+
       option {
         color: var(--azul-escuro);
       }
@@ -111,7 +111,7 @@ export const GrupoInput = styled.div`
   align-items: center;
   border-bottom: 1px solid var(--branco);
   border-radius: 10px;
-  gap: .5rem;
+  gap: 0.5rem;
   position: relative;
 
   i {
@@ -167,6 +167,40 @@ export const GrupoInput = styled.div`
 
     &:hover {
       opacity: 0.7;
+    }
+  }
+`;
+
+export const ImagemPerfil = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  gap: 1rem;
+
+  label {
+    .placeholder {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--branco);
+
+      i {
+        font-size: 50px;
+        margin-bottom: 0.5rem;
+        color: var(--azul-escuro);
+      }
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
     }
   }
 `;
