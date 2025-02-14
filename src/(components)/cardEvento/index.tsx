@@ -2,14 +2,9 @@ import Image from "next/image";
 import { ContainerCard } from "./styled";
 import Link from "next/link";
 import Compartilhar from "../compartinhar";
-import { Evento } from "@/interfaces";
+import { CardProps } from "react-bootstrap";
 
-export interface CardProps {
-  evento: Evento;
-  bgColor: string;
-  color: string;
-  hover: string;
-}
+
 
 export default function Card({ evento, bgColor, color, hover }: CardProps) {
   return (

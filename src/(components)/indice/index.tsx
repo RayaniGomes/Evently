@@ -1,9 +1,6 @@
+import { IndiceProps } from "@/interfaces";
 import { ContainerIndice } from "./styled";
 
-interface IndiceProps {
-  titulo: string;
-  indice: number;
-}
 export default function Indice({ titulo, indice }: IndiceProps) {
   return (
     <ContainerIndice>

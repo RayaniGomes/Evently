@@ -1,9 +1,5 @@
+import { TituloProps } from "@/interfaces";
 import { ContainerTitulo } from "./styled";
-
-interface TituloProps {
-  titulo: string;
-  border: string;
-}
 
 export default function Titulo({ titulo, border }: TituloProps) {
   return (

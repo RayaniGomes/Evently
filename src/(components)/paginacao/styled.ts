@@ -1,9 +1,5 @@
+import { StyledPaginacao } from "@/interfaces";
 import styled from "styled-components";
-
-interface StyledPaginacao {
-  $color: string;
-  $colorHover: string;
-}
 
 export const ContainerPaginacao = styled.div<StyledPaginacao>`
   display: flex;

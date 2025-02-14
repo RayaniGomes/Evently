@@ -6,11 +6,7 @@ import InputCheckbox from "../inputCheckbox";
 import SetFiltro from "@/help/funcaoFiltro";
 import { useEvento } from "@/stores/eventoStore";
 import { formatarData } from "@/help/funcoes";
-
-interface FiltroModalProps {
-  showModal: boolean;
-  toggleModal: () => void;
-}
+import { FiltroModalProps } from "@/interfaces";
 
 export default function FiltroModal({
   showModal,

@@ -1,10 +1,7 @@
+import { StyledBorderProps } from "@/interfaces";
 import styled from "styled-components";
 
-interface borderProps {
-  $color: string;
-}
-
-export const Checkbox = styled.div<borderProps>`
+export const Checkbox = styled.div<StyledBorderProps>`
   input {
     display: none;
   }

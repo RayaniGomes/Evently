@@ -1,10 +1,5 @@
+import { StyledCard } from "@/interfaces";
 import styled from "styled-components";
-
-interface StyledCard {
-  $bgColor: string;
-  $color: string;
-  $hover: string;
-}
 
 export const ContainerCard = styled.div<StyledCard>`
   display: flex;

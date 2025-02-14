@@ -1,12 +1,5 @@
+import { PaginacaoProps } from "@/interfaces";
 import { ContainerPaginacao } from "./styled";
-
-interface PaginacaoProps {
-  handlePageClick: (page: number) => void;
-  currentPage: number;
-  totalPages: number;
-  color: string;
-  colorHover: string;
-}
 
 export default function Paginacao({
   handlePageClick,

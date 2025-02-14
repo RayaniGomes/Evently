@@ -1,12 +1,5 @@
+import { CheckboxProps } from "@/interfaces";
 import { Checkbox } from "./styled";
-
-interface CheckboxProps {
-  id: string;
-  htmlFor: string;
-  label: string;
-  color: string;
-  onChange: () => void;
-}
 
 export default function InputCheckbox({
   id,

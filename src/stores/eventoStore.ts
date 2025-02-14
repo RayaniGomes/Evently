@@ -1,21 +1,9 @@
 "use client";
-import { Evento } from "@/interfaces";
+import { Evento, PropEventoStore } from "@/interfaces";
 import { createDataEvento } from "@/schema/evento.schema";
 import api from "@/service/api";
 import { toast } from "react-toastify";
 import { create } from "zustand";
-
-interface PropEventoStore {
-  eventos: Evento[];
-  copyEventos: Evento[];
-  getEventos: () => void;
-  filtroEstado: (uf: string) => void;
-  filtroCidade: (cidade: string) => void;
-  filtroTipo: (tipo: string) => void;
-  filtroData: (data: string) => void;
-  filtroNome: (nome: string) => void;
-  criarEvento: (data: createDataEvento) => void;
-}
 
 export const useEvento = create<PropEventoStore>((set) => ({
   eventos: [],
