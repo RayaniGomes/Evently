@@ -4,7 +4,7 @@ import { Form, GrupoInput } from "../formUsuario/styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
-import { redirect, useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { createDataLogin, loginSchema } from "@/schema/login.schema";
 import { toast } from "react-toastify";
 export default function FormLogin() {
@@ -17,9 +17,6 @@ export default function FormLogin() {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const error = searchParams.get("error");
-  const callbackUrl = searchParams.get("from") || "/perfil";
 
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
@@ -35,13 +32,15 @@ export default function FormLogin() {
     });
 
     if (dataLogin?.error) {
-      if (dataLogin.error !== "register_required") {
+      if (dataLogin.error === "invalid_credentials") {
+        toast.error("Senha incorretos");
+      } else if (dataLogin.error === "register_required") {
         toast.error("Usuário não encontrado. Por favor, cadastre-se.");
       } else {
         toast.error("Erro ao logar, tente novamente.");
       }
     } else {
-      router.push(callbackUrl);
+      router.push('/perfil');
     }
 
     setIsLoading(false);
@@ -50,9 +49,6 @@ export default function FormLogin() {
   return (
     <>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        {error === "CredentialsSignin" && (
-          <span className="error">Email ou senha incorretos</span>
-        )}
         <GrupoInput>
           <i className="bi bi-person-fill" />
           <input
@@ -95,7 +91,7 @@ export default function FormLogin() {
           <button
             type="button"
             className="bi bi-google"
-            onClick={() => signIn("google", { callbackUrl })}
+            onClick={() => signIn("google", { callbackUrl: "/perfil" })}
             disabled={isLoading}
           />
         </div>
