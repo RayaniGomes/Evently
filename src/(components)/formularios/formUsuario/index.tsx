@@ -4,11 +4,9 @@ import { Form, GrupoInput, ImagemPerfil } from "./styled";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
-import { signIn } from "next-auth/react";
 import { toast } from "react-toastify";
 import api from "@/service/api";
-import { useRouter, useSearchParams } from "next/navigation";
-import { formatarData } from "@/help/funcoes";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 export default function FormUsuario() {
   const {
@@ -21,7 +19,6 @@ export default function FormUsuario() {
   const [isLoading, setIsLoading] = useState(false);
   const [isPagePerfil, setIsPagePerfil] = useState(false);
   const [isFotoPerfil, setIsFotoPerfil] = useState<string | null>(null);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
@@ -44,7 +41,6 @@ export default function FormUsuario() {
     const dadosFormatados =  {
       ...data,
       fotoPerfil: isFotoPerfil,
-      dataNascimento: formatarData(data.dataNascimento),
     };
 
     await api.post("/usuarios", dadosFormatados)

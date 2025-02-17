@@ -6,45 +6,75 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
 import { toast } from "react-toastify";
 import api from "@/service/api";
-import { useSearchParams } from "next/navigation";
-import { formatarData } from "@/help/funcoes";
 import Image from "next/image";
-import { SesseionProps } from "@/interfaces";
+import { Usuario } from "@/interfaces";
+import { get } from "http";
+import { useUsuario } from "@/stores/usuarioStore";
 
-export default function FormUpdateUsuario({user}: SesseionProps) {
+interface Props {
+  usuario: Usuario | null;
+}
+
+export default function FormUpdateUsuario({ usuario }: Props) {
   const {
     register,
     setValue,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isFotoPerfil, setIsFotoPerfil] = useState<string | null>(null);
+  const { getUsuario } = useUsuario();
+
+  useEffect(() => {
+    if (usuario) {
+      setValue("nome", usuario.nome);
+      setValue("dataNascimento", usuario.dataNascimento);
+      setValue("email", usuario.email);
+      setValue("senha", usuario.senha);
+      setValue("fotoPerfil", usuario.fotoPerfil);
+    }
+  }, [usuario, setValue]);
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
-  const onSubmit = async () => {
+  const onSubmit = (data: createDataUsuario) => {
     setIsLoading(true);
-  };
 
-  useEffect(() => {
-    setValue("nome", user?.nome);
-    setValue("email", user?.email);
-    setValue("dataNascimento", user?.dataNascimento);
-    setValue("senha", user?.senha);
-    setValue("criador", user?.criador?.toString());
-    setValue("fotoPerfil", user?.fotoPerfil);
-  }, [user]);
+    const updateUsuario = {
+      nome: data.nome,
+      dataNascimento: data.dataNascimento,
+      email: data.email,
+      senha: data.senha,
+      fotoPerfil: data.fotoPerfil,
+    };
+
+    api
+      .patch(`/usuarios/${usuario?._id}`, updateUsuario)
+      .then((response) => {
+        toast.success("Dados atualizado com sucesso!");
+        api.get(`/usuarios/${usuario?._id}`);
+        console.log(response.data);
+      })
+      .catch(() => {
+        toast.error("Erro ao atualizar o usuario, tente novamente!");
+        setIsLoading(false);
+      });
+  };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <ImagemPerfil>
         <label htmlFor="fotoPerfil">
-          {isFotoPerfil ? (
+          {usuario?.fotoPerfil !== null ? (
             <Image
-              src={isFotoPerfil || "/placeholder.svg"}
-              alt="Profile"
+              src={usuario?.fotoPerfil || "/placeholder.svg"}
+              alt={
+                usuario
+                  ? "Foto de perfil de" + usuario.nome
+                  : "Imagem de perfil"
+              }
               width={100}
               height={100}
             />
@@ -103,8 +133,12 @@ export default function FormUpdateUsuario({user}: SesseionProps) {
           <label htmlFor="criador">
             Deseja ser um criador de eventos?
             <select {...register("criador")}>
-              <option value="true">Sim</option>
-              <option value="false">Não</option>
+              <option value={usuario?.criador ? "true" : "false"}>
+                {usuario?.criador === true ? "Sim" : "Não"}
+              </option>
+              <option value={usuario?.criador! ? "true" : "false"}>
+                {usuario?.criador === true ? "Não" : "Sim"}
+              </option>
             </select>
           </label>
         </div>

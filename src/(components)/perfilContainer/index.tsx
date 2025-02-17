@@ -1,27 +1,48 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { Botoes, ContainerPerfil, Section } from "./styled";
 import Titulo from "../titulo";
-import FormUsuario from "../formularios/formUsuario";
 import MinhasInscrições from "../minhasInscrições";
 import MeusEventos from "../meusEventos";
 import FormCriarEvento from "../formularios/formCriarEvento";
-import { SesseionProps } from "@/interfaces";
 import FormUpdateUsuario from "../formularios/formUpdateUsuario";
+import { Usuario } from "@/interfaces";
+import api from "@/service/api";
+import { toast } from "react-toastify";
 
-export default function PerfilContainer(session: SesseionProps) {
-  const { criador } = session;
+type User = {
+  name: string;
+  email: string;
+};
+
+export default function PerfilContainer(session: User) {
   const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
+  const [usuario, setUsuario] = useState<Usuario | null>(null);
 
+  const getUsuario = async () => {
+    await api
+      .get(`/usuarios/email?email=${session.email}`)
+      .then((response) => {
+        setUsuario(response.data);
+        
+      })
+      .catch(() => {
+        toast.error("Erro ao buscar o usuário, tente novamente!");
+      });
+  };
   const handleIsAtivar = (botao: string) => {
     setIsAtivar(botao);
   };
 
+  useEffect(() => {
+    getUsuario();
+  }, []);
+
   return (
     <main>
       <Container as={Section}>
-        <Titulo titulo={`Olá, ${session?.user?.nome}`} border="--azul-escuro" />
+        <Titulo titulo={`Olá, ${session.name}`} border="--azul-escuro" />
         <div className="perfil">
           <Botoes>
             <button
@@ -36,7 +57,7 @@ export default function PerfilContainer(session: SesseionProps) {
             >
               Minhas Inscrições
             </button>
-            {criador && (
+            {usuario?.criador === true && (
               <button
                 className={isAtivar === "Meus Eventos" ? "active" : ""}
                 onClick={() => handleIsAtivar("Meus Eventos")}
@@ -44,7 +65,7 @@ export default function PerfilContainer(session: SesseionProps) {
                 Meus Eventos
               </button>
             )}
-            {criador && (
+            {usuario?.criador === true && (
               <button
                 className={isAtivar === "Criar Evento" ? "active" : ""}
                 onClick={() => handleIsAtivar("Criar Evento")}
@@ -54,10 +75,12 @@ export default function PerfilContainer(session: SesseionProps) {
             )}
           </Botoes>
           <ContainerPerfil>
-            {isAtivar === "Dados Pessoais" && <FormUpdateUsuario { ...session } />}
+            {isAtivar === "Dados Pessoais" && (
+              <FormUpdateUsuario usuario={usuario} />
+            )}
             {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
-            {criador && isAtivar === "Meus Eventos" && <MeusEventos />}
-            {criador && isAtivar === "Criar Evento" && <FormCriarEvento />}
+            {isAtivar === "Meus Eventos" && <MeusEventos />}
+            {isAtivar === "Criar Evento" && <FormCriarEvento />}
           </ContainerPerfil>
         </div>
       </Container>
