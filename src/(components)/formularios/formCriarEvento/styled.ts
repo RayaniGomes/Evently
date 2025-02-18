@@ -82,7 +82,7 @@ export const GrupoInput = styled.div`
 
     input,
     select {
-      color: var(--branco);
+      color:rgba(244, 244, 244, 0.5);
       width: 100%;
       height: 100%;
       padding: .25rem .5rem;
@@ -99,6 +99,7 @@ export const GrupoInput = styled.div`
   
   ::placeholder {
     color: var(--branco);
+    opacity: 0.5;
   }
   
   .descricao {
@@ -109,6 +110,7 @@ export const GrupoInput = styled.div`
       border-left: 1px solid var(--branco);
       border-right: 1px solid var(--branco);
       border-radius: 0 0 10px 10px;
+
       
       textarea {
         width: 100%;
@@ -117,13 +119,17 @@ export const GrupoInput = styled.div`
         background-color: transparent;
         border: none;
         border-radius: 10px;
-        color: var(--branco);
+        color:rgba(244, 244, 244, 0.5);
       }
     }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
     font-size: 20px;
+
+    ::placeholder {
+      opacity: 0.5;
+    }
   }
 
   input[type="time"]::-webkit-calendar-picker-indicator {

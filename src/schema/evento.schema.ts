@@ -60,7 +60,7 @@ export const eventoSchema = z.object({
       },
       { message: "Hora inválida. Verifique os valores de hora e minuto." }
     ),
-  qtd: z
+    maxPessoas: z
     .string()
     .transform((value) => Number(value))
     .refine((value) => !isNaN(value), {
@@ -71,7 +71,7 @@ export const eventoSchema = z.object({
     }),
   tipo: nonEmptyString("O tipo do evento"),
   imagem: z.string().url("A URL fornecida não é válida."),
-  descricao: nonEmptyString("A descrição do evento"),
+  descricao: z.string().optional(),
   local: nonEmptyString("O local do evento"),
   endereco: nonEmptyString("O endereço do evento"),
   numero: nonEmptyString("O número do endereço do evento"),
