@@ -6,10 +6,14 @@ import {
 import { FormEvento, GrupoInput } from "./styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Props } from "../formUpdateUsuario";
 import { useState } from "react";
 import api from "@/service/api";
 import { toast } from "react-toastify";
+import { Usuario } from "@/interfaces";
+
+interface Props {
+  usuario: Usuario | null;
+}
 
 export default function FormCriarEvento({ usuario }: Props) {
   const {

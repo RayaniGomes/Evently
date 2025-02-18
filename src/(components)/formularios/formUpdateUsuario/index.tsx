@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 import api from "@/service/api";
 import Image from "next/image";
 import { Usuario } from "@/interfaces";
-
-export interface Props {
+interface Props {
   usuario: Usuario | null;
   getUsuario: () => void;
 }
