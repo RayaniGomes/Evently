@@ -41,7 +41,10 @@ export default function FormCriarEvento({ usuario }: Props) {
       .then((response) => {
         if (response.status === 201) {
           toast.success("Evento criado com sucesso!");
-          reset();
+          api.patch(`/usuarios/${usuario._id}`, {
+            eventos: response.data._id }
+          );
+          //reset();
         } else {
           toast.error("Erro ao criar o evento, tente novamente!");
         }

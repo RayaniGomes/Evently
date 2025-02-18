@@ -82,7 +82,7 @@ export const GrupoInput = styled.div`
 
     input,
     select {
-      color:rgba(244, 244, 244, 0.5);
+      color:rgba(244, 244, 244, 0.7);
       width: 100%;
       height: 100%;
       padding: .25rem .5rem;
@@ -99,7 +99,7 @@ export const GrupoInput = styled.div`
   
   ::placeholder {
     color: var(--branco);
-    opacity: 0.5;
+    opacity: 0.7;
   }
   
   .descricao {
@@ -119,7 +119,7 @@ export const GrupoInput = styled.div`
         background-color: transparent;
         border: none;
         border-radius: 10px;
-        color:rgba(244, 244, 244, 0.5);
+        color:rgba(244, 244, 244, 0.7);
       }
     }
 
