@@ -8,68 +8,87 @@ import { toast } from "react-toastify";
 import api from "@/service/api";
 import Image from "next/image";
 import { Usuario } from "@/interfaces";
-import { get } from "http";
-import { useUsuario } from "@/stores/usuarioStore";
 
 interface Props {
   usuario: Usuario | null;
+  getUsuario: () => void;
 }
 
-export default function FormUpdateUsuario({ usuario }: Props) {
-  const {
-    register,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
+export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { getUsuario } = useUsuario();
+  const [nome, setNome] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+  const [criador, setCriador] = useState(false);
+  const [fotoPerfil, setFotoPerfil] = useState<string | null>(null);
+  
 
   useEffect(() => {
     if (usuario) {
-      setValue("nome", usuario.nome);
-      setValue("dataNascimento", usuario.dataNascimento);
-      setValue("email", usuario.email);
-      setValue("senha", usuario.senha);
-      setValue("fotoPerfil", usuario.fotoPerfil);
+      setNome(usuario.nome);
+      setDataNascimento(usuario.dataNascimento);
+      setEmail(usuario.email);
+      setSenha(usuario.senha);
+      setCriador(usuario.criador);
+      if (usuario) {
+        setFotoPerfil(usuario.fotoPerfil || "/sem-imagem.svg");
+      }
     }
-  }, [usuario, setValue]);
+  }, [usuario]);
+
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
   };
-  const onSubmit = (data: createDataUsuario) => {
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFotoPerfil(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
 
-    const updateUsuario = {
-      nome: data.nome,
-      dataNascimento: data.dataNascimento,
-      email: data.email,
-      senha: data.senha,
-      fotoPerfil: data.fotoPerfil,
+    const formData = {
+      nome: nome,
+      dataNascimento: dataNascimento,
+      email: email,
+      senha: senha,
+      criador: criador,
+      fotoPerfil: fotoPerfil,
     };
 
     api
-      .patch(`/usuarios/${usuario?._id}`, updateUsuario)
+      .patch(`/usuarios/${usuario?._id}`, formData)
       .then((response) => {
-        toast.success("Dados atualizado com sucesso!");
-        api.get(`/usuarios/${usuario?._id}`);
-        console.log(response.data);
+        console.log("Resposta do servidor:", response.data);
+        toast.success("Dados atualizados com sucesso!");
+        getUsuario();
       })
-      .catch(() => {
-        toast.error("Erro ao atualizar o usuario, tente novamente!");
+      .catch((error) => {
+        console.error("Erro ao atualizar o usuário:", error);
+        toast.error("Erro ao atualizar o usuário, tente novamente!");
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={onSubmit}>
       <ImagemPerfil>
         <label htmlFor="fotoPerfil">
-          {usuario?.fotoPerfil !== null ? (
+          {fotoPerfil ? (
             <Image
-              src={usuario?.fotoPerfil || "/placeholder.svg"}
+              src={fotoPerfil || "/sem-imagem.svg"}
               alt={
                 usuario
                   ? "Foto de perfil de" + usuario.nome
@@ -77,6 +96,7 @@ export default function FormUpdateUsuario({ usuario }: Props) {
               }
               width={100}
               height={100}
+              priority
             />
           ) : (
             <div className="placeholder">
@@ -88,26 +108,41 @@ export default function FormUpdateUsuario({ usuario }: Props) {
           type="file"
           id="fotoPerfil"
           accept="image/*"
-          {...register("fotoPerfil")}
+          defaultValue={usuario?.fotoPerfil}
+          onChange={(e) => {
+            handleImageUpload(e);
+            setFotoPerfil(e.target.value);
+          }}
         />
       </ImagemPerfil>
 
       <GrupoInput>
         <i className="bi bi-person-fill" />
-        <input type="text" placeholder="Nome Completo" {...register("nome")} />
+        <input
+          type="text"
+          placeholder="Nome Completo"
+          defaultValue={usuario?.nome}
+          onChange={(e) => setNome(e.target.value)}
+        />
       </GrupoInput>
-      {errors.nome && <span>{errors.nome.message}</span>}
 
       <GrupoInput>
-        <input type="date" {...register("dataNascimento")} />
+        <input
+          type="date"
+          defaultValue={usuario?.dataNascimento}
+          onChange={(e) => setDataNascimento(e.target.value)}
+        />
       </GrupoInput>
-      {errors.dataNascimento && <span>{errors.dataNascimento.message}</span>}
 
       <GrupoInput>
         <i className="bi bi-envelope-fill" />
-        <input type="email" placeholder="Email" {...register("email")} />
+        <input
+          type="email"
+          placeholder="Email"
+          defaultValue={usuario?.email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
       </GrupoInput>
-      {errors.email && <span>{errors.email.message}</span>}
 
       <div className="senha">
         <h5>Alterar Senha</h5>
@@ -117,7 +152,8 @@ export default function FormUpdateUsuario({ usuario }: Props) {
           <input
             type={mostrarSenha ? "text" : "password"}
             placeholder="Senha"
-            {...register("senha")}
+            defaultValue={usuario?.senha}
+            onChange={(e) => setSenha(e.target.value)}
           />
           <button type="button" onClick={toggleMostrarSenha}>
             {mostrarSenha ? (
@@ -127,18 +163,16 @@ export default function FormUpdateUsuario({ usuario }: Props) {
             )}
           </button>
         </GrupoInput>
-        {errors.senha && <span>{errors.senha.message}</span>}
 
         <div className="criador">
           <label htmlFor="criador">
             Deseja ser um criador de eventos?
-            <select {...register("criador")}>
-              <option value={usuario?.criador ? "true" : "false"}>
-                {usuario?.criador === true ? "Sim" : "Não"}
-              </option>
-              <option value={usuario?.criador! ? "true" : "false"}>
-                {usuario?.criador === true ? "Não" : "Sim"}
-              </option>
+            <select
+              value={criador ? "true" : "false"}
+              onChange={(e) => setCriador(e.target.value === "true")}
+            >
+              <option value="true">Sim</option>
+              <option value="false">Não</option>
             </select>
           </label>
         </div>

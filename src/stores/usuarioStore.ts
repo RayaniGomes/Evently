@@ -1,6 +1,5 @@
 import { Usuario } from "@/interfaces";
 import api from "@/service/api";
-import { Session } from "next-auth";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
@@ -20,9 +19,6 @@ export const useUsuario = create<PropUsuarioStore>((set) => ({
       console.log(response);
     });
   },
-  
-
-  
   criarUsuario: async (user: Usuario) => {
     await api.post("/usuarios", user).then((response) => {
       set({

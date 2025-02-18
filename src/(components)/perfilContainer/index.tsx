@@ -76,7 +76,7 @@ export default function PerfilContainer(session: User) {
           </Botoes>
           <ContainerPerfil>
             {isAtivar === "Dados Pessoais" && (
-              <FormUpdateUsuario usuario={usuario} />
+              <FormUpdateUsuario usuario={usuario} getUsuario={getUsuario} />
             )}
             {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
             {isAtivar === "Meus Eventos" && <MeusEventos />}

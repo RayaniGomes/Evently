@@ -74,7 +74,7 @@ export default function FormUsuario() {
         <label htmlFor="fotoPerfil">
           {isFotoPerfil ? (
             <Image
-              src={isFotoPerfil || "/placeholder.svg"}
+              src={isFotoPerfil || "/sem-imagem.svg"}
               alt="Profile"
               width={100}
               height={100}

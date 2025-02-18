@@ -23,7 +23,7 @@ export const usuarioSchema = z
       .refine((value) => !/^\s+$/g.test(value), {
         message: "A senha não pode conter apenas espaços em branco.",
       }),
-    criador: z.boolean(),
+    criador: z.string(),
     fotoPerfil: z.string().optional(),
   });
 
