@@ -202,4 +202,14 @@ export const ImagemPerfil = styled.div`
       object-fit: cover;
     }
   }
+
+  input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--branco);
+    border-radius: 10px;
+    padding: 0.25rem .5rem;
+    background-color: transparent;
+    color: var(--branco);
+  }
 `;

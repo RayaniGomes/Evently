@@ -1,15 +1,12 @@
 "use client";
-import { useForm } from "react-hook-form";
 import { Form, GrupoInput, ImagemPerfil } from "./styled";
 import { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
 import { toast } from "react-toastify";
 import api from "@/service/api";
 import Image from "next/image";
 import { Usuario } from "@/interfaces";
 
-interface Props {
+export interface Props {
   usuario: Usuario | null;
   getUsuario: () => void;
 }
@@ -32,25 +29,12 @@ export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
       setEmail(usuario.email);
       setSenha(usuario.senha);
       setCriador(usuario.criador);
-      if (usuario) {
-        setFotoPerfil(usuario.fotoPerfil || "/sem-imagem.svg");
-      }
+      setFotoPerfil(usuario.fotoPerfil || null);
     }
   }, [usuario]);
 
   const toggleMostrarSenha = () => {
     setMostrarSenha(!mostrarSenha);
-  };
-
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFotoPerfil(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -88,7 +72,7 @@ export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
         <label htmlFor="fotoPerfil">
           {fotoPerfil ? (
             <Image
-              src={fotoPerfil || "/sem-imagem.svg"}
+              src={fotoPerfil || "/PersonFill.svg"}
               alt={
                 usuario
                   ? "Foto de perfil de" + usuario.nome
@@ -105,12 +89,11 @@ export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
           )}
         </label>
         <input
-          type="file"
+          type="text"
           id="fotoPerfil"
           accept="image/*"
           defaultValue={usuario?.fotoPerfil}
           onChange={(e) => {
-            handleImageUpload(e);
             setFotoPerfil(e.target.value);
           }}
         />
