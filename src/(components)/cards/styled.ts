@@ -92,12 +92,6 @@ export const ContainerCard = styled.div<StyledCard>`
     .botoes {
       margin-top: 0.5em;
       justify-content: center;
-
-      button,
-      a {
-        width: 80px;
-        height: 30px;
-      }
     }
   }
 `;

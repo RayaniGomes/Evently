@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { useEvento } from "@/stores/eventoStore";
 import { Inscricoes } from "./styled";
-import Card from "../cardEvento";
+import CardEventos from "../cards/cardEventos";
 import Paginacao from "../paginacao";
 import FuncaoPaginacao from "@/help/funcaoPaginacao";
 
@@ -28,7 +28,7 @@ export default function MinhasInscrições() {
       </div>
       {eventos.length > 0 ? (
         paginatedEventos.map((evento) => (
-          <Card
+          <CardEventos
             key={evento._id}
             evento={evento}
             bgColor="--branco"

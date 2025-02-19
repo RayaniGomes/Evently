@@ -1,6 +1,6 @@
 "use client";
 import Banner from "@/(components)/banner";
-import Card from "@/(components)/cardEvento";
+import CardEventos from "@/(components)/cards/cardEventos";
 import { useEvento } from "@/stores/eventoStore";
 import { useEffect } from "react";
 import { Section } from "./styled";
@@ -23,7 +23,7 @@ export default function Home() {
             <h2>Eventos da semana</h2>
             <div className="cards">
               {eventos.slice(0, 4).map((evento) => (
-                <Card
+                <CardEventos
                   key={evento._id}
                   evento={evento}
                   bgColor="--azul-medio"

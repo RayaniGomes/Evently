@@ -1,5 +1,5 @@
 "use client";
-import Card from "@/(components)/cardEvento";
+import CardEventos from "@/(components)/cards/cardEventos";
 import { Filtro } from "@/(components)/filtro";
 import Titulo from "@/(components)/titulo";
 import { useEvento } from "@/stores/eventoStore";
@@ -52,7 +52,7 @@ export default function Eventos() {
             {eventos.length > 0 ? (
               <div className="cards">
                 {paginatedEventos.map((evento, index) => (
-                  <Card
+                  <CardEventos
                     key={index}
                     evento={evento}
                     bgColor="--azul-medio"
