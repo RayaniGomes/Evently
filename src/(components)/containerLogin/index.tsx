@@ -6,7 +6,7 @@ import FormLogin from "@/(components)/formularios/formLogin";
 import FormUsuario from "@/(components)/formularios/formUsuario";
 import { Section } from "./styled";
 
-export default function LoginContainer() {
+export default function ContainerLogin() {
   const [ativarcadastro, setAtivarcadastro] = useState(false);
 
   const toggleAtivarcadastro = () => {

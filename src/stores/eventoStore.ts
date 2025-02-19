@@ -13,7 +13,6 @@ export const useEvento = create<PropEventoStore>((set) => ({
       set({
         eventos: response.data,
       });
-      console.log(response);
     });
   },
 

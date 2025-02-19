@@ -12,7 +12,7 @@ type Params = Promise<{ id: string }>;
 export default function DetalheEvento(props: { params: Params }) {
   const urlParams = use(props.params);
   const [evento, setEvento] = useState<Evento>({} as Evento);
-  
+
   const getEventoDetalhe = async () => {
     await api
       .get(`/eventos/${urlParams.id}/`)

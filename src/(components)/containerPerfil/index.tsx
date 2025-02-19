@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { Botoes, ContainerPerfil, Section } from "./styled";
+import { Botoes, PerfilMain, Section } from "./styled";
 import Titulo from "../titulo";
 import MinhasInscrições from "../minhasInscrições";
 import MeusEventos from "../meusEventos";
@@ -16,7 +16,7 @@ type User = {
   email: string;
 };
 
-export default function PerfilContainer(session: User) {
+export default function ContainerPerfil(session: User) {
   const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
   const [usuario, setUsuario] = useState<Usuario | null>(null);
 
@@ -25,7 +25,6 @@ export default function PerfilContainer(session: User) {
       .get(`/usuarios/email?email=${session.email}`)
       .then((response) => {
         setUsuario(response.data);
-        
       })
       .catch(() => {
         toast.error("Erro ao buscar o usuário, tente novamente!");
@@ -74,14 +73,16 @@ export default function PerfilContainer(session: User) {
               </button>
             )}
           </Botoes>
-          <ContainerPerfil>
+          <PerfilMain>
             {isAtivar === "Dados Pessoais" && (
               <FormUpdateUsuario usuario={usuario} getUsuario={getUsuario} />
             )}
             {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
             {isAtivar === "Meus Eventos" && <MeusEventos usuario={usuario} />}
-            {isAtivar === "Criar Evento" && <FormCriarEvento usuario={usuario} />}
-          </ContainerPerfil>
+            {isAtivar === "Criar Evento" && (
+              <FormCriarEvento usuario={usuario} />
+            )}
+          </PerfilMain>
         </div>
       </Container>
     </main>
