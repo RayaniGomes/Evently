@@ -33,5 +33,7 @@ export default function FuncaoPaginacao() {
     currentPage,
     handlePageClick,
     itemsPerPage,
+    startIndex,
+    endIndex
   };
 }
