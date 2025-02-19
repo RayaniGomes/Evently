@@ -79,7 +79,7 @@ export default function PerfilContainer(session: User) {
               <FormUpdateUsuario usuario={usuario} getUsuario={getUsuario} />
             )}
             {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
-            {isAtivar === "Meus Eventos" && <MeusEventos  />}
+            {isAtivar === "Meus Eventos" && <MeusEventos usuario={usuario} />}
             {isAtivar === "Criar Evento" && <FormCriarEvento usuario={usuario} />}
           </ContainerPerfil>
         </div>

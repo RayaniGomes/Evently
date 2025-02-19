@@ -1,34 +1,42 @@
 "use client";
-import { useEffect } from "react";
-import { useEvento } from "@/stores/eventoStore";
-import Card from "../cardEvento";
+import { useEffect, useState } from "react";
 import Paginacao from "../paginacao";
 import FuncaoPaginacao from "@/help/funcaoPaginacao";
 import { Inscricoes } from "../minhasInscrições/styled";
+import { Evento, Usuario } from "@/interfaces";
+import api from "@/service/api";
+import CardMeusEventos from "../cards/cardMeusEventos";
+import { useEvento } from "@/stores/eventoStore";
 
-export default function MeusEventos() {
-  const { eventos, getEventos } = useEvento();
+interface Props {
+  usuario: Usuario | null;
+}
+export default function MeusEventos({ usuario }: Props) {
+  const { eventos, getCriadorEventos } = useEvento();
   const {
-    paginatedEventos,
     totalPages,
     currentPage,
     handlePageClick,
     itemsPerPage,
+    startIndex,
+    endIndex,
   } = FuncaoPaginacao();
 
+  const paginatedEventos = eventos.slice(startIndex, endIndex);
+
   useEffect(() => {
-    getEventos();
+    getCriadorEventos(usuario?._id || "");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <Inscricoes>
       <div className="total-inscricoes">
-        <p>Total de eventos: 100</p>
+        <p>Total de eventos: {eventos.length}</p>
       </div>
       {eventos.length > 0 ? (
         paginatedEventos.map((evento) => (
-          <Card
+          <CardMeusEventos
             key={evento._id}
             evento={evento}
             bgColor="--branco"

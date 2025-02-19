@@ -1,6 +1,7 @@
 "use client";
-import { PropEventoStore } from "@/interfaces";
+import { Evento, PropEventoStore } from "@/interfaces";
 import api from "@/service/api";
+import { get } from "http";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
@@ -8,25 +9,33 @@ export const useEvento = create<PropEventoStore>((set) => ({
   eventos: [],
   copyEventos: [],
   getEventos: async () => {
-    await api.get("/eventos")
-      .then((response) => {
-        set({
-          eventos: response.data,
-        });
-        console.log(response);
-      })
+    await api.get("/eventos").then((response) => {
+      set({
+        eventos: response.data,
+      });
+      console.log(response);
+    });
   },
 
-  criarEvento: async (evento) => {
-    await api.post("/eventos", evento)
-      .then((response) => {
-        set({
-          eventos: response.data,
-        });
-        toast.success("Evento criado com sucesso!");
+  getCriadorEventos: async (id: string) => {
+    await api.get(`/eventos?criador=${id}`).then((response) => {
+      set({
+        eventos: response.data,
+      });
+    });
+  },
+
+  deleteEvento: async (id: string) => {
+    await api
+      .delete(`/eventos/${id}`)
+      .then((res) => {
+        if (res.status === 204) {
+          set({ eventos: useEvento.getState().eventos.filter((evento: Evento) => evento._id !== id) });
+          toast.success("Evento cancelado com sucesso!");
+        }
       })
       .catch(() => {
-        toast.error("Erro ao criar o evento, tente novamente!");
+        toast.error("Erro ao deletar o evento, tente novamente!");
       });
   },
 
