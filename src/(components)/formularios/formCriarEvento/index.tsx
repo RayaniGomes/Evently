@@ -10,6 +10,7 @@ import { useState } from "react";
 import api from "@/service/api";
 import { toast } from "react-toastify";
 import { Usuario } from "@/interfaces";
+import { createDataUsuario } from "@/schema/usuario.schema";
 
 interface Props {
   usuario: Usuario | null;
@@ -33,7 +34,10 @@ export default function FormCriarEvento({ usuario }: Props) {
 
     const dadosEvento = {
       ...data,
-      criador: usuario._id,
+      criador: {
+        id: usuario._id,
+        nome: usuario.nome,
+      },
     };
 
     await api
@@ -41,10 +45,7 @@ export default function FormCriarEvento({ usuario }: Props) {
       .then((response) => {
         if (response.status === 201) {
           toast.success("Evento criado com sucesso!");
-          api.patch(`/usuarios/${usuario._id}`, {
-            eventos: response.data._id }
-          );
-          //reset();
+          reset();
         } else {
           toast.error("Erro ao criar o evento, tente novamente!");
         }
