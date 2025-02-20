@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ContainerCard } from "../styled";
 import Link from "next/link";
 import Compartilhar from "../../compartinhar";
 import { CardProps } from "@/interfaces";
+import { usePathname } from "next/navigation";
 
 export default function CardEventos({
   evento,
@@ -11,13 +11,7 @@ export default function CardEventos({
   color,
   hover,
 }: CardProps) {
-  const [pathname, setPathname] = useState("");
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      setPathname(window.location.pathname);
-    }
-  }, []);
+  const pathname = usePathname();
 
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
@@ -51,10 +45,10 @@ export default function CardEventos({
         </div>
 
         <div className="botoes">
-          {pathname === "/perfil" ? (
-            <button>Cancelar inscrição</button>
-          ) : (
+          {pathname === "/eventos" ? (
             <button>Inscrever-se</button>
+          ) : (
+            <button>Cancelar inscrição</button>
           )}
           <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
         </div>

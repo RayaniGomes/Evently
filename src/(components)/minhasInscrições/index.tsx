@@ -18,7 +18,6 @@ export default function MinhasInscrições() {
 
   useEffect(() => {
     getEventos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

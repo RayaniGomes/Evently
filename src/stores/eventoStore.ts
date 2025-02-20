@@ -1,7 +1,6 @@
 "use client";
 import { Evento, PropEventoStore } from "@/interfaces";
 import api from "@/service/api";
-import { get } from "http";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 

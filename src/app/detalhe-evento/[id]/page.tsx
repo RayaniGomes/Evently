@@ -23,7 +23,6 @@ export default function DetalheEvento(props: { params: Params }) {
 
   useEffect(() => {
     getEventoDetalhe();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [urlParams.id]);
   
   if (!evento._id) {

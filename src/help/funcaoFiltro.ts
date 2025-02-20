@@ -21,7 +21,6 @@ export default function SetFiltro() {
 
   useEffect(() => {
     getEventos();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const normalizarEOrdenar = (array: (string | undefined)[]) => {
@@ -43,7 +42,7 @@ export default function SetFiltro() {
 
   const estados = normalizarEOrdenar(eventos.map((evento) => evento.uf));
   const cidades = normalizarEOrdenar(eventos.map((evento) => evento.cidade));
-  const tipos = normalizarEOrdenar(eventos.map((evento) => evento.tipo_evento));
+  const tipos = normalizarEOrdenar(eventos.map((evento) => evento.tipo));
 
   return { estados, cidades, tipos };
 }

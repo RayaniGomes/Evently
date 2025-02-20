@@ -16,13 +16,13 @@ type User = {
   email: string;
 };
 
-export default function ContainerPerfil(session: User) {
+export default function ContainerPerfil({ name, email }: User) {
   const [isAtivar, setIsAtivar] = useState("Dados Pessoais");
   const [usuario, setUsuario] = useState<Usuario | null>(null);
 
   const getUsuario = async () => {
     await api
-      .get(`/usuarios/email?email=${session.email}`)
+      .get(`/usuarios/email?email=${email}`)
       .then((response) => {
         setUsuario(response.data);
       })
@@ -41,7 +41,7 @@ export default function ContainerPerfil(session: User) {
   return (
     <>
       <Container as={Section}>
-        <Titulo titulo={`Olá, ${session.name}`} border="--azul-escuro" />
+        <Titulo titulo={`Olá, ${name}`} border="--azul-escuro" />
         <div className="perfil">
           <Botoes>
             <button
@@ -74,13 +74,24 @@ export default function ContainerPerfil(session: User) {
             )}
           </Botoes>
           <PerfilMain>
-            {isAtivar === "Dados Pessoais" && (
-              <FormUpdateUsuario usuario={usuario} getUsuario={getUsuario} />
-            )}
-            {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
-            {isAtivar === "Meus Eventos" && <MeusEventos usuario={usuario} />}
-            {isAtivar === "Criar Evento" && (
-              <FormCriarEvento usuario={usuario} />
+            {!usuario ? (
+              <h5>Carregando...</h5>
+            ) : (
+              <>
+                {isAtivar === "Dados Pessoais" && (
+                  <FormUpdateUsuario
+                    usuario={usuario}
+                    getUsuario={getUsuario}
+                  />
+                )}
+                {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
+                {isAtivar === "Meus Eventos" && (
+                  <MeusEventos usuario={usuario} />
+                )}
+                {isAtivar === "Criar Evento" && (
+                  <FormCriarEvento usuario={usuario} />
+                )}
+              </>
             )}
           </PerfilMain>
         </div>

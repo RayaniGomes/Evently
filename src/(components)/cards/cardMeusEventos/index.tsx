@@ -54,7 +54,7 @@ export default function CardMeusEventos({
             Cancelar evento
           </button>
           <button>Editar evento</button>
-          <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
+          <Link href={`/detalhe-evento-criador/${evento._id}`}>Detalhes</Link>
         </div>
       </div>
     </ContainerCard>

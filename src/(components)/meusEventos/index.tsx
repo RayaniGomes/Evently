@@ -13,6 +13,7 @@ interface Props {
 }
 export default function MeusEventos({ usuario }: Props) {
   const { eventos, getCriadorEventos } = useEvento();
+
   const {
     totalPages,
     currentPage,
@@ -26,7 +27,6 @@ export default function MeusEventos({ usuario }: Props) {
 
   useEffect(() => {
     getCriadorEventos(usuario?._id || "");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
