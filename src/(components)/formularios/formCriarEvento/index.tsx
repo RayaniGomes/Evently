@@ -10,7 +10,6 @@ import { useState } from "react";
 import api from "@/service/api";
 import { toast } from "react-toastify";
 import { Usuario } from "@/interfaces";
-import { createDataUsuario } from "@/schema/usuario.schema";
 
 interface Props {
   usuario: Usuario | null;

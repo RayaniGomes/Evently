@@ -39,7 +39,7 @@ export default function ContainerPerfil(session: User) {
   }, []);
 
   return (
-    <main>
+    <>
       <Container as={Section}>
         <Titulo titulo={`Olá, ${session.name}`} border="--azul-escuro" />
         <div className="perfil">
@@ -85,6 +85,6 @@ export default function ContainerPerfil(session: User) {
           </PerfilMain>
         </div>
       </Container>
-    </main>
+    </>
   );
 }

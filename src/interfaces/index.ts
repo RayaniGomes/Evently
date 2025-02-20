@@ -45,7 +45,6 @@ export interface Usuario {
   minhasInscricoes?: Evento[];
 }
 
-
 export interface CardProps {
   evento: Evento;
   bgColor: string;
@@ -93,6 +92,7 @@ export interface StyledCompartilhar {
   $top: number;
   $right: number;
   $hover: string;
+  $evento?: Evento;
 }
 
 export interface StyledCard {

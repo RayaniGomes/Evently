@@ -5,7 +5,12 @@ import Compartilhar from "../../compartinhar";
 import { CardProps } from "@/interfaces";
 import { useEvento } from "@/stores/eventoStore";
 
-export default function CardMeusEventos({ evento, bgColor, color, hover }: CardProps) {
+export default function CardMeusEventos({
+  evento,
+  bgColor,
+  color,
+  hover,
+}: CardProps) {
   const { deleteEvento } = useEvento();
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
@@ -20,6 +25,7 @@ export default function CardMeusEventos({ evento, bgColor, color, hover }: CardP
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
+              $evento={evento}
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}
@@ -38,7 +44,15 @@ export default function CardMeusEventos({ evento, bgColor, color, hover }: CardP
         </div>
 
         <div className="botoes">
-          <button onClick={() => deleteEvento(evento._id)}>Cancelar evento</button>
+          <button
+            onClick={() => {
+              if (confirm("Tem certeza que deseja cancelar este evento?")) {
+                deleteEvento(evento._id);
+              }
+            }}
+          >
+            Cancelar evento
+          </button>
           <button>Editar evento</button>
           <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
         </div>

@@ -7,6 +7,18 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 1rem;
 
+  .notLoading {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .loading {
+    width: 100%;
+    opacity: 0.5;
+  }
+
   .senha {
     width: 100%;
     display: flex;
@@ -200,6 +212,21 @@ export const ImagemPerfil = styled.div`
       height: 80px;
       border-radius: 50%;
       object-fit: cover;
+    }
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid var(--branco);
+    border-radius: 10px;
+    padding: 0.25rem .5rem;
+    background-color: transparent;
+    color: var(--branco);
+    font-size: 14px;
+    
+    &::placeholder {
+      color: var(--branco);
     }
   }
 `;

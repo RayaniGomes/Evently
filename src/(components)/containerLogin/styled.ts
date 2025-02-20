@@ -43,12 +43,9 @@ export const Section = styled.section`
     background-color: transparent;
     border: none;
     color: var(--branco);
+    font-weight: 500 !important;
+    font-size: 16px !important;
     gap: 0.5rem;
-
-    h6 {
-      margin: 0;
-    }
-
     i {
       height: auto;
       font-size: 18px;

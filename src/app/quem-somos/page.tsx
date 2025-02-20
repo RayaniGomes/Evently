@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function QuemSomos() {
   return (
-    <main>
+    <>
       <Sobre />
       <Container>
         <div className="indices">
@@ -18,44 +18,13 @@ export default function QuemSomos() {
         <div className="colaboradores">
           <h2>Colaboradores</h2>
           <div className="logos">
-            <Image
-              src="/interjato.png"
-              alt="Interjato"
-              width={230}
-              height={60}
-              loading="lazy"
-            />
-            <Image
-              src="/zaori.png"
-              alt="Interjato"
-              width={230}
-              height={60}
-              loading="lazy"
-            />
-            <Image
-              src="/mesotech.png"
-              alt="Interjato"
-              width={230}
-              height={60}
-              loading="lazy"
-            />
-            <Image
-              src="/evos.png"
-              alt="Interjato"
-              width={230}
-              height={60}
-              loading="lazy"
-            />
-            <Image
-              src="/affare.png"
-              alt="Interjato"
-              width={230}
-              height={60}
-              loading="lazy"
-            />
+            <Image src="/zaori.png" alt="Zaori" width={230} height={60} />
+            <Image src="/mesotech.png" alt="Mesotech" width={230} height={60} />
+            <Image src="/evos.png" alt="Evos" width={230} height={60} />
+            <Image src="/affare.png" alt="Affare" width={230} height={60} />
           </div>
         </div>
       </Container>
-    </main>
+    </>
   );
 }

@@ -1,6 +1,12 @@
 import { PaginacaoProps } from "@/interfaces";
 import { ContainerPaginacao } from "./styled";
 
+/**
+ * Componente de pagina o que renderiza um conjunto de botões 
+ * numerados que permitem navegar entre as páginas de um 
+ * componente que lista itens.
+ */
+
 export default function Paginacao({
   handlePageClick,
   currentPage,

@@ -40,15 +40,15 @@ export default function FormLogin() {
         toast.error("Erro ao logar, tente novamente.");
       }
     } else {
-      router.push('/perfil');
+      router.push("/perfil");
     }
 
     setIsLoading(false);
   };
 
   return (
-    <>
-      <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
+      <div className={isLoading ? "loading" : "notLoading"}>
         <GrupoInput>
           <i className="bi bi-person-fill" />
           <input
@@ -72,30 +72,25 @@ export default function FormLogin() {
             type="button"
             onClick={toggleMostrarSenha}
             disabled={isLoading}
-          >
-            {mostrarSenha ? (
-              <i className="bi bi-eye-slash-fill" />
-            ) : (
-              <i className="bi bi-eye-fill" />
-            )}
-          </button>
+            className={mostrarSenha ? "bi bi-eye-slash-fill" : "bi bi-eye-fill"}
+          />
         </GrupoInput>
         {errors.senha && <span>{errors.senha.message}</span>}
+      </div>
 
-        <button type="submit" className="btn-form" disabled={isLoading}>
-          {isLoading ? "Entrando..." : "Login"}
-        </button>
+      <button type="submit" className="btn-form" disabled={isLoading}>
+        {isLoading ? "Entrando..." : "Login"}
+      </button>
 
-        <div className="google">
-          <h6>Login com o Google</h6>
-          <button
-            type="button"
-            className="bi bi-google"
-            onClick={() => signIn("google", { callbackUrl: "/perfil" })}
-            disabled={isLoading}
-          />
-        </div>
-      </Form>
-    </>
+      <div className="google">
+        <h6>Login com o Google</h6>
+        <button
+          type="button"
+          className="bi bi-google"
+          onClick={() => signIn("google", { callbackUrl: "/perfil" })}
+          disabled={isLoading}
+        />
+      </div>
+    </Form>
   );
 }

@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import api from "@/service/api";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+
 export default function FormUsuario() {
   const {
     register,
@@ -17,7 +18,6 @@ export default function FormUsuario() {
   } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isPagePerfil, setIsPagePerfil] = useState(false);
   const [isFotoPerfil, setIsFotoPerfil] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const toggleMostrarSenha = () => {
@@ -25,25 +25,19 @@ export default function FormUsuario() {
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setIsFotoPerfil(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
+    setIsFotoPerfil(e.target.value);
   };
 
   const onSubmit = async (data: createDataUsuario) => {
     setIsLoading(true);
 
-    const dadosFormatados =  {
+    const dadosFormatados = {
       ...data,
       fotoPerfil: isFotoPerfil,
     };
 
-    await api.post("/usuarios", dadosFormatados)
+    await api
+      .post("/usuarios", dadosFormatados)
       .then((response) => {
         if (response.status === 201) {
           toast.success("Usuário criado com sucesso! Agora você pode logar.");
@@ -64,56 +58,54 @@ export default function FormUsuario() {
     if (nome) {
       setValue("nome", nome);
     }
-
-    setIsPagePerfil(window.location.pathname === "/perfil");
   }, [searchParams, setValue]);
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <ImagemPerfil>
-        <label htmlFor="fotoPerfil">
-          {isFotoPerfil ? (
-            <Image
-              src={isFotoPerfil || "/sem-imagem.svg"}
-              alt="Profile"
-              width={100}
-              height={100}
-            />
-          ) : (
-            <div className="placeholder">
-              <i className="bi bi-person-fill" />
-            </div>
-          )}
-        </label>
-        <input
-          type="file"
-          id="fotoPerfil"
-          accept="image/*"
-          onChange={handleImageUpload}
-        />
-      </ImagemPerfil>
+      <div className={isLoading ? "loading" : "notLoading"}>
+        <ImagemPerfil>
+          <label htmlFor="fotoPerfil">
+            {isFotoPerfil ? (
+              <Image
+                src={isFotoPerfil || "/sem-imagem.svg"}
+                alt="Imagem de Perfil"
+                width={100}
+                height={100}
+              />
+            ) : (
+              <div className="placeholder">
+                <i className="bi bi-person-fill" />
+              </div>
+            )}
+          </label>
+          <input
+            type="text"
+            id="fotoPerfil"
+            placeholder="Link da sua foto de perfil"
+            onChange={handleImageUpload}
+          />
+        </ImagemPerfil>
 
-      <GrupoInput>
-        <i className="bi bi-person-fill" />
-        <input type="text" placeholder="Nome Completo" {...register("nome")} />
-      </GrupoInput>
-      {errors.nome && <span>{errors.nome.message}</span>}
+        <GrupoInput>
+          <i className="bi bi-person-fill" />
+          <input
+            type="text"
+            placeholder="Nome Completo"
+            {...register("nome")}
+          />
+        </GrupoInput>
+        {errors.nome && <span>{errors.nome.message}</span>}
 
-      <GrupoInput>
-        <input type="date" {...register("dataNascimento")} />
-      </GrupoInput>
-      {errors.dataNascimento && <span>{errors.dataNascimento.message}</span>}
+        <GrupoInput>
+          <input type="date" {...register("dataNascimento")} />
+        </GrupoInput>
+        {errors.dataNascimento && <span>{errors.dataNascimento.message}</span>}
 
-      <GrupoInput>
-        <i className="bi bi-envelope-fill" />
-        <input type="email" placeholder="Email" {...register("email")} />
-      </GrupoInput>
-      {errors.email && <span>{errors.email.message}</span>}
-
-      <div
-        className={isPagePerfil ? "senha" : "w-100 d-flex flex-column gap-3"}
-      >
-        {isPagePerfil && <h5>Alterar Senha</h5>}
+        <GrupoInput>
+          <i className="bi bi-envelope-fill" />
+          <input type="email" placeholder="Email" {...register("email")} />
+        </GrupoInput>
+        {errors.email && <span>{errors.email.message}</span>}
 
         <GrupoInput>
           <i className="bi bi-lock-fill" />
@@ -122,13 +114,12 @@ export default function FormUsuario() {
             placeholder="Senha"
             {...register("senha")}
           />
-          <button type="button" onClick={toggleMostrarSenha}>
-            {mostrarSenha ? (
-              <i className="bi bi-eye-slash-fill" />
-            ) : (
-              <i className="bi bi-eye-fill" />
-            )}
-          </button>
+          <button
+            type="button"
+            onClick={toggleMostrarSenha}
+            disabled={isLoading}
+            className={mostrarSenha ? "bi bi-eye-slash-fill" : "bi bi-eye-fill"}
+          />
         </GrupoInput>
         {errors.senha && <span>{errors.senha.message}</span>}
 
@@ -143,15 +134,9 @@ export default function FormUsuario() {
         </div>
       </div>
 
-      {isPagePerfil ? (
-        <button type="submit" className="btn-form" disabled={isLoading}>
-          {isLoading ? "Atualizando..." : "Atualizar"}
-        </button>
-      ) : (
-        <button type="submit" className="btn-form" disabled={isLoading}>
-          {isLoading ? "Enviando..." : "Enviar"}
-        </button>
-      )}
+      <button type="submit" className="btn-form" disabled={isLoading}>
+        {isLoading ? "Enviando..." : "Enviar"}
+      </button>
     </Form>
   );
 }

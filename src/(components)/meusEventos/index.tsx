@@ -45,7 +45,7 @@ export default function MeusEventos({ usuario }: Props) {
           />
         ))
       ) : (
-        <h3>Nenhuma inscrição encontrada</h3>
+        <h3>Você não tem eventos cadastrados</h3>
       )}
 
       {eventos.length > itemsPerPage && (

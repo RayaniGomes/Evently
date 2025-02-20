@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ContainerCard } from "../styled";
 import Link from "next/link";
@@ -10,6 +11,14 @@ export default function CardEventos({
   color,
   hover,
 }: CardProps) {
+  const [pathname, setPathname] = useState("");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setPathname(window.location.pathname);
+    }
+  }, []);
+
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
       <Image
@@ -23,6 +32,7 @@ export default function CardEventos({
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
+              $evento={evento}
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}
@@ -41,7 +51,7 @@ export default function CardEventos({
         </div>
 
         <div className="botoes">
-          {window.location.pathname === "/perfil" ? (
+          {pathname === "/perfil" ? (
             <button>Cancelar inscrição</button>
           ) : (
             <button>Inscrever-se</button>

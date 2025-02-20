@@ -14,19 +14,17 @@ export default function Compartilhar({
   $top,
   $right,
   $hover,
+  $evento,
 }: StyledCompartilhar) {
   const [isOpen, setIsOpen] = useState(false);
+  const url = `${window.location.origin}/detalhe-evento/${$evento?._id}`;
 
-  const handleToggle = () => {
-    setIsOpen(!isOpen);
-  };
+  const handleToggle = () => setIsOpen(!isOpen);
+
   const handleCopyLink = () => {
-    const url = "http://localhost:3000/detalhes-evento/1";
     navigator.clipboard
       .writeText(url)
-      .then(() => {
-        toast.success("Link copiado com sucesso!");
-      })
+      .then(() => toast.success("Link copiado com sucesso!"))
       .catch((err) => {
         toast.error("Erro ao copiar o link!");
         console.error(err);
@@ -48,27 +46,30 @@ export default function Compartilhar({
         className="btn bi bi-share-fill"
         type="button"
         onClick={handleToggle}
+        aria-label="Abrir opções de compartilhamento"
       />
 
       <div className={isOpen ? "links" : "close"}>
-        <button className="btn" type="button" onClick={handleToggle}>
+        <button className="btn" type="button" onClick={handleToggle} aria-label="Fechar opções de compartilhamento">
           <i className="bi bi-share-fill" />
         </button>
-        <button type="button" onClick={handleCopyLink}>
+        <button type="button" onClick={handleCopyLink} aria-label="Copiar link">
           <i className="bi bi-copy" />
         </button>
 
         <Link
-          href="https://wa.me/?text=https://localhost:3000/detalhes-evento/1"
+          href={`https://wa.me/?text=${encodeURIComponent(url)}`}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label="Compartilhar no WhatsApp"
         >
           <i className="bi bi-whatsapp" />
         </Link>
 
         <Link
-          href="http://www.facebook.com/sharer/sharer.php?u=http://localhost:3000/api"
+          href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
           target="_blank"
+          aria-label="Compartilhar no Facebook"
         >
           <i className="bi bi-facebook" />
         </Link>

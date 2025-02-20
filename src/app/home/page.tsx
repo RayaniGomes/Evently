@@ -15,7 +15,7 @@ export default function Home() {
   }, []);
 
   return (
-    <main>
+    <>
       <Banner />
       <Container as={Section}>
         {eventos.length > 0 ? (
@@ -37,6 +37,6 @@ export default function Home() {
           <h2 className="text-center w-100 mt-5">Nenhum evento encontrado</h2>
         )}
       </Container>
-    </main>
+    </>
   );
 }
