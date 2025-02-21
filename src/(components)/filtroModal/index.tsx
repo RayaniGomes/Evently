@@ -4,7 +4,7 @@ import { Forms } from "./styled";
 import InputCheckbox from "../inputCheckbox";
 import SetFiltro from "@/help/funcaoFiltro";
 import { useEvento } from "@/stores/eventoStore";
-import { formatarData } from "@/help/funcoes";
+import { formatarData } from "@/help/formataData";
 import { FiltroModalProps } from "@/interfaces";
 
 export default function FiltroModal({
@@ -30,12 +30,7 @@ export default function FiltroModal({
             <label className="border-bottom">Data:</label>
             <input
               type="date"
-              onChange={(event) => {
-                const dataFormatada = formatarData(event.target.value);
-                if (dataFormatada) {
-                  filtrarEventos({ data: dataFormatada });
-                }
-              }}
+              onChange={(e) => filtrarEventos({ data: e.target.value })}
             />
           </div>
           <div className="item-form">

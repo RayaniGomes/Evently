@@ -4,6 +4,7 @@ import Link from "next/link";
 import Compartilhar from "../../compartinhar";
 import { CardProps } from "@/interfaces";
 import { usePathname } from "next/navigation";
+import { formatarData } from "@/help/formataData";
 
 export default function CardEventos({
   evento,
@@ -41,7 +42,7 @@ export default function CardEventos({
           <p>
             {evento.cidade} / <span>{evento.uf}</span>
           </p>
-          <h6>{evento.data}</h6>
+          <h6>{formatarData(evento.data)}</h6>
         </div>
 
         <div className="botoes">

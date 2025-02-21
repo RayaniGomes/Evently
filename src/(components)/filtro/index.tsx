@@ -3,10 +3,9 @@ import { useEvento } from "@/stores/eventoStore";
 import InputCheckbox from "../inputCheckbox";
 import { Section } from "./styled";
 import SetFiltro from "@/help/funcaoFiltro";
-import { formatarData } from "@/help/funcoes";
 
 export function Filtro() {
-  const { estados, cidades, tipos } = SetFiltro();
+  const { estados, cidades, tipos, data } = SetFiltro();
   const { filtrarEventos } = useEvento();
 
   const limparFiltro = () => {
@@ -26,14 +25,9 @@ export function Filtro() {
             Data: <hr />
           </label>
           <input
-              type="date"
-              onChange={(event) => {
-                const dataFormatada = formatarData(event.target.value);
-                if (dataFormatada) {
-                  filtrarEventos({ data: dataFormatada });
-                }
-              }}
-            />
+            type="date"
+            onChange={(e) => filtrarEventos({ data: e.target.value })}
+          />
         </div>
         <div className="item-form">
           <label htmlFor="">

@@ -43,6 +43,7 @@ export default function SetFiltro() {
   const estados = normalizarEOrdenar(eventos.map((evento) => evento.uf));
   const cidades = normalizarEOrdenar(eventos.map((evento) => evento.cidade));
   const tipos = normalizarEOrdenar(eventos.map((evento) => evento.tipo));
+  const data = normalizarEOrdenar(eventos.map((evento) => evento.data));
 
-  return { estados, cidades, tipos };
+  return { estados, cidades, tipos, data };
 }

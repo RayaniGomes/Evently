@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Evento } from "@/interfaces";
 import api from "@/service/api";
 import Compartilhar from "@/(components)/compartinhar";
+import { formatarData } from "@/help/formataData";
 
 type Params = Promise<{ id: string }>;
 
@@ -14,17 +15,15 @@ export default function DetalheEvento(props: { params: Params }) {
   const [evento, setEvento] = useState<Evento>({} as Evento);
 
   const getEventoDetalhe = async () => {
-    await api
-      .get(`/eventos/${urlParams.id}/`)
-      .then((response) => {
-        setEvento(response.data);
-      })
+    await api.get(`/eventos/${urlParams.id}/`).then((response) => {
+      setEvento(response.data);
+    });
   };
 
   useEffect(() => {
     getEventoDetalhe();
   }, [urlParams.id]);
-  
+
   if (!evento._id) {
     return (
       <Section>
@@ -78,7 +77,7 @@ export default function DetalheEvento(props: { params: Params }) {
                 <div className="d-flex gap-2">
                   <i className="bi bi-calendar-event-fill" />
                   <h6>
-                    {evento.data}, às {evento.horario}
+                    {formatarData(evento.data)}, às {evento.horario}
                   </h6>
                 </div>
               </div>

@@ -7,6 +7,7 @@ import { Evento } from "@/interfaces";
 import api from "@/service/api";
 import Compartilhar from "@/(components)/compartinhar";
 import { useEvento } from "@/stores/eventoStore";
+import { formatarData } from "@/help/formataData";
 
 type Params = Promise<{ id: string }>;
 
@@ -78,7 +79,7 @@ export default function DetalheEventoCriador(props: { params: Params }) {
                 <div className="d-flex gap-2">
                   <i className="bi bi-calendar-event-fill" />
                   <h6>
-                    {evento.data}, às {evento.horario}
+                    {formatarData(evento.data)}, às {evento.horario}
                   </h6>
                 </div>
               </div>
