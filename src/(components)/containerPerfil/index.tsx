@@ -10,6 +10,7 @@ import FormUpdateUsuario from "../formularios/formUpdateUsuario";
 import { Usuario } from "@/interfaces";
 import api from "@/service/api";
 import { toast } from "react-toastify";
+import { primeiroNome } from "@/help/funcoesUteis";
 
 type User = {
   name: string;
@@ -41,7 +42,7 @@ export default function ContainerPerfil({ name, email }: User) {
   return (
     <>
       <Container as={Section}>
-        <Titulo titulo={`Olá, ${name}`} border="--azul-escuro" />
+        <Titulo titulo={`Olá, ${primeiroNome(name)}`} border="--azul-escuro" />
         <div className="perfil">
           <Botoes>
             <button

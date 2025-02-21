@@ -4,7 +4,7 @@ import Link from "next/link";
 import Compartilhar from "../../compartinhar";
 import { CardProps } from "@/interfaces";
 import { usePathname } from "next/navigation";
-import { formatarData } from "@/help/formataData";
+import { formatarData } from "@/help/funcoesUteis";
 
 export default function CardEventos({
   evento,

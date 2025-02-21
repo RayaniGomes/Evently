@@ -7,7 +7,7 @@ import { Evento } from "@/interfaces";
 import api from "@/service/api";
 import Compartilhar from "@/(components)/compartinhar";
 import { useEvento } from "@/stores/eventoStore";
-import { formatarData } from "@/help/formataData";
+import { formatarData } from "@/help/funcoesUteis";
 
 type Params = Promise<{ id: string }>;
 

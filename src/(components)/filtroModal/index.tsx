@@ -4,7 +4,7 @@ import { Forms } from "./styled";
 import InputCheckbox from "../inputCheckbox";
 import SetFiltro from "@/help/funcaoFiltro";
 import { useEvento } from "@/stores/eventoStore";
-import { formatarData } from "@/help/formataData";
+import { formatarData } from "@/help/funcoesUteis";
 import { FiltroModalProps } from "@/interfaces";
 
 export default function FiltroModal({

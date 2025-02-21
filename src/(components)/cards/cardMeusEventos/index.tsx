@@ -4,7 +4,7 @@ import Link from "next/link";
 import Compartilhar from "../../compartinhar";
 import { CardProps } from "@/interfaces";
 import { useEvento } from "@/stores/eventoStore";
-import { formatarData } from "@/help/formataData";
+import { formatarData } from "@/help/funcoesUteis";
 
 export default function CardMeusEventos({
   evento,
