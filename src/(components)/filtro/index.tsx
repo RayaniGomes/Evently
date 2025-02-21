@@ -7,13 +7,10 @@ import { formatarData } from "@/help/funcoes";
 
 export function Filtro() {
   const { estados, cidades, tipos } = SetFiltro();
-  const { filtroData, filtroEstado, filtroCidade, filtroTipo } = useEvento();
+  const { filtrarEventos } = useEvento();
 
   const limparFiltro = () => {
-    filtroData(" ");
-    filtroEstado("");
-    filtroCidade("");
-    filtroTipo("");
+    filtrarEventos({});
   };
 
   return (
@@ -29,12 +26,14 @@ export function Filtro() {
             Data: <hr />
           </label>
           <input
-            type="date"
-            onChange={(event) => {
-              const dataFormatada = formatarData(event.target.value);
-              filtroData(dataFormatada);
-            }}
-          />
+              type="date"
+              onChange={(event) => {
+                const dataFormatada = formatarData(event.target.value);
+                if (dataFormatada) {
+                  filtrarEventos({ data: dataFormatada });
+                }
+              }}
+            />
         </div>
         <div className="item-form">
           <label htmlFor="">
@@ -48,7 +47,7 @@ export function Filtro() {
                 htmlFor={uf}
                 label={uf}
                 color="--branco"
-                onChange={() => filtroEstado(uf)}
+                onChange={() => filtrarEventos({ uf })}
               />
             ))}
           </div>
@@ -65,7 +64,7 @@ export function Filtro() {
                 htmlFor={cidade}
                 label={cidade}
                 color="--branco"
-                onChange={() => filtroCidade(cidade)}
+                onChange={() => filtrarEventos({ cidade })}
               />
             ))}
           </div>
@@ -82,7 +81,7 @@ export function Filtro() {
                 htmlFor={tipo}
                 label={tipo}
                 color="--branco"
-                onChange={() => filtroTipo(tipo)}
+                onChange={() => filtrarEventos({ tipo })}
               />
             ))}
           </div>

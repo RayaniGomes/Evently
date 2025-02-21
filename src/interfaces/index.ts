@@ -26,11 +26,7 @@ export interface PropEventoStore {
   getEventos: () => void;
   getCriadorEventos: (id: string) => void;
   deleteEvento: (id: string) => void;
-  filtroEstado: (uf: string) => void;
-  filtroCidade: (cidade: string) => void;
-  filtroTipo: (tipo: string) => void;
-  filtroData: (data: string) => void;
-  filtroNome: (nome: string) => void;
+  filtrarEventos: (filtros: {}) => void;
 }
 
 export interface Usuario {

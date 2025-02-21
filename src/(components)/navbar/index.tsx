@@ -16,7 +16,7 @@ import { Container } from "react-bootstrap";
 import { signOut } from "next-auth/react";
 
 export default function Navbar() {
-  const { filtroNome } = useEvento();
+  const { eventos, filtrarEventos } = useEvento();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [itemAtivo, setItemAtivo] = useState("home");
 
@@ -25,11 +25,9 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    const path = window.location.pathname;
-    if (path === "/") {
-      setItemAtivo("home");
-    } else {
-      setItemAtivo(path.slice(1));
+    if (typeof window !== "undefined") {
+      const path = window.location.pathname;
+      setItemAtivo(path === "/" ? "home" : path.slice(1));
     }
   }, []);
 
@@ -50,7 +48,10 @@ export default function Navbar() {
           <input
             type="search"
             placeholder="Pesquise pelo nome do seu evento"
-            onChange={(e) => filtroNome(e.target.value)}
+            onChange={(e) => {
+              console.log("Pesquisando por:", e.target.value);
+              filtrarEventos({ nome: e.target.value });
+            }}
           />
           <button type="submit">
             <i className="bi bi-search"></i>
@@ -95,8 +96,12 @@ export default function Navbar() {
               <i className="bi bi-person-fill" />
             </Dropdown.Toggle>
             <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Item href="/perfil">Perfil</Dropdown.Item>
-              <button type="button" onClick={() => signOut()}>Sair</button>
+              <Dropdown.Item as={Link} href="/perfil">
+                Perfil
+              </Dropdown.Item>
+              <Dropdown.Item as="button" onClick={() => signOut()}>
+                Sair
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </Login>
@@ -148,10 +153,9 @@ export default function Navbar() {
           </div>
         </NavMobile>
 
-        <ButtonMenuHamburger
-          className={isMenuOpen ? "bi bi-x" : "bi bi-list"}
-          onClick={toggleMenu}
-        />
+        <ButtonMenuHamburger onClick={toggleMenu}>
+          <i className={isMenuOpen ? "bi bi-x" : "bi bi-list"} />
+        </ButtonMenuHamburger>
       </Container>
     </Nav>
   );

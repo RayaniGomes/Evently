@@ -1,4 +1,3 @@
-"use client";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Forms } from "./styled";
@@ -12,14 +11,11 @@ export default function FiltroModal({
   showModal,
   toggleModal,
 }: FiltroModalProps) {
-  const { estados, cidades, tipos } = SetFiltro();
-  const { filtroData, filtroEstado, filtroCidade, filtroTipo } = useEvento();
+  const { estados = [], cidades = [], tipos = [] } = SetFiltro() || {};
+  const { filtrarEventos } = useEvento();
 
   const limparFiltro = () => {
-    filtroData(" ");
-    filtroEstado("");
-    filtroCidade("");
-    filtroTipo("");
+    filtrarEventos({});
   };
 
   return (
@@ -36,7 +32,9 @@ export default function FiltroModal({
               type="date"
               onChange={(event) => {
                 const dataFormatada = formatarData(event.target.value);
-                filtroData(dataFormatada);
+                if (dataFormatada) {
+                  filtrarEventos({ data: dataFormatada });
+                }
               }}
             />
           </div>
@@ -50,7 +48,7 @@ export default function FiltroModal({
                   htmlFor={uf}
                   label={uf}
                   color="--azul-escuro"
-                  onChange={() => filtroEstado(uf)}
+                  onChange={() => filtrarEventos({ uf })}
                 />
               ))}
             </div>
@@ -65,7 +63,7 @@ export default function FiltroModal({
                   htmlFor={cidade}
                   label={cidade}
                   color="--azul-escuro"
-                  onChange={() => filtroCidade(cidade)}
+                  onChange={() => filtrarEventos({ cidade })}
                 />
               ))}
             </div>
@@ -80,7 +78,7 @@ export default function FiltroModal({
                   htmlFor={tipo}
                   label={tipo}
                   color="--azul-escuro"
-                  onChange={() => filtroTipo(tipo)}
+                  onChange={() => filtrarEventos({ tipo })}
                 />
               ))}
             </div>

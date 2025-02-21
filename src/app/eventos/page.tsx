@@ -11,26 +11,28 @@ import { Container } from "react-bootstrap";
 import FuncaoPaginacao from "@/help/funcaoPaginacao";
 
 export default function Eventos() {
-  const { eventos, getEventos, filtroNome } = useEvento();
+  const { eventos, getEventos, filtrarEventos } = useEvento();
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  
   const {
     paginatedEventos,
     totalPages,
     currentPage,
     handlePageClick,
     itemsPerPage,
-  } = FuncaoPaginacao();
+  } = FuncaoPaginacao(eventos);
+
   const toggleModal = () => {
     setShowModal(!showModal);
   };
-  
+
   const carregarEventos = async () => {
-    setIsLoading(true); 
-    await getEventos(); 
-    setIsLoading(false); 
-  };       
-  
+    setIsLoading(true);
+    await getEventos();
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     carregarEventos();
   }, []);
@@ -49,20 +51,17 @@ export default function Eventos() {
               <input
                 type="search"
                 placeholder="Pesquise pelo nome do seu evento"
-                onChange={(e) => filtroNome(e.target.value)}
+                onChange={(e) => filtrarEventos({ nome: e.target.value })}
               />
               <button type="submit" className="bi bi-search" />
             </div>
-            <button
-              className="bi bi-funnel-fill filtro"
-              onClick={toggleModal}
-            />
+            <button className="bi bi-funnel-fill filtro" onClick={toggleModal} />
             <FiltroModal showModal={showModal} toggleModal={toggleModal} />
           </Pesquisar>
           <Section>
             <Filtro />
             <div className="container-cards">
-              {eventos.length > 0 ? (
+              {eventos.length > 0 && paginatedEventos.length > 0 ? (
                 <div className="cards">
                   {paginatedEventos.map((evento) => (
                     <CardEventos

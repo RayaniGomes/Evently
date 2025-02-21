@@ -28,7 +28,11 @@ export const useEvento = create<PropEventoStore>((set) => ({
       .delete(`/eventos/${id}`)
       .then((res) => {
         if (res.status === 204) {
-          set({ eventos: useEvento.getState().eventos.filter((evento: Evento) => evento._id !== id) });
+          set({
+            eventos: useEvento
+              .getState()
+              .eventos.filter((evento: Evento) => evento._id !== id),
+          });
           toast.success("Evento cancelado com sucesso!");
         }
       })
@@ -37,74 +41,25 @@ export const useEvento = create<PropEventoStore>((set) => ({
       });
   },
 
-  filtroEstado: (uf: string) => {
-    if (!uf) {
-      useEvento.getState().getEventos();
-      return;
-    }
+  filtrarEventos: async (filtros: {
+    data?: string;
+    cidade?: string;
+    uf?: string;
+    tipo?: string;
+    nome?: string;
+  }) => {
+    const params = new URLSearchParams();
 
-    const eventosFiltrados = useEvento
-      .getState()
-      .copyEventos.filter(
-        (evento) => evento.uf?.toLowerCase() === uf.toLowerCase()
-      );
+    if (filtros.data) params.append("data", filtros.data.replace(/\//g, "-"));
+    if (filtros.cidade) params.append("cidade", filtros.cidade);
+    if (filtros.uf) params.append("uf", filtros.uf);
+    if (filtros.tipo) params.append("tipo", filtros.tipo);
+    if (filtros.nome) params.append("nome", filtros.nome);
 
-    useEvento.setState({
-      eventos: eventosFiltrados,
+    const query = params.toString() ? `?${params.toString()}` : "";
+
+    await api.get(`/eventos${query}`).then((response) => {
+      set({ eventos: response.data });
     });
-  },
-
-  filtroCidade: (cidade: string) => {
-    if (!cidade) {
-      useEvento.getState().getEventos();
-      return;
-    }
-
-    useEvento.setState((state) => ({
-      eventos: state.copyEventos.filter(
-        (evento) => evento.cidade?.toLowerCase() === cidade.toLowerCase()
-      ),
-    }));
-  },
-
-  filtroTipo: (tipo: string) => {
-    if (!tipo) {
-      useEvento.getState().getEventos();
-      return;
-    }
-
-    useEvento.setState((state) => ({
-      eventos: state.copyEventos.filter(
-        (evento) => evento.tipo?.toLowerCase() === tipo.toLowerCase()
-      ),
-    }));
-  },
-
-  filtroData: (data: string) => {
-    if (!data) {
-      useEvento.getState().getEventos();
-      return;
-    }
-
-    const newData = data.replace(/-/g, "/");
-
-    useEvento.setState((state) => ({
-      eventos: state.copyEventos.filter((evento) => evento.data === newData),
-    }));
-  },
-
-  filtroNome: (nome: string) => {
-    if (!nome) {
-      useEvento.setState((state) => ({
-        eventos: state.copyEventos,
-      }));
-      return;
-    }
-
-    useEvento.setState((state) => ({
-      eventos: state.copyEventos.filter((evento) =>
-        evento.nome?.toLowerCase().includes(nome.toLowerCase())
-      ),
-    }));
   },
 }));

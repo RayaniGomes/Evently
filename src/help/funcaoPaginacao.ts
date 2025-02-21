@@ -1,7 +1,7 @@
 "use client";
-import { useEvento } from "@/stores/eventoStore";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { Evento } from "@/interfaces";
 
 /**
  * Componente de paginação para os cards. Ele renderiza apenas uma
@@ -9,8 +9,7 @@ import { usePathname } from "next/navigation";
  * necessarias para navegar entre as páginas.
 **/
 
-export default function FuncaoPaginacao() {
-  const { eventos } = useEvento();
+export default function FuncaoPaginacao(eventos: Evento[]) {
   const [currentPage, setCurrentPage] = useState(1);
   const pathname = usePathname();
   const itemsPerPage = pathname === "/eventos" ? 10 : 5;
