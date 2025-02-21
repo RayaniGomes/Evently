@@ -49,6 +49,7 @@ export interface CardProps {
 }
 
 export interface FiltroModalProps {
+  evento?: Evento;
   showModal: boolean;
   toggleModal: () => void;
 }

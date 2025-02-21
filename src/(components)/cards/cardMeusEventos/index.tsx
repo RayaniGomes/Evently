@@ -5,6 +5,8 @@ import Compartilhar from "../../compartinhar";
 import { CardProps } from "@/interfaces";
 import { useEvento } from "@/stores/eventoStore";
 import { formatarData } from "@/help/funcoesUteis";
+import { useState } from "react";
+import ModalUpdateEvento from "@/(components)/modalUlpdateEvento";
 
 export default function CardMeusEventos({
   evento,
@@ -13,6 +15,12 @@ export default function CardMeusEventos({
   hover,
 }: CardProps) {
   const { deleteEvento } = useEvento();
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
+
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
       <Image
@@ -54,7 +62,8 @@ export default function CardMeusEventos({
           >
             Cancelar evento
           </button>
-          <button>Editar evento</button>
+          <button onClick={toggleModal}>Editar evento</button>
+          <ModalUpdateEvento showModal={showModal} toggleModal={toggleModal} evento={evento} />
           <Link href={`/detalhe-evento-criador/${evento._id}`}>Detalhes</Link>
         </div>
       </div>

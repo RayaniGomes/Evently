@@ -50,13 +50,11 @@ export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
 
     api
       .patch(`/usuarios/${usuario?._id}`, formData)
-      .then((response) => {
-        console.log("Resposta do servidor:", response.data);
+      .then(() => {
         toast.success("Dados atualizados com sucesso!");
         getUsuario();
       })
-      .catch((error) => {
-        console.error("Erro ao atualizar o usuário:", error);
+      .catch(() => {
         toast.error("Erro ao atualizar o usuário, tente novamente!");
       })
       .finally(() => {

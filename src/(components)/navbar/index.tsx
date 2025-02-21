@@ -115,7 +115,7 @@ export default function Navbar() {
             className={itemAtivo === "login" ? "active" : ""}
             onClick={() => setItemAtivo("login")}
           >
-            {!session ? "Login" : primeiroNome(usuario?.nome ?? "")}
+            {!session ? "LOGIN" : primeiroNome(usuario?.nome ?? "")}
           </Link>
 
           <Dropdown>
