@@ -15,7 +15,5 @@ export default async function Perfil() {
     email: session.user.email ?? "",
   };
 
-  console.log(user);
-
   return <ContainerPerfil {...user} />;
 }

@@ -18,7 +18,6 @@ import api from "@/service/api";
 import { toast } from "react-toastify";
 import { Usuario } from "@/interfaces";
 import { primeiroNome } from "@/help/funcoesUteis";
-import { redirect } from "next/navigation";
 
 export default function Navbar() {
   const { filtrarEventos } = useEvento();

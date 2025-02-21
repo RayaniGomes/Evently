@@ -133,10 +133,6 @@ export const Login = styled.div`
     &.active::before {
       scale: 1;
     }
-
-    @media (max-width: 768px) {
-      display: none;
-    }
   }
 
   .btn-primary {
@@ -255,6 +251,14 @@ export const NavMobile = styled.div`
       border: none;
       background-color: transparent;
     }
+  }
+
+  .btn-sair {
+    border: none;
+    background-color: transparent;
+    color: var(--branco);
+    font-size: 14px;
+    font-weight: 400;
   }
 
   @media (max-width: 768px) {
