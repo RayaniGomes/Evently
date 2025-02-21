@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Form, GrupoInput } from "../formUsuario/styled";
+import { Form, GrupoInput } from "../styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";

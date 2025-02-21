@@ -6,6 +6,17 @@ export const FormEvento = styled.form`
   flex-direction: column;
   gap: 1rem;
   padding: 0 3rem;
+  .notLoading {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .loading {
+    width: 100%;
+    opacity: 0.5;
+  }
 
   .input-duplo {
     width: 100%;

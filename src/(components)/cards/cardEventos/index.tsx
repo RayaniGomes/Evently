@@ -40,12 +40,12 @@ export default function CardEventos({
           </div>
           <p>{evento.local}</p>
           <p>
-            {evento.cidade} / <span>{evento.uf}</span>
+            {evento.cidade} / {evento.uf}
           </p>
           <h6>{formatarData(evento.data)}</h6>
         </div>
 
-        <div className="botoes">
+        <div className="botoes-card ">
           {pathname === "/eventos" ? (
             <button>Inscrever-se</button>
           ) : (

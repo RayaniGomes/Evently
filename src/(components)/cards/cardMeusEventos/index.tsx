@@ -39,12 +39,12 @@ export default function CardMeusEventos({
           </div>
           <p>{evento.local}</p>
           <p>
-            {evento.cidade} / <span>{evento.uf}</span>
+            {evento.cidade} / {evento.uf}
           </p>
           <h6>{formatarData(evento.data)}</h6>
         </div>
 
-        <div className="botoes">
+        <div className="botoes-card">
           <button
             onClick={() => {
               if (confirm("Tem certeza que deseja cancelar este evento?")) {

@@ -1,6 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { Form, GrupoInput, ImagemPerfil } from "./styled";
+import { Form, GrupoInput, ImagemPerfil } from "../styled";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";

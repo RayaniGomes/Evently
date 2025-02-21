@@ -7,6 +7,18 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 1rem;
 
+  .notLoading {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .loading {
+    width: 100%;
+    opacity: 0.5;
+  }
+
   .senha {
     width: 100%;
     display: flex;
@@ -158,17 +170,12 @@ export const GrupoInput = styled.div`
   }
 
   button {
-    width: 20px;
-    height: 20px;
     border: none;
     background-color: transparent;
     color: var(--branco);
     font-size: 20px;
-
-    &:hover {
-      opacity: 0.7;
-    }
   }
+
 `;
 
 export const ImagemPerfil = styled.div`
@@ -180,8 +187,8 @@ export const ImagemPerfil = styled.div`
 
   label {
     .placeholder {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       display: flex;
       flex-direction: column;
@@ -196,8 +203,8 @@ export const ImagemPerfil = styled.div`
     }
 
     img {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
     }
@@ -211,5 +218,10 @@ export const ImagemPerfil = styled.div`
     padding: 0.25rem .5rem;
     background-color: transparent;
     color: var(--branco);
+    font-size: 14px;
+    
+    &::placeholder {
+      color: var(--branco);
+    }
   }
 `;

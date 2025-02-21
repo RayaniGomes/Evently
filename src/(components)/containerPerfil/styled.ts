@@ -38,11 +38,13 @@ export const Botoes = styled.div`
     border-radius: 10px 10px 0 0;
     font-size: 16px;
     font-weight: 600;
+    color: var(--azul-escuro);
 
     &:hover {
       transform: scale(1);
       background-color: var(--azul-escuro);
       color: var(--branco);
+      opacity: 1;
     }
   }
 

@@ -14,7 +14,7 @@ export default function MinhasInscrições() {
     currentPage,
     handlePageClick,
     itemsPerPage,
-  } = FuncaoPaginacao();
+  } = FuncaoPaginacao(eventos);
 
   useEffect(() => {
     getEventos();

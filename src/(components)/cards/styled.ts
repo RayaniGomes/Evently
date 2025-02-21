@@ -34,10 +34,6 @@ export const ContainerCard = styled.div<StyledCard>`
     p {
       text-transform: capitalize;
     }
-
-    span {
-      text-transform: uppercase;
-    }
   }
 
   .nome-evento {
@@ -45,7 +41,7 @@ export const ContainerCard = styled.div<StyledCard>`
     text-transform: uppercase;
   }
 
-  .botoes {
+  .botoes-card {
     display: flex;
     justify-content: end;
     align-items: center;
