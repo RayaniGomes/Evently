@@ -15,6 +15,14 @@ export const useEvento = create<PropEventoStore>((set) => ({
     });
   },
 
+  getEventoID: async (id: string) => {
+    await api.get(`/eventos/${id}`).then((response) => {
+      set({
+        eventos: response.data,
+      });
+    });
+  },
+
   getCriadorEventos: async (id: string) => {
     await api.get(`/eventos?criador=${id}`).then((response) => {
       set({

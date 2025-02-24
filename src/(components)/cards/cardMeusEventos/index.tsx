@@ -13,6 +13,7 @@ export default function CardMeusEventos({
   bgColor,
   color,
   hover,
+  getUsuario,
 }: CardProps) {
   const { deleteEvento } = useEvento();
   const [showModal, setShowModal] = useState(false);
@@ -63,7 +64,7 @@ export default function CardMeusEventos({
             Cancelar evento
           </button>
           <button onClick={toggleModal}>Editar evento</button>
-          <ModalUpdateEvento showModal={showModal} toggleModal={toggleModal} evento={evento} />
+          <ModalUpdateEvento showModal={showModal} toggleModal={toggleModal} evento={evento} getUsuario={getUsuario}/>
           <Link href={`/detalhe-evento-criador/${evento._id}`}>Detalhes</Link>
         </div>
       </div>

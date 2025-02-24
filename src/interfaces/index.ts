@@ -24,6 +24,7 @@ export interface PropEventoStore {
   eventos: Evento[];
   copyEventos: Evento[];
   getEventos: () => void;
+  getEventoID: (id: string) => void;
   getCriadorEventos: (id: string) => void;
   deleteEvento: (id: string) => void;
   filtrarEventos: (filtros: {}) => void;
@@ -46,12 +47,14 @@ export interface CardProps {
   bgColor: string;
   color: string;
   hover: string;
+  getUsuario?: () => void;
 }
 
 export interface FiltroModalProps {
   evento?: Evento;
   showModal: boolean;
   toggleModal: () => void;
+  getUsuario?: () => void;
 }
 
 export interface IndiceProps {

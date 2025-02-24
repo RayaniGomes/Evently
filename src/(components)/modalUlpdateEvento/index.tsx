@@ -10,12 +10,13 @@ export default function ModalUpdateEvento({
   showModal,
   toggleModal,
   evento,
+  getUsuario,
 }: FiltroModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState("");
   const [data, setData] = useState("");
   const [horario, setHorario] = useState("");
-  const [maxPessoas, setMaxPessoas] = useState<Number>();
+  const [maxPessoas, setMaxPessoas] = useState<number>();
   const [tipo, setTipo] = useState("");
   const [imagem, setImagem] = useState("");
   const [descricao, setDescricao] = useState("");
@@ -44,7 +45,7 @@ export default function ModalUpdateEvento({
       setUf(evento.uf);
       setComplemento(evento.complemento || "");
     }
-  }, [showModal]);
+  }, [evento]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,27 +55,37 @@ export default function ModalUpdateEvento({
       nome: nome,
       data: data,
       horario: horario,
-      maxPessoas: Number(maxPessoas),
+      maxPessoas: maxPessoas ? Number(maxPessoas) : 0,
       tipo: tipo,
       imagem: imagem,
       descricao: descricao,
       local: local,
       endereco: endereco,
-      numero: numero,
+      numero: numero ? Number(numero) : null,
       bairro: bairro,
       cidade: cidade,
       uf: uf,
       complemento: complemento,
+      criador: evento?.criador,
     };
-    
+
     api
       .patch(`/eventos/${evento?._id}`, formData)
       .then((response) => {
+        console.log("Resposta da API:", response);
         if (response.status === 200) {
           toast.success("Evento atualizado com sucesso!");
+          if (getUsuario) {
+            getUsuario();
+            toggleModal();
+          }
         }
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error(
+          "Erro na requisição:",
+          error.response?.data || error.message
+        );
         toast.error("Erro ao atualizar o evento, tente novamente!");
       })
       .finally(() => {
@@ -136,7 +147,12 @@ export default function ModalUpdateEvento({
                     id="maxPessoas"
                     placeholder="2000"
                     defaultValue={evento?.maxPessoas}
-                    onChange={(e) => setMaxPessoas(Number(e.target.value))}
+                    onChange={(e) =>
+                      setMaxPessoas(
+                        e.target.value ? Number(e.target.value) : undefined
+                      )
+                    }
+                    min="1"
                   />
                 </div>
               </GrupoInput>
@@ -219,7 +235,11 @@ export default function ModalUpdateEvento({
                       type="text"
                       placeholder="123"
                       defaultValue={evento?.numero}
-                      onChange={(e) => setNumero(e.target.value)}
+                      onChange={(e) =>
+                        setNumero(
+                          evento?.numero ? evento.numero.toString() : ""
+                        )
+                      }
                     />
                   </div>
                 </GrupoInput>

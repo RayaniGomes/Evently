@@ -9,8 +9,12 @@ import { useEvento } from "@/stores/eventoStore";
 
 interface Props {
   usuario: Usuario | null;
+  getUsuario: () => void;
 }
-export default function MeusEventos({ usuario }: Props) {
+export default function MeusEventos({
+  usuario,
+  getUsuario: getUsuarios,
+}: Props) {
   const { eventos, getCriadorEventos } = useEvento();
 
   const {
@@ -41,6 +45,7 @@ export default function MeusEventos({ usuario }: Props) {
             bgColor="--branco"
             color="--azul-escuro"
             hover="--drop-shadow-azul-hover"
+            getUsuario={getUsuarios}
           />
         ))
       ) : (

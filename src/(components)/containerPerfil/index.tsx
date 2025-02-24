@@ -87,7 +87,7 @@ export default function ContainerPerfil({ name, email }: User) {
                 )}
                 {isAtivar === "Minhas Inscrições" && <MinhasInscrições />}
                 {isAtivar === "Meus Eventos" && (
-                  <MeusEventos usuario={usuario} />
+                  <MeusEventos usuario={usuario} getUsuario={getUsuario} />
                 )}
                 {isAtivar === "Criar Evento" && (
                   <FormCriarEvento usuario={usuario} />
