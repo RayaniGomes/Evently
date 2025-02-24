@@ -2,12 +2,12 @@
 import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { Detalhe, Section } from "./styled";
-import { toast } from "react-toastify";
 import { Evento } from "@/interfaces";
 import api from "@/service/api";
 import Compartilhar from "@/(components)/compartinhar";
 import { useEvento } from "@/stores/eventoStore";
 import { formatarData } from "@/help/funcoesUteis";
+import ModalUpdateEvento from "@/(components)/modalUlpdateEvento";
 
 type Params = Promise<{ id: string }>;
 
@@ -15,6 +15,11 @@ export default function DetalheEventoCriador(props: { params: Params }) {
   const urlParams = use(props.params);
   const { deleteEvento } = useEvento();
   const [evento, setEvento] = useState<Evento>({} as Evento);
+  const [showModal, setShowModal] = useState(false);
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+  };
 
   const getEventoDetalhe = async () => {
     await api.get(`/eventos/${urlParams.id}/`).then((response) => {
@@ -132,7 +137,8 @@ export default function DetalheEventoCriador(props: { params: Params }) {
               >
                 Cancelar evento
               </button>
-              <button className="btnInscricao">Editar evento</button>
+              <button className="btnInscricao" onClick={toggleModal} >Editar evento</button>
+              <ModalUpdateEvento showModal={showModal} toggleModal={toggleModal} evento={evento} getUsuario={getEventoDetalhe}/>
             </div>
           </div>
         </Detalhe>

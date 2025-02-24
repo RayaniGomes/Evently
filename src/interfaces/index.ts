@@ -1,5 +1,3 @@
-import { createDataEvento } from "@/schema/evento.schema";
-
 export interface Evento {
   _id: string;
   nome: string;
@@ -24,7 +22,6 @@ export interface PropEventoStore {
   eventos: Evento[];
   copyEventos: Evento[];
   getEventos: () => void;
-  getEventoID: (id: string) => void;
   getCriadorEventos: (id: string) => void;
   deleteEvento: (id: string) => void;
   filtrarEventos: (filtros: {}) => void;
@@ -55,6 +52,7 @@ export interface FiltroModalProps {
   showModal: boolean;
   toggleModal: () => void;
   getUsuario?: () => void;
+  getEvento?: () => void;
 }
 
 export interface IndiceProps {

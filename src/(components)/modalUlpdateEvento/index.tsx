@@ -11,6 +11,7 @@ export default function ModalUpdateEvento({
   toggleModal,
   evento,
   getUsuario,
+  getEvento,
 }: FiltroModalProps) {
   const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState("");
@@ -78,6 +79,7 @@ export default function ModalUpdateEvento({
           if (getUsuario) {
             getUsuario();
             toggleModal();
+            getEvento?.();
           }
         }
       })
