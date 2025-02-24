@@ -3,8 +3,11 @@ import { ContainerCard } from "../styled";
 import Link from "next/link";
 import Compartilhar from "../../compartinhar";
 import { CardProps } from "@/interfaces";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 import { formatarData } from "@/help/funcoesUteis";
+import { useSession } from "next-auth/react";
+import api from "@/service/api";
+import { toast } from "react-toastify";
 
 export default function CardEventos({
   evento,
@@ -13,6 +16,41 @@ export default function CardEventos({
   hover,
 }: CardProps) {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+
+
+const handleInscricao = async () => {
+  if (!session) {
+    toast.warning("Por favor, faca login para realizar inscrição!");
+    redirect("/login");
+  }
+
+  const dados = {
+    ...evento,
+    inscritos: {
+      id: session.user.id,
+      nome: session.user.name,
+    },
+  };
+
+  await api
+    .patch(`/eventos/${evento._id}`, dados)
+    .then((response) => {
+      if (session.user.name === evento.inscritos) {
+        toast.warning("Voce já esta inscrito nesse evento!");
+      } else {
+        if (response.status === 200) {
+          toast.success("Inscricao realizada com sucesso!");
+        } else {
+          toast.error("Erro ao realizar inscrição, tente novamente!");
+        }
+      }
+    })
+    .catch (() =>{
+      toast.error("Erro ao realizar inscrição, tente novamente!");
+    });
+};
 
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
@@ -47,7 +85,7 @@ export default function CardEventos({
 
         <div className="botoes-card ">
           {pathname === "/eventos" ? (
-            <button>Inscrever-se</button>
+            <button onClick={handleInscricao}>Inscrever-se</button>
           ) : (
             <button>Cancelar inscrição</button>
           )}
