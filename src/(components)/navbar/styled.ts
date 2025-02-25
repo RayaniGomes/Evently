@@ -106,7 +106,7 @@ export const Menu = styled.div`
 export const Login = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: .5rem;
 
   a {
     font-size: 14px;
@@ -155,6 +155,10 @@ export const Login = styled.div`
     }
   }
 
+  .dropdown img {
+    border-radius: 50% !important;
+  }
+
   .dropdown-toggle:after {
     display: none;
   }
@@ -163,7 +167,8 @@ export const Login = styled.div`
     background-color: var(--branco);
     border: none;
 
-    a, button {
+    a,
+    button {
       width: 100%;
       display: flex;
       flex-direction: column;
