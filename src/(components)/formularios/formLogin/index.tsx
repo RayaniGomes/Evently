@@ -33,7 +33,7 @@ export default function FormLogin() {
 
     if (dataLogin?.error) {
       if (dataLogin.error === "invalid_credentials") {
-        toast.error("Senha incorretos");
+        toast.error("Email ou senha incorretos");
       } else if (dataLogin.error === "register_required") {
         toast.error("Usuário não encontrado. Por favor, cadastre-se.");
       } else {

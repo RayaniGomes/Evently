@@ -8,6 +8,10 @@ import { formatarData } from "@/help/funcoesUteis";
 import { useSession } from "next-auth/react";
 import api from "@/service/api";
 import { toast } from "react-toastify";
+import { useEvento } from "@/stores/eventoStore";
+import Email from "next-auth/providers/email";
+import { useInscrito } from "@/stores/inscritosStore";
+import { useState } from "react";
 
 export default function CardEventos({
   evento,
@@ -17,40 +21,50 @@ export default function CardEventos({
 }: CardProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
+  const [isLoading, setIsLoading] = useState(false);
 
+  const handleInscricao = async () => {
+    setIsLoading(true);
 
+    if (!session) {
+      toast.warning("Por favor, faça login para realizar inscrição!");
+      redirect("/login");
+    }
 
-const handleInscricao = async () => {
-  if (!session) {
-    toast.warning("Por favor, faca login para realizar inscrição!");
-    redirect("/login");
-  }
+    const dados = {
+      evento: {
+        id: evento._id,
+        nome: evento.nome,
+      },
+      inscritos: [
+        {
+          id: session.user.id,
+          nome: session.user.name,
+          email: session.user.email,
+        },
+      ],
+    };
 
-  const dados = {
-    ...evento,
-    inscritos: {
-      id: session.user.id,
-      nome: session.user.name,
-    },
-  };
-
-  await api
-    .patch(`/eventos/${evento._id}`, dados)
-    .then((response) => {
-      if (session.user.name === evento.inscritos) {
-        toast.warning("Voce já esta inscrito nesse evento!");
-      } else {
-        if (response.status === 200) {
-          toast.success("Inscricao realizada com sucesso!");
+    await api
+      .post("/inscricoes", dados, {
+        headers: { "Content-Type": "application/json" },
+      })
+      .then((response) => {
+        if (response.status === 201) {
+          toast.success("Inscrição realizada com sucesso!");
+        }
+      })
+      .catch((response) => {
+        if (response.status === 400) {
+          toast.warning("Usuário já esta inscrito nesse evento!");
         } else {
           toast.error("Erro ao realizar inscrição, tente novamente!");
         }
-      }
-    })
-    .catch (() =>{
-      toast.error("Erro ao realizar inscrição, tente novamente!");
-    });
-};
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
@@ -85,7 +99,13 @@ const handleInscricao = async () => {
 
         <div className="botoes-card ">
           {pathname === "/eventos" ? (
-            <button onClick={handleInscricao}>Inscrever-se</button>
+            <button
+              type="button"
+              onClick={handleInscricao}
+              disabled={isLoading}
+            >
+              {isLoading ? "Carregando..." : "Inscrever-se"}
+            </button>
           ) : (
             <button>Cancelar inscrição</button>
           )}
