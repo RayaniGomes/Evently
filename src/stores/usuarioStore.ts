@@ -4,31 +4,30 @@ import { toast } from "react-toastify";
 import { create } from "zustand";
 
 interface PropUsuarioStore {
-  usuarios: Usuario[];
-  getUsuario: () => void;
-  criarUsuario: (usuario: Usuario) => void;
+  inscricoes: Inscricoes[];
+  getMeusEventos: (nome: string) => void;
 }
 
-export const useUsuario = create<PropUsuarioStore>((set) => ({
-  usuarios: [],
-  getUsuario: async () => {
-    await api.get("/usuarios").then((response) => {
+export interface Inscricoes {
+  evento: {
+    id: string;
+    nome: string;
+  },
+  inscritos: {
+    id: string;
+    nome: string;
+    email: string;
+  }
+}
+
+export const useInscricoes = create<PropUsuarioStore>((set) => ({
+  inscricoes: [],
+  getMeusEventos: async (nome: string) => {
+    await api.get(`/inscricoes?nome=${nome}`).then((response) => {
       set({
-        usuarios: response.data.data,
+        inscricoes: response.data.data,
       });
       console.log(response);
     });
-  },
-  criarUsuario: async (user: Usuario) => {
-    await api.post("/usuarios", user).then((response) => {
-      set({
-        usuarios: response.data.data,
-      });
-      if (response.status === 201) {
-        toast.success("Usuarios criado com sucesso!");
-      } else {
-        toast.error("Erro ao criar o usuario, tente novamente!");
-      }
-    });
-  },
+  }
 }));

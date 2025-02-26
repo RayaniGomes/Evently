@@ -8,9 +8,6 @@ import { formatarData } from "@/help/funcoesUteis";
 import { useSession } from "next-auth/react";
 import api from "@/service/api";
 import { toast } from "react-toastify";
-import { useEvento } from "@/stores/eventoStore";
-import Email from "next-auth/providers/email";
-import { useInscrito } from "@/stores/inscritosStore";
 import { useState } from "react";
 
 export default function CardEventos({
@@ -36,13 +33,11 @@ export default function CardEventos({
         id: evento._id,
         nome: evento.nome,
       },
-      inscritos: [
-        {
-          id: session.user.id,
-          nome: session.user.name,
-          email: session.user.email,
-        },
-      ],
+      inscritos: {
+        id: session.user.id,
+        nome: session.user.name,
+        email: session.user.email,
+      },
     };
 
     await api
