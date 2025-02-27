@@ -2,7 +2,7 @@ import Image from "next/image";
 import { ContainerCard } from "../styled";
 import Link from "next/link";
 import Compartilhar from "../../compartinhar";
-import { CardProps } from "@/interfaces";
+import { CardProps, MinhasInscricoes } from "@/interfaces";
 import { redirect, usePathname } from "next/navigation";
 import { formatarData } from "@/help/funcoesUteis";
 import { useSession } from "next-auth/react";
@@ -32,11 +32,24 @@ export default function CardEventos({
       evento: {
         id: evento._id,
         nome: evento.nome,
+        data: evento.data,
+        horario: evento.horario,
+        maxPessoas: evento.maxPessoas,
+        tipo: evento.tipo,
+        descricao: evento.descricao,
+        local: evento.local,
+        endereco: evento.endereco,
+        numero: evento.numero,
+        bairro: evento.bairro,
+        cidade: evento.cidade,
+        uf: evento.uf,
+        complemento: evento.complemento,
+        imagem: evento.imagem,
       },
       inscritos: {
         id: session.user.id,
-        nome: session.user.name,
-        email: session.user.email,
+        nome: session.user.name ?? "",
+        email: session.user.email ?? "",
       },
     };
 
@@ -74,7 +87,7 @@ export default function CardEventos({
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
-              $evento={evento}
+              $url={`/detalhe-evento/${evento._id}`} 
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}

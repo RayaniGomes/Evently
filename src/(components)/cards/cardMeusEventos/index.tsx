@@ -35,7 +35,7 @@ export default function CardMeusEventos({
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
-              $evento={evento}
+              $url={`/detalhe-evento-criador/${evento._id}`} 
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}

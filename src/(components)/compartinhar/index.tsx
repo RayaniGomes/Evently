@@ -14,16 +14,15 @@ export default function Compartilhar({
   $top,
   $right,
   $hover,
-  $evento,
+  $url,
 }: StyledCompartilhar) {
   const [isOpen, setIsOpen] = useState(false);
-  const url = `${window.location.origin}/detalhe-evento/${$evento?._id}`;
 
   const handleToggle = () => setIsOpen(!isOpen);
-
+  http://localhost:3000/detalhe-evento/67a7cab3939198207421cac9
   const handleCopyLink = () => {
     navigator.clipboard
-      .writeText(url)
+      .writeText("http://localhost:3000" + $url ?? "")
       .then(() => toast.success("Link copiado com sucesso!"))
       .catch((err) => {
         toast.error("Erro ao copiar o link!");
@@ -41,6 +40,7 @@ export default function Compartilhar({
       $top={$top}
       $right={$right}
       $hover={$hover}
+      $url={$url}
     >
       <button
         className="btn bi bi-share-fill"
@@ -58,7 +58,7 @@ export default function Compartilhar({
         </button>
 
         <Link
-          href={`https://wa.me/?text=${encodeURIComponent(url)}`}
+          href={`https://wa.me/?text=${encodeURIComponent($url)}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Compartilhar no WhatsApp"
@@ -67,7 +67,7 @@ export default function Compartilhar({
         </Link>
 
         <Link
-          href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`}
+          href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent($url ?? window.location.href)}`}
           target="_blank"
           aria-label="Compartilhar no Facebook"
         >

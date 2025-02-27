@@ -1,16 +1,18 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useEvento } from "@/stores/eventoStore";
 import { Inscricoes } from "./styled";
-import CardEventos from "../cards/cardEventos";
 import Paginacao from "../paginacao";
-import FuncaoPaginacao from "@/help/funcaoPaginacao";
 import { useSession } from "next-auth/react";
-import { useInscricoes } from "@/stores/usuarioStore";
+import api from "@/service/api";
+import FuncaoPaginacao from "@/help/funcaoPaginacao";
+import CardMinhasInscricoes from "../cards/cardMinhasInscricoes";
+import { MinhasInscricoes } from "@/interfaces";
 
 export default function MinhasInscrições() {
   const { eventos, getEventos } = useEvento();
-  const { inscricoes, getMeusEventos } = useInscricoes();
+  const [inscricoes, setInscricoes] = useState<MinhasInscricoes[]>([]);
+  const { data: session } = useSession();
   const {
     paginatedEventos,
     totalPages,
@@ -18,38 +20,39 @@ export default function MinhasInscrições() {
     handlePageClick,
     itemsPerPage,
   } = FuncaoPaginacao(eventos);
-  const { data: session } = useSession();
+
+  const getInscricoes = () => {
+    if (session) {
+      api.get(`/inscricoes?email=${session.user.name}`).then((response) => {
+        if (Array.isArray(response.data)) {
+          setInscricoes(response.data as MinhasInscricoes[]);
+        } else {
+          console.error("Erro: resposta não é um array");
+        }
+      });
+    }
+  };
 
   useEffect(() => {
-    if (session) {
-      getEventos();
-      getMeusEventos(session.user.name ?? "");
-    }
-  }, [session, getEventos, getMeusEventos]);
+    getInscricoes();
+  }, []);
 
   return (
     <Inscricoes>
       <div className="total-inscricoes">
         <p>Total de eventos inscritos: 100</p>
       </div>
-      {eventos.length > 0 ? (
-        paginatedEventos.map((evento) => {
-          const minhasInscricoes = inscricoes.find(
-            (inscricao) => inscricao.evento.nome === evento.nome
-          );
-          if (minhasInscricoes) {
-            return (
-              <CardEventos
-                key={evento._id}
-                evento={evento}
-                bgColor="--branco"
-                color="--azul-escuro"
-                hover="--drop-shadow-azul-hover"
-              />
-            );
-          }
-          return null;
-        })
+      {inscricoes.length > 0 ? (
+        inscricoes.map((inscricao, index) => (
+          <CardMinhasInscricoes
+            key={index}
+            inscricao={inscricao}
+            getInscricoes={getInscricoes}
+            bgColor="--branco"
+            color="--azul-escuro"
+            hover="--drop-shadow-azul-hover"
+          />
+        ))
       ) : (
         <h3>Nenhuma inscrição encontrada</h3>
       )}

@@ -2,7 +2,6 @@
 import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { Detalhe, Section } from "./styled";
-import { toast } from "react-toastify";
 import { Evento } from "@/interfaces";
 import api from "@/service/api";
 import Compartilhar from "@/(components)/compartinhar";
@@ -50,6 +49,7 @@ export default function DetalheEvento(props: { params: Params }) {
 
           <div className="info-container">
             <Compartilhar
+              $url={`/detalhe-evento/${evento._id}`}
               $bgColor="--azul-escuro"
               $color="--branco"
               $tamanho={40}

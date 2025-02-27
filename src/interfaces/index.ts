@@ -15,7 +15,6 @@ export interface Evento {
   complemento?: string;
   imagem?: string;
   criador?: Usuario;
-  inscritos?: Usuario[];
 }
 
 export interface PropEventoStore {
@@ -45,6 +44,42 @@ export interface CardProps {
   color: string;
   hover: string;
   getUsuario?: () => void;
+}
+
+export interface CardInscricoesProps {
+  inscricao: MinhasInscricoes;
+  bgColor: string;
+  color: string;
+  hover: string;
+  getInscricoes?: () => void;
+}
+
+export interface MinhasInscricoes {
+  _id: string;
+  evento: { 
+    id: {
+      _id: string;
+    };
+    nome: string;
+    data: string;
+    horario: string;
+    maxPessoas: number;
+    tipo: string;
+    descricao: string;
+    local: string;
+    endereco: string;
+    numero: number;
+    bairro: string;
+    cidade: string;
+    uf: string;
+    complemento?: string;
+    imagem?: string;
+  };
+  inscritos: {
+    _id: string;
+    nome: string;
+    email: string;
+  }
 }
 
 export interface FiltroModalProps {
@@ -90,7 +125,7 @@ export interface StyledCompartilhar {
   $top: number;
   $right: number;
   $hover: string;
-  $evento?: Evento;
+  $url?: string;
 }
 
 export interface StyledCard {

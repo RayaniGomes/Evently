@@ -65,6 +65,7 @@ export default function DetalheEventoCriador(props: { params: Params }) {
               $top={0}
               $right={0}
               $hover="--drop-shadow-azul-hover"
+              $url={`/detalhe-evento-criador/${evento._id}`} 
             />
             <div className="info">
               <div>
