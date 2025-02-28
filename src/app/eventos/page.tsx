@@ -14,6 +14,7 @@ export default function Eventos() {
   const { eventos, getEventos, filtrarEventos } = useEvento();
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const eventosOrdenados = [...eventos].sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
   
   const {
     paginatedEventos,
@@ -21,7 +22,7 @@ export default function Eventos() {
     currentPage,
     handlePageClick,
     itemsPerPage,
-  } = FuncaoPaginacao({eventos});
+  } = FuncaoPaginacao({eventos: eventosOrdenados});
 
   const toggleModal = () => {
     setShowModal(!showModal);
