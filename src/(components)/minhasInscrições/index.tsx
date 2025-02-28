@@ -5,21 +5,21 @@ import { Inscricoes } from "./styled";
 import Paginacao from "../paginacao";
 import { useSession } from "next-auth/react";
 import api from "@/service/api";
-import FuncaoPaginacao from "@/help/funcaoPaginacao";
 import CardMinhasInscricoes from "../cards/cardMinhasInscricoes";
 import { MinhasInscricoes } from "@/interfaces";
+import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
 
 export default function MinhasInscrições() {
-  const { eventos, getEventos } = useEvento();
+  const { eventos } = useEvento();
   const [inscricoes, setInscricoes] = useState<MinhasInscricoes[]>([]);
   const { data: session } = useSession();
   const {
-    paginatedEventos,
+    paginatedEventos: paginatedInscricoes,
     totalPages,
+    itemsPerPage,
     currentPage,
     handlePageClick,
-    itemsPerPage,
-  } = FuncaoPaginacao(eventos);
+  } = FuncaoPaginacao({ eventos: inscricoes });
 
   const getInscricoes = () => {
     if (session) {
@@ -40,10 +40,10 @@ export default function MinhasInscrições() {
   return (
     <Inscricoes>
       <div className="total-inscricoes">
-        <p>Total de eventos inscritos: 100</p>
+        <p>Total de eventos inscritos: {inscricoes.length}</p>
       </div>
-      {inscricoes.length > 0 ? (
-        inscricoes.map((inscricao, index) => (
+      {paginatedInscricoes.length > 0 ? (
+        paginatedInscricoes.map((inscricao, index) => (
           <CardMinhasInscricoes
             key={index}
             inscricao={inscricao}
@@ -56,7 +56,6 @@ export default function MinhasInscrições() {
       ) : (
         <h3>Nenhuma inscrição encontrada</h3>
       )}
-
       {eventos.length > itemsPerPage && (
         <Paginacao
           color="--branco"

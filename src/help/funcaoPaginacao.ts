@@ -9,7 +9,7 @@ import { Evento } from "@/interfaces";
  * necessarias para navegar entre as páginas.
 **/
 
-export default function FuncaoPaginacao(eventos: Evento[]) {
+export function FuncaoPaginacao<T>({ eventos }: { eventos: T[] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const pathname = usePathname();
   const itemsPerPage = pathname === "/eventos" ? 10 : 5;

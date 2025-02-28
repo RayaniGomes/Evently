@@ -8,7 +8,7 @@ import { Pesquisar, Section } from "./styled";
 import FiltroModal from "@/(components)/filtroModal";
 import Paginacao from "@/(components)/paginacao";
 import { Container } from "react-bootstrap";
-import FuncaoPaginacao from "@/help/funcaoPaginacao";
+import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
 
 export default function Eventos() {
   const { eventos, getEventos, filtrarEventos } = useEvento();
@@ -21,7 +21,7 @@ export default function Eventos() {
     currentPage,
     handlePageClick,
     itemsPerPage,
-  } = FuncaoPaginacao(eventos);
+  } = FuncaoPaginacao({eventos});
 
   const toggleModal = () => {
     setShowModal(!showModal);

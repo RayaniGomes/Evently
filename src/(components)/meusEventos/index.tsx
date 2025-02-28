@@ -1,11 +1,11 @@
 "use client";
 import { useEffect } from "react";
 import Paginacao from "../paginacao";
-import FuncaoPaginacao from "@/help/funcaoPaginacao";
 import { Inscricoes } from "../minhasInscrições/styled";
 import { Usuario } from "@/interfaces";
 import CardMeusEventos from "../cards/cardMeusEventos";
 import { useEvento } from "@/stores/eventoStore";
+import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
 
 interface Props {
   usuario: Usuario | null;
@@ -24,7 +24,7 @@ export default function MeusEventos({
     itemsPerPage,
     startIndex,
     endIndex,
-  } = FuncaoPaginacao(eventos);
+  } = FuncaoPaginacao({eventos});
 
   const paginatedEventos = eventos.slice(startIndex, endIndex);
 
