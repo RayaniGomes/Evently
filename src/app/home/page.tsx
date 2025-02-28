@@ -5,6 +5,7 @@ import { useEvento } from "@/stores/eventoStore";
 import { useEffect, useState } from "react";
 import { Section } from "./styled";
 import { Container } from "react-bootstrap";
+import { eventosDaSemana } from "@/help/funcoesUteis";
 
 export default function Home() {
   const { eventos, getEventos } = useEvento();
@@ -34,7 +35,7 @@ export default function Home() {
               <>
                 <h2>Eventos da semana</h2>
                 <div className="cards">
-                  {eventos.slice(0, 4).map((evento) => (
+                  {eventosDaSemana(eventos).map((evento) => (
                     <CardEventos
                       key={evento._id}
                       evento={evento}

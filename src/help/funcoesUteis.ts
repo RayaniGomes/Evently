@@ -1,6 +1,10 @@
+import { startOfWeek, endOfWeek, isWithinInterval, parseISO } from "date-fns";
+
 /**
  * Formata uma data para o padrão brasileiro (dd-mm-yyyy)
  **/
+
+import { Evento } from "@/interfaces";
 
 export const formatarData = (data: string) => {
   const dataFormatada = new Date(data);
@@ -12,4 +16,21 @@ export const formatarData = (data: string) => {
 **/
 export const primeiroNome = (nome: string) => {
   return nome.split(" ")[0];
+}
+
+
+/**
+ * Filtra e retorna eventos que ocorrem durante a semana atual.
+**/
+export const eventosDaSemana = (eventos: Evento[]) => {
+  const hoje = new Date();
+  const inicioSemana = startOfWeek(hoje, { weekStartsOn: 1 });
+  const fimSemana = endOfWeek(hoje, { weekStartsOn: 1 }); 
+  
+  const eventosDaSemana = eventos.filter((evento) => {
+    const dataEvento = parseISO(evento.data); 
+    return isWithinInterval(dataEvento, { start: inicioSemana, end: fimSemana });
+  });
+
+  return eventosDaSemana;
 }
