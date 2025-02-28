@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import api from "@/service/api";
 import { toast } from "react-toastify";
 import { useState } from "react";
+import { useInscritos } from "@/stores/inscricoesStore";
 
 export default function CardEventos({
   evento,
@@ -16,7 +17,7 @@ export default function CardEventos({
   color,
   hover,
 }: CardProps) {
-  const pathname = usePathname();
+  const { postInscricao } = useInscritos();
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,9 +29,11 @@ export default function CardEventos({
       redirect("/login");
     }
 
-    const dados = {
+    const dados: MinhasInscricoes = {
       evento: {
-        id: evento._id,
+        id: {
+          _id: evento._id,
+        },
         nome: evento.nome,
         data: evento.data,
         horario: evento.horario,
@@ -47,31 +50,15 @@ export default function CardEventos({
         imagem: evento.imagem,
       },
       inscritos: {
-        id: session.user.id,
+        _id: session.user.id ?? "",
         nome: session.user.name ?? "",
         email: session.user.email ?? "",
       },
     };
 
-    await api
-      .post("/inscricoes", dados, {
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((response) => {
-        if (response.status === 201) {
-          toast.success("Inscrição realizada com sucesso!");
-        }
-      })
-      .catch((response) => {
-        if (response.status === 400) {
-          toast.warning("Usuário já esta inscrito nesse evento!");
-        } else {
-          toast.error("Erro ao realizar inscrição, tente novamente!");
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    postInscricao(dados);
+
+    setIsLoading(false);
   };
 
   return (
@@ -87,7 +74,7 @@ export default function CardEventos({
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
-              $url={`/detalhe-evento/${evento._id}`} 
+              $url={`/detalhe-evento/${evento._id}`}
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}
@@ -106,17 +93,10 @@ export default function CardEventos({
         </div>
 
         <div className="botoes-card ">
-          {pathname === "/eventos" ? (
-            <button
-              type="button"
-              onClick={handleInscricao}
-              disabled={isLoading}
-            >
-              {isLoading ? "Carregando..." : "Inscrever-se"}
-            </button>
-          ) : (
-            <button>Cancelar inscrição</button>
-          )}
+          <button type="button" onClick={handleInscricao} disabled={isLoading}>
+            {isLoading ? "Carregando..." : "Inscrever-se"}
+          </button>
+
           <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
         </div>
       </div>

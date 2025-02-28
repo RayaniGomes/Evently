@@ -1,69 +1,75 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useEvento } from "@/stores/eventoStore";
+import { useEffect } from "react";
 import { Inscricoes } from "./styled";
 import Paginacao from "../paginacao";
 import { useSession } from "next-auth/react";
-import api from "@/service/api";
 import CardMinhasInscricoes from "../cards/cardMinhasInscricoes";
-import { MinhasInscricoes } from "@/interfaces";
 import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
+import { useInscritos } from "@/stores/inscricoesStore";
 
 export default function MinhasInscrições() {
-  const { eventos } = useEvento();
-  const [inscricoes, setInscricoes] = useState<MinhasInscricoes[]>([]);
+  const { inscricoes, getInscricoes } = useInscritos();
   const { data: session } = useSession();
+
+  const inscricoesOrdenados = Array.isArray(inscricoes)
+    ? [...inscricoes].sort((a, b) => {
+        const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+        const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+        return dataB - dataA;
+      })
+    : [];
+
   const {
     paginatedEventos: paginatedInscricoes,
+    itemsPorPage,
     totalPages,
-    itemsPerPage,
     currentPage,
     handlePageClick,
-  } = FuncaoPaginacao({ eventos: inscricoes });
+  } = FuncaoPaginacao({ eventos: inscricoesOrdenados });
 
-  const getInscricoes = () => {
-    if (session) {
-      api.get(`/inscricoes?email=${session.user.name}`).then((response) => {
-        if (Array.isArray(response.data)) {
-          setInscricoes(response.data as MinhasInscricoes[]);
-        } else {
-          console.error("Erro: resposta não é um array");
-        }
-      });
-    }
-  };
+  const validacaoInscricoes = inscricoes.some(
+    (inscricao) => inscricao.inscritos.nome === session?.user.name
+  )
+  
 
   useEffect(() => {
-    getInscricoes();
-  }, []);
+    getInscricoes(session?.user.name || "");
+  }, [session]);
 
   return (
     <Inscricoes>
       <div className="total-inscricoes">
-        <p>Total de eventos inscritos: {inscricoes.length}</p>
+        {validacaoInscricoes ? (
+          <p>Total de eventos inscritos: { inscricoes.length}</p>
+        ) : (
+          <p>Total de inscrições: 0</p>
+        )}
       </div>
-      {paginatedInscricoes.length > 0 ? (
-        paginatedInscricoes.map((inscricao, index) => (
-          <CardMinhasInscricoes
-            key={index}
-            inscricao={inscricao}
-            getInscricoes={getInscricoes}
-            bgColor="--branco"
-            color="--azul-escuro"
-            hover="--drop-shadow-azul-hover"
-          />
-        ))
+      {inscricoes.length > 0 && validacaoInscricoes ? (
+        paginatedInscricoes.map(
+          (inscricao) =>
+              <CardMinhasInscricoes
+                key={inscricao._id}
+                inscricao={inscricao}
+                getInscricoes={getInscricoes}
+                bgColor="--branco"
+                color="--azul-escuro"
+                hover="--drop-shadow-azul-hover"
+              />
+            )
       ) : (
         <h3>Nenhuma inscrição encontrada</h3>
       )}
-      {eventos.length > itemsPerPage && (
-        <Paginacao
-          color="--branco"
-          colorHover="--azul-escuro"
-          currentPage={currentPage}
-          totalPages={totalPages}
-          handlePageClick={handlePageClick}
-        />
+      {validacaoInscricoes && (
+        inscricoes.length > itemsPorPage && (
+          <Paginacao
+            color="--branco"
+            colorHover="--azul-escuro"
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePageClick={handlePageClick}
+          />
+        )
       )}
     </Inscricoes>
   );

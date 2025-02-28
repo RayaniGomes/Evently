@@ -6,6 +6,7 @@ import { CardInscricoesProps } from "@/interfaces";
 import { formatarData } from "@/help/funcoesUteis";
 import api from "@/service/api";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 export default function CardMinhasInscricoes({
   inscricao,
@@ -14,13 +15,15 @@ export default function CardMinhasInscricoes({
   color,
   hover,
 }: CardInscricoesProps) {
+  const { data: session } = useSession();
+
   const cancelarInscricao = async () => {
     api
       .delete(`/inscricoes/${inscricao._id}`)
       .then((response) => {
         if (response.status === 204) {
           toast.success("Inscrição cancelada com sucesso!");
-          getInscricoes?.();
+          getInscricoes?.(session?.user.name ?? "");
         }
       })
       .catch(() => {
@@ -60,12 +63,18 @@ export default function CardMinhasInscricoes({
         </div>
 
         <div className="botoes-card ">
-          <button onClick={() => {
-            if (confirm("Tem certeza que deseja cancelar a inscrição?")) {
-              cancelarInscricao();
-            }
-          }}>Cancelar inscrição</button>
-          <Link href={`/detalhe-evento/${inscricao.evento.id._id}`}>Detalhes</Link>
+          <button
+            onClick={() => {
+              if (confirm("Tem certeza que deseja cancelar a inscrição?")) {
+                cancelarInscricao();
+              }
+            }}
+          >
+            Cancelar inscrição
+          </button>
+          <Link href={`/detalhe-evento/${inscricao.evento.id._id}`}>
+            Detalhes
+          </Link>
         </div>
       </div>
     </ContainerCard>
