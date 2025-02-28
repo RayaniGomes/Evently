@@ -1,10 +1,9 @@
 import { startOfWeek, endOfWeek, isWithinInterval, parseISO } from "date-fns";
+import { Evento } from "@/interfaces";
 
 /**
  * Formata uma data para o padrão brasileiro (dd-mm-yyyy)
  **/
-
-import { Evento } from "@/interfaces";
 
 export const formatarData = (data: string) => {
   const dataFormatada = new Date(data);

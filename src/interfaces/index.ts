@@ -51,11 +51,11 @@ export interface CardInscricoesProps {
   bgColor: string;
   color: string;
   hover: string;
-  getInscricoes?: () => void;
+  getInscricoes?: (nome: string) => void;
 }
 
 export interface MinhasInscricoes {
-  _id: string;
+  _id?: string;
   evento: { 
     id: {
       _id: string;
@@ -80,6 +80,13 @@ export interface MinhasInscricoes {
     nome: string;
     email: string;
   }
+  createdAt?: string;
+}
+
+export interface PropInscritosStore {
+  inscricoes: MinhasInscricoes[];
+  getInscricoes: (nome: string) => void;
+  postInscricao: (inscricao: MinhasInscricoes) => void;
 }
 
 export interface FiltroModalProps {
