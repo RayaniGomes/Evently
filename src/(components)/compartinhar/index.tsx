@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { BtnCompartilhar } from "./styled";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StyledCompartilhar } from "@/interfaces";
 
 export default function Compartilhar({
@@ -17,18 +17,22 @@ export default function Compartilhar({
   $url,
 }: StyledCompartilhar) {
   const [isOpen, setIsOpen] = useState(false);
+  const [baseUrl, setBaseUrl] = useState("http://localhost:3000");
 
   const handleToggle = () => setIsOpen(!isOpen);
-  http://localhost:3000/detalhe-evento/67a7cab3939198207421cac9
   const handleCopyLink = () => {
     navigator.clipboard
-      .writeText("http://localhost:3000" + $url ?? "")
+      .writeText(`${baseUrl}${$url || ""}`)
       .then(() => toast.success("Link copiado com sucesso!"))
       .catch((err) => {
         toast.error("Erro ao copiar o link!");
         console.error(err);
       });
   };
+
+  useEffect(() => {
+    setBaseUrl(window.location.origin);
+  }, []);
 
   return (
     <BtnCompartilhar
@@ -50,7 +54,12 @@ export default function Compartilhar({
       />
 
       <div className={isOpen ? "links" : "close"}>
-        <button className="btn" type="button" onClick={handleToggle} aria-label="Fechar opções de compartilhamento">
+        <button
+          className="btn"
+          type="button"
+          onClick={handleToggle}
+          aria-label="Fechar opções de compartilhamento"
+        >
           <i className="bi bi-share-fill" />
         </button>
         <button type="button" onClick={handleCopyLink} aria-label="Copiar link">
@@ -58,7 +67,7 @@ export default function Compartilhar({
         </button>
 
         <Link
-          href={`https://wa.me/?text=${encodeURIComponent($url)}`}
+          href={`https://wa.me/?text=${encodeURIComponent(`${baseUrl}${$url || ""}`)}`}
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Compartilhar no WhatsApp"
@@ -67,7 +76,7 @@ export default function Compartilhar({
         </Link>
 
         <Link
-          href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent($url ?? window.location.href)}`}
+          href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${baseUrl}${$url || ""}`)}`}
           target="_blank"
           aria-label="Compartilhar no Facebook"
         >
