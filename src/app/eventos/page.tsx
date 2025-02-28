@@ -21,7 +21,7 @@ export default function Eventos() {
     totalPages,
     currentPage,
     handlePageClick,
-    itemsPerPage,
+    itemsPorPage,
   } = FuncaoPaginacao({eventos: eventosOrdenados});
 
   const toggleModal = () => {
@@ -78,7 +78,7 @@ export default function Eventos() {
                 <h2>Nenhum evento encontrado</h2>
               )}
 
-              {eventos.length > itemsPerPage && (
+              {eventos.length > itemsPorPage && (
                 <Paginacao
                   color="--azul-escuro"
                   colorHover="--branco"

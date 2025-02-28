@@ -1,7 +1,6 @@
 "use client";
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Evento } from "@/interfaces";
 
 /**
  * Componente de paginação para os cards. Ele renderiza apenas uma
@@ -10,14 +9,16 @@ import { Evento } from "@/interfaces";
 **/
 
 export function FuncaoPaginacao<T>({ eventos }: { eventos: T[] }) {
+  const verificarEventos = Array.isArray(eventos) ? eventos : [];
+  
   const [currentPage, setCurrentPage] = useState(1);
   const pathname = usePathname();
-  const itemsPerPage = pathname === "/eventos" ? 10 : 5;
+  const itemsPorPage = pathname === "/eventos" ? 10 : 5;
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedEventos = eventos.slice(startIndex, endIndex);
-  const totalPages = Math.ceil(eventos.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPorPage;
+  const endIndex = startIndex + itemsPorPage;
+  const paginatedEventos = verificarEventos.slice(startIndex, endIndex);
+  const totalPages = verificarEventos.length > 0 ? Math.ceil(verificarEventos.length / itemsPorPage) : 0;
 
   const handlePageClick = (page: number) => setCurrentPage(page);
 
@@ -26,9 +27,11 @@ export function FuncaoPaginacao<T>({ eventos }: { eventos: T[] }) {
     totalPages,
     currentPage,
     handlePageClick,
-    itemsPerPage,
+    itemsPorPage,
     startIndex,
     endIndex
   };
 }
+
+
 

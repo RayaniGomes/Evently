@@ -34,7 +34,6 @@ export default function RootLayout({
           pauseOnHover
           theme="dark"
           transition={Bounce}
-          limit={1}
         />
         <StyledComponentsRegistry>
           <SessionProvider>

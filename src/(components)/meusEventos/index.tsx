@@ -21,7 +21,7 @@ export default function MeusEventos({
     totalPages,
     currentPage,
     handlePageClick,
-    itemsPerPage,
+    itemsPorPage,
     startIndex,
     endIndex,
   } = FuncaoPaginacao({eventos});
@@ -52,7 +52,7 @@ export default function MeusEventos({
         <h3>Você não tem eventos cadastrados</h3>
       )}
 
-      {eventos.length > itemsPerPage && (
+      {eventos.length > itemsPorPage && (
         <Paginacao
           color="--branco"
           colorHover="--azul-escuro"

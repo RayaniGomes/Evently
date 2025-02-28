@@ -18,7 +18,6 @@ export const useInscritos = create<PropInscritosStore>((set) => ({
   },
 
   postInscricao: async (inscricao: MinhasInscricoes) => {
-    // Inicia a requisição POST
     api.post("/inscricoes", inscricao, {
       headers: {
         "Content-Type": "application/json",
