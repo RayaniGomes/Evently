@@ -6,12 +6,20 @@ import { Evento } from "@/interfaces";
 import api from "@/service/api";
 import Compartilhar from "@/(components)/compartinhar";
 import { formatarData } from "@/help/funcoesUteis";
+import { useSession } from "next-auth/react";
+import { useInscritos } from "@/stores/inscricoesStore";
 
 type Params = Promise<{ id: string }>;
 
 export default function DetalheEvento(props: { params: Params }) {
   const urlParams = use(props.params);
   const [evento, setEvento] = useState<Evento>({} as Evento);
+  const { inscricoes } = useInscritos();
+  const { data: session } = useSession();
+
+  const validacaoInscricoes = inscricoes.some(
+    (inscricao) => inscricao.inscritos.nome === session?.user.name
+  )
 
   const getEventoDetalhe = async () => {
     await api.get(`/eventos/${urlParams.id}/`).then((response) => {
@@ -112,7 +120,11 @@ export default function DetalheEvento(props: { params: Params }) {
                 </div>
               </div>
             </div>
-            <button className="btnInscricao">Inscreva-se</button>
+            {validacaoInscricoes ? (
+              <button className="btnInscricao">Inscreva-se</button>
+            ) : (
+              <button className="btnInscricao">Cancelar inscrição</button>
+            )}
           </div>
         </Detalhe>
       </Section>
