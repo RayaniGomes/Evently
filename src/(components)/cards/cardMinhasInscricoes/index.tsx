@@ -4,32 +4,15 @@ import Link from "next/link";
 import Compartilhar from "../../compartinhar";
 import { CardInscricoesProps } from "@/interfaces";
 import { formatarData } from "@/help/funcoesUteis";
-import api from "@/service/api";
-import { toast } from "react-toastify";
-import { useSession } from "next-auth/react";
+import { useInscritos } from "@/stores/inscricoesStore";
 
 export default function CardMinhasInscricoes({
   inscricao,
-  getInscricoes,
   bgColor,
   color,
   hover,
 }: CardInscricoesProps) {
-  const { data: session } = useSession();
-
-  const cancelarInscricao = async () => {
-    api
-      .delete(`/inscricoes/${inscricao._id}`)
-      .then((response) => {
-        if (response.status === 204) {
-          toast.success("Inscrição cancelada com sucesso!");
-          getInscricoes?.(session?.user.name ?? "");
-        }
-      })
-      .catch(() => {
-        toast.error("Erro ao cancelar inscrição, tente novamente!");
-      });
-  };
+  const { cancelarInscricao } = useInscritos();
 
   return (
     <ContainerCard $bgColor={bgColor} $color={color} $hover={hover}>
@@ -44,7 +27,7 @@ export default function CardMinhasInscricoes({
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{inscricao.evento.nome}</h6>
             <Compartilhar
-              $url={`/detalhe-evento/${inscricao.evento.id._id}`}
+              $url={`/detalhe-evento/${inscricao.evento?.id?._id || ""}`}
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}
@@ -66,13 +49,13 @@ export default function CardMinhasInscricoes({
           <button
             onClick={() => {
               if (confirm("Tem certeza que deseja cancelar a inscrição?")) {
-                cancelarInscricao();
+                cancelarInscricao(inscricao._id || "");
               }
             }}
           >
             Cancelar inscrição
           </button>
-          <Link href={`/detalhe-evento/${inscricao.evento.id._id}`}>
+          <Link href={`/detalhe-evento/${inscricao.evento?.id?._id || ""}`}>
             Detalhes
           </Link>
         </div>
