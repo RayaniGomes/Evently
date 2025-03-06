@@ -35,7 +35,7 @@ export default function CardMeusEventos({
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
-              $url={`/detalhe-evento-criador/${evento._id}`} 
+              $url={`/detalhe-evento/${evento._id}`} 
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}
@@ -65,7 +65,7 @@ export default function CardMeusEventos({
           </button>
           <button onClick={toggleModal}>Editar evento</button>
           <ModalUpdateEvento showModal={showModal} toggleModal={toggleModal} evento={evento} getUsuario={getUsuario}/>
-          <Link href={`/detalhe-evento-criador/${evento._id}`}>Detalhes</Link>
+          <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
         </div>
       </div>
     </ContainerCard>
