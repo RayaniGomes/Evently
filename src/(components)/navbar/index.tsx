@@ -16,6 +16,7 @@ import { Container } from "react-bootstrap";
 import { signOut, useSession } from "next-auth/react";
 import { primeiroNome } from "@/help/funcoesUteis";
 import { useUsuario } from "@/stores/usuarioStore";
+import { redirect } from "next/navigation";
 
 export default function Navbar() {
   const { filtrarEventos } = useEvento();
@@ -25,9 +26,10 @@ export default function Navbar() {
   const { usuarios, getUsuario } = useUsuario();
   const usuario = usuarios.find((u) => u.email === session?.user?.email);
 
-  const handleLogout = async () => {
-    await signOut({ callbackUrl: "/login" });
+  const handleLogout = () => {
+    signOut();
     getUsuario("");
+    redirect("/");
   };
 
   const toggleMenu = () => {

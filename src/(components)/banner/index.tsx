@@ -6,17 +6,25 @@ import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 
 export default function Banner() {
-  const { eventos, getEventos: getEventos } = useEvento();
+  const { eventos, getEventos } = useEvento();
 
   useEffect(() => {
     getEventos();
   }, []);
 
+  const ultimosEventos = [...eventos]
+    .sort((a, b) => {
+      const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dataA - dataB;
+    })
+    .slice(0, 4);
+
   return (
     <ContainerBanner>
       <Container>
-        {eventos.length > 0 ? (
-          eventos.slice(0, 4).map((evento, index) => (
+        {ultimosEventos.length > 0 ? (
+          ultimosEventos.map((evento, index) => (
             <Slide
               key={evento._id ?? index}
               imagem={evento.imagem ?? "/sem-imagem.svg"}

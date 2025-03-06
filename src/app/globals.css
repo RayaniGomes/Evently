@@ -25,6 +25,7 @@ body {
   overflow-x: hidden;
   font-family: "Inter", sans-serif;
   background-color: var(--branco) !important;
+  color: var(--azul-escuro) !important;
   margin: 0;
   scroll-behavior: smooth;
 }
