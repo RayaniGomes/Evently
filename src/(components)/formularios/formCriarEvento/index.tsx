@@ -6,10 +6,8 @@ import {
 import { FormEvento, GrupoInput } from "./styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
-import api from "@/service/api";
-import { toast } from "react-toastify";
 import { Usuario } from "@/interfaces";
+import { useEvento } from "@/stores/eventoStore";
 
 interface Props {
   usuario: Usuario | null;
@@ -22,11 +20,9 @@ export default function FormCriarEvento({ usuario }: Props) {
     formState: { errors },
     reset,
   } = useForm<createDataEvento>({ resolver: zodResolver(eventoSchema) });
-  const [isLoading, setIsLoading] = useState(false);
+  const { postEvento, isLoading } = useEvento();
 
   const onSubmit = async (data: createDataEvento) => {
-    setIsLoading(true);
-
     if (!usuario) {
       throw new Error("Usuário não encontrado");
     }
@@ -36,25 +32,11 @@ export default function FormCriarEvento({ usuario }: Props) {
       criador: {
         id: usuario._id,
         nome: usuario.nome,
+        email: usuario.email,
       },
     };
 
-    await api
-      .post("/eventos", dadosEvento)
-      .then((response) => {
-        if (response.status === 201) {
-          toast.success("Evento criado com sucesso!");
-          reset();
-        } else {
-          toast.error("Erro ao criar o evento, tente novamente!");
-        }
-      })
-      .catch(() => {
-        toast.error("Erro ao criar o evento, tente novamente!");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    postEvento(dadosEvento, reset);
   };
 
   return (

@@ -3,17 +3,14 @@ import { Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { UFS_VALIDAS } from "@/schema/evento.schema";
 import { Forms, GrupoInput } from "./styled";
-import api from "@/service/api";
-import { toast } from "react-toastify";
+import { useEvento } from "@/stores/eventoStore";
 
 export default function ModalUpdateEvento({
   showModal,
   toggleModal,
   evento,
-  getUsuario,
-  getEvento,
 }: FiltroModalProps) {
-  const [isLoading, setIsLoading] = useState(false);
+  const { patchEvento, isLoading } = useEvento();
   const [nome, setNome] = useState("");
   const [data, setData] = useState("");
   const [horario, setHorario] = useState("");
@@ -50,7 +47,6 @@ export default function ModalUpdateEvento({
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
     const formData = {
       nome: nome,
@@ -70,31 +66,11 @@ export default function ModalUpdateEvento({
       criador: evento?.criador,
     };
 
-    api
-      .patch(`/eventos/${evento?._id}`, formData)
-      .then((response) => {
-        console.log("Resposta da API:", response);
-        if (response.status === 200) {
-          toast.success("Evento atualizado com sucesso!");
-          if (getUsuario) {
-            getUsuario();
-            toggleModal();
-            getEvento?.();
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(
-          "Erro na requisição:",
-          error.response?.data || error.message
-        );
-        toast.error("Erro ao atualizar o evento, tente novamente!");
-      })
-      .finally(() => {
-        setIsLoading(false);
+    patchEvento(evento?._id as string, formData)
+      .then(() => {
+        toggleModal();
       });
   };
-
   return (
     <Modal size="lg" show={showModal} onHide={toggleModal}>
       <Modal.Header closeButton>

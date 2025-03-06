@@ -43,20 +43,6 @@ export const Detalhe = styled.div`
     justify-content: space-between;
     position: relative;
 
-    .btnInscricao {
-      width: 200px;
-      height: 40px;
-      margin: 0 auto;
-      background: var(--botao);
-      color: var(--branco);
-      border-radius: 10px;
-      border: none;
-      font-weight: 600;
-      font-size: 12px;
-      box-shadow: var(--drop-shadow);
-      margin-top: 3rem;
-    }
-
     .info {
       display: flex;
       flex-direction: column;
@@ -67,6 +53,27 @@ export const Detalhe = styled.div`
         color: var(--azul-escuro);
         opacity: 0.5;
       }
+    }
+  }
+
+  .btnContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    .btnInscricao {
+      width: 200px;
+      height: 40px;
+      background: var(--botao);
+      color: var(--branco);
+      border-radius: 10px;
+      border: none;
+      font-weight: 600;
+      font-size: 12px;
+      box-shadow: var(--drop-shadow);
+      margin-top: 3rem;
     }
   }
 

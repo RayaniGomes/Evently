@@ -3,12 +3,10 @@ import { ContainerCard } from "../styled";
 import Link from "next/link";
 import Compartilhar from "../../compartinhar";
 import { CardProps, MinhasInscricoes } from "@/interfaces";
-import { redirect, usePathname } from "next/navigation";
+import { redirect } from "next/navigation";
 import { formatarData } from "@/help/funcoesUteis";
 import { useSession } from "next-auth/react";
-import api from "@/service/api";
 import { toast } from "react-toastify";
-import { useState } from "react";
 import { useInscritos } from "@/stores/inscricoesStore";
 
 export default function CardEventos({
@@ -17,13 +15,10 @@ export default function CardEventos({
   color,
   hover,
 }: CardProps) {
-  const { postInscricao } = useInscritos();
+  const { postInscricao, isLoading } = useInscritos();
   const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleInscricao = async () => {
-    setIsLoading(true);
-
     if (!session) {
       toast.warning("Por favor, faça login para realizar inscrição!");
       redirect("/login");
@@ -48,6 +43,7 @@ export default function CardEventos({
         uf: evento.uf,
         complemento: evento.complemento,
         imagem: evento.imagem,
+        criador: evento.criador,
       },
       inscritos: {
         _id: session.user.id ?? "",
@@ -57,8 +53,6 @@ export default function CardEventos({
     };
 
     postInscricao(dados);
-
-    setIsLoading(false);
   };
 
   return (

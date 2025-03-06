@@ -2,23 +2,16 @@
 import Banner from "@/(components)/banner";
 import CardEventos from "@/(components)/cards/cardEventos";
 import { useEvento } from "@/stores/eventoStore";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Section } from "./styled";
 import { Container } from "react-bootstrap";
 import { eventosDaSemana } from "@/help/funcoesUteis";
 
 export default function Home() {
-  const { eventos, getEventos } = useEvento();
-  const [isLoading, setIsLoading] = useState(true);
+  const { eventos, getEventos, isLoading } = useEvento();
   
-  const carregarEventos = async () => {
-    setIsLoading(true);
-    await getEventos();
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    carregarEventos();
+    getEventos();
   }, []);
 
   return (

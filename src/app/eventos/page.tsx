@@ -11,9 +11,8 @@ import { Container } from "react-bootstrap";
 import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
 
 export default function Eventos() {
-  const { eventos, getEventos, filtrarEventos } = useEvento();
+  const { eventos, getEventos, filtrarEventos, isLoading } = useEvento();
   const [showModal, setShowModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const eventosOrdenados = [...eventos].sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
   
   const {
@@ -28,14 +27,8 @@ export default function Eventos() {
     setShowModal(!showModal);
   };
 
-  const carregarEventos = async () => {
-    setIsLoading(true);
-    await getEventos();
-    setIsLoading(false);
-  };
-
   useEffect(() => {
-    carregarEventos();
+    getEventos();
   }, []);
 
   return (

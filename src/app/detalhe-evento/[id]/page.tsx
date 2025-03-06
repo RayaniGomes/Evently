@@ -2,39 +2,40 @@
 import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { Detalhe, Section } from "./styled";
-import { Evento } from "@/interfaces";
-import api from "@/service/api";
 import Compartilhar from "@/(components)/compartinhar";
 import { formatarData } from "@/help/funcoesUteis";
 import { useSession } from "next-auth/react";
 import { useInscritos } from "@/stores/inscricoesStore";
+import ModalUpdateEvento from "@/(components)/modalUlpdateEvento";
+import { useEvento } from "@/stores/eventoStore";
 
 type Params = Promise<{ id: string }>;
 
 export default function DetalheEvento(props: { params: Params }) {
   const urlParams = use(props.params);
-  const [evento, setEvento] = useState<Evento>({} as Evento);
+  const [showModal, setShowModal] = useState(false);
+  const { eventos, getEventoId, deleteEvento } = useEvento();
   const { inscricoes } = useInscritos();
   const { data: session } = useSession();
 
-  const validacaoInscricoes = inscricoes.some(
-    (inscricao) => inscricao.inscritos.nome === session?.user.name
-  )
-
-  const getEventoDetalhe = async () => {
-    await api.get(`/eventos/${urlParams.id}/`).then((response) => {
-      setEvento(response.data);
-    });
+  const toggleModal = () => {
+    setShowModal(!showModal);
   };
 
+  const validacaoInscricoes = inscricoes.filter(
+    (inscricao) => inscricao.inscritos.email === session?.user.email
+  );
+
   useEffect(() => {
-    getEventoDetalhe();
+    getEventoId(urlParams.id);
   }, [urlParams.id]);
 
-  if (!evento._id) {
+  const evento = eventos.length > 0 ? eventos[0] : null;
+
+  if (!evento) {
     return (
       <Section>
-        <h2 className="">Evento não encontrado</h2>
+        <h2 className="">Carregando...</h2>
       </Section>
     );
   }
@@ -105,13 +106,15 @@ export default function DetalheEvento(props: { params: Params }) {
                   </div>
                 </div>
               </div>
-              <div>
-                <h6 className="label">Descrição:</h6>
-                <div className="d-flex gap-2">
-                  <i className="bi bi-file-earmark-text-fill" />
-                  <h6>{evento.descricao}</h6>
+              {evento.descricao !== "" && (
+                <div>
+                  <h6 className="label">Descrição:</h6>
+                  <div className="d-flex gap-2">
+                    <i className="bi bi-file-earmark-text-fill" />
+                    <h6>{evento.descricao}</h6>
+                  </div>
                 </div>
-              </div>
+              )}
               <div>
                 <h6 className="label">Qtd. máxima de pessoas:</h6>
                 <div className="d-flex gap-2">
@@ -119,11 +122,54 @@ export default function DetalheEvento(props: { params: Params }) {
                   <h6>{evento.maxPessoas}</h6>
                 </div>
               </div>
+              {evento.criador?._id === session?.user.id && (
+                <div>
+                  <h6 className="label">Total de inscritos:</h6>
+                  <div className="d-flex gap-2">
+                    <i className="bi bi-people-fill" />
+                    <h6>
+                      {
+                        inscricoes.filter(
+                          (inscricao) => inscricao.evento.id._id === evento._id
+                        ).length
+                      }
+                    </h6>
+                  </div>
+                </div>
+              )}
             </div>
-            {validacaoInscricoes ? (
-              <button className="btnInscricao">Inscreva-se</button>
+
+            {evento.criador?.email === session?.user.email ? (
+              <div className="btnContainer">
+                <button
+                  className="btnInscricao"
+                  onClick={() => {
+                    if (
+                      confirm("Tem certeza que deseja cancelar este evento?")
+                    ) {
+                      deleteEvento(evento._id);
+                    }
+                  }}
+                >
+                  Cancelar evento
+                </button>
+                <button className="btnInscricao" onClick={toggleModal}>
+                  Editar evento
+                </button>
+                <ModalUpdateEvento
+                  showModal={showModal}
+                  toggleModal={toggleModal}
+                  evento={evento}
+                />
+              </div>
+            ) : validacaoInscricoes ? (
+              <div className="btnContainer">
+                <button className="btnInscricao">Inscreva-se</button>
+              </div>
             ) : (
-              <button className="btnInscricao">Cancelar inscrição</button>
+              <div className="btnContainer">
+                <button className="btnInscricao">Cancelar inscrição</button>
+              </div>
             )}
           </div>
         </Detalhe>
