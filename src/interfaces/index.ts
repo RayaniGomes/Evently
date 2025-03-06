@@ -1,3 +1,5 @@
+import { createDataEvento } from "@/schema/evento.schema";
+
 export interface Evento {
   _id: string;
   nome: string;
@@ -14,14 +16,22 @@ export interface Evento {
   uf: string;
   complemento?: string;
   imagem?: string;
-  criador?: Usuario;
+  criador?: {
+    _id: string;
+    nome: string;
+    email: string;
+  };
+  createdAt?: string;
 }
 
 export interface PropEventoStore {
   eventos: Evento[];
-  copyEventos: Evento[];
+  isLoading: boolean;
   getEventos: () => void;
+  getEventoId: (id: string) => void;
   getCriadorEventos: (id: string) => void;
+  postEvento: (data: createDataEvento, reset?: () => void) => void;
+  patchEvento: (id: string, data: any) => Promise<void>;
   deleteEvento: (id: string) => void;
   filtrarEventos: (filtros: {}) => void;
 }
@@ -38,6 +48,15 @@ export interface Usuario {
   minhasInscricoes?: Evento[];
 }
 
+export interface PropUsuarioStore {
+  usuarios: Usuario[];
+  isLoading: boolean;
+  getUsuario: (email: string) => void;
+  postUsuario: (data: any, reset?: () => void) => void;
+  patchUsuario: (id: string, data: any) => void;
+  deleteUsuario: (id: string) => void;
+}
+
 export interface CardProps {
   evento: Evento;
   bgColor: string;
@@ -51,7 +70,7 @@ export interface CardInscricoesProps {
   bgColor: string;
   color: string;
   hover: string;
-  getInscricoes?: (nome: string) => void;
+  getInscricoes?: (email: string) => void;
 }
 
 export interface MinhasInscricoes {
@@ -74,6 +93,11 @@ export interface MinhasInscricoes {
     uf: string;
     complemento?: string;
     imagem?: string;
+    criador?: {
+      _id: string;
+      nome: string;
+      email: string;
+    };
   };
   inscritos: {
     _id: string;
@@ -85,8 +109,10 @@ export interface MinhasInscricoes {
 
 export interface PropInscritosStore {
   inscricoes: MinhasInscricoes[];
+  isLoading: boolean;
   getInscricoes: (nome: string) => void;
   postInscricao: (inscricao: MinhasInscricoes) => void;
+  cancelarInscricao: (id: string) => void;
 }
 
 export interface FiltroModalProps {

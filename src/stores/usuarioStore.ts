@@ -1,18 +1,8 @@
 "use client";
-import { Usuario } from "@/interfaces";
+import { PropUsuarioStore } from "@/interfaces";
 import api from "@/service/api";
-import { get } from "http";
 import { toast } from "react-toastify";
 import { create } from "zustand";
-
-interface PropUsuarioStore {
-  usuarios: Usuario[];
-  isLoading: boolean;
-  getUsuario: (email: string) => void;
-  postUsuario: (data: any, reset?: () => void) => void;
-  patchUsuario: (id: string, data: any) => void;
-  deleteUsuario: (id: string) => void;
-}
 
 export const useUsuario = create<PropUsuarioStore>((set) => ({
   usuarios: [],
