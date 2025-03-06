@@ -9,24 +9,23 @@ import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
 
 interface Props {
   usuario: Usuario | null;
-  getUsuario: () => void;
 }
-export default function MeusEventos({
-  usuario,
-  getUsuario: getUsuarios,
-}: Props) {
+export default function MeusEventos({ usuario }: Props) {
   const { eventos, getCriadorEventos } = useEvento();
 
+  const eventosOrdenados = [...eventos].sort((a, b) => {
+    const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return dataB - dataA;
+  });
+
   const {
+    paginatedEventos: paginatedEventos,
+    itemsPorPage,
     totalPages,
     currentPage,
     handlePageClick,
-    itemsPorPage,
-    startIndex,
-    endIndex,
-  } = FuncaoPaginacao({eventos});
-
-  const paginatedEventos = eventos.slice(startIndex, endIndex);
+  } = FuncaoPaginacao({ eventos: eventosOrdenados });
 
   useEffect(() => {
     getCriadorEventos(usuario?._id || "");
@@ -45,7 +44,6 @@ export default function MeusEventos({
             bgColor="--branco"
             color="--azul-escuro"
             hover="--drop-shadow-azul-hover"
-            getUsuario={getUsuarios}
           />
         ))
       ) : (

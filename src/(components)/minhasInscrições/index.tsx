@@ -11,13 +11,11 @@ export default function MinhasInscrições() {
   const { inscricoes, getInscricoes } = useInscritos();
   const { data: session } = useSession();
 
-  const inscricoesOrdenados = Array.isArray(inscricoes)
-    ? [...inscricoes].sort((a, b) => {
-        const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-        const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-        return dataB - dataA;
-      })
-    : [];
+  const inscricoesOrdenados = [...inscricoes].sort((a, b) => {
+    const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+    const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+    return dataB - dataA;
+  });
 
   const {
     paginatedEventos: paginatedInscricoes,
@@ -28,48 +26,43 @@ export default function MinhasInscrições() {
   } = FuncaoPaginacao({ eventos: inscricoesOrdenados });
 
   const validacaoInscricoes = inscricoes.some(
-    (inscricao) => inscricao.inscritos.nome === session?.user.name
-  )
-  
+    (inscricao) => inscricao.inscritos.email === session?.user.email
+  );
 
   useEffect(() => {
-    getInscricoes(session?.user.name || "");
+    getInscricoes(session?.user.email || "");
   }, [session]);
 
   return (
     <Inscricoes>
       <div className="total-inscricoes">
         {validacaoInscricoes ? (
-          <p>Total de eventos inscritos: { inscricoes.length}</p>
+          <p>Total de eventos inscritos: {inscricoes.length}</p>
         ) : (
           <p>Total de inscrições: 0</p>
         )}
       </div>
       {inscricoes.length > 0 && validacaoInscricoes ? (
-        paginatedInscricoes.map(
-          (inscricao) =>
-              <CardMinhasInscricoes
-                key={inscricao._id}
-                inscricao={inscricao}
-                getInscricoes={getInscricoes}
-                bgColor="--branco"
-                color="--azul-escuro"
-                hover="--drop-shadow-azul-hover"
-              />
-            )
+        paginatedInscricoes.map((inscricao) => (
+          <CardMinhasInscricoes
+            key={inscricao._id}
+            inscricao={inscricao}
+            bgColor="--branco"
+            color="--azul-escuro"
+            hover="--drop-shadow-azul-hover"
+          />
+        ))
       ) : (
         <h3>Nenhuma inscrição encontrada</h3>
       )}
-      {validacaoInscricoes && (
-        inscricoes.length > itemsPorPage && (
-          <Paginacao
-            color="--branco"
-            colorHover="--azul-escuro"
-            currentPage={currentPage}
-            totalPages={totalPages}
-            handlePageClick={handlePageClick}
-          />
-        )
+      {validacaoInscricoes && inscricoes.length > itemsPorPage && (
+        <Paginacao
+          color="--branco"
+          colorHover="--azul-escuro"
+          currentPage={currentPage}
+          totalPages={totalPages}
+          handlePageClick={handlePageClick}
+        />
       )}
     </Inscricoes>
   );
