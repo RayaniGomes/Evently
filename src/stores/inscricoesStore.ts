@@ -9,6 +9,18 @@ export const useInscritos = create<PropInscritosStore>((set) => ({
   inscricoes: [],
   isLoading: false,
 
+  getListaInscricoes: async () => {
+    set({ isLoading: true });
+    api.get("/inscricoes").then((response) => {
+      set({
+        inscricoes: response.data,
+      });
+    })
+    .finally(() => {
+      set({ isLoading: false });
+    });
+  },
+
   getInscricoes: async (email: string) => {
     set({ isLoading: true });
     api.get(`/inscricoes?email=${email}`).then((response) => {

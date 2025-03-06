@@ -22,6 +22,21 @@ export const useUsuario = create<PropUsuarioStore>((set) => ({
       });
   },
 
+  getUsuariosLista: async () => {
+    set({ isLoading: true });
+    await api
+      .get("/usuarios")
+      .then((response) => {
+        set({ usuarios: response.data });
+      })
+      .catch(() => {
+        toast.error("Erro ao buscar os usuários, tente novamente!");
+      })
+      .finally(() => {
+        set({ isLoading: false });
+      });
+  },
+
   postUsuario: async (data: any, reset?: () => void) => {
     set({ isLoading: true });
     await api

@@ -52,6 +52,7 @@ export interface PropUsuarioStore {
   usuarios: Usuario[];
   isLoading: boolean;
   getUsuario: (email: string) => void;
+  getUsuariosLista: () => void;
   postUsuario: (data: any, reset?: () => void) => void;
   patchUsuario: (id: string, data: any) => void;
   deleteUsuario: (id: string) => void;
@@ -110,6 +111,7 @@ export interface MinhasInscricoes {
 export interface PropInscritosStore {
   inscricoes: MinhasInscricoes[];
   isLoading: boolean;
+  getListaInscricoes: () => void;
   getInscricoes: (nome: string) => void;
   postInscricao: (inscricao: MinhasInscricoes) => void;
   cancelarInscricao: (id: string) => void;

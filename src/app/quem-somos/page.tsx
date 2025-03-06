@@ -3,16 +3,30 @@ import Indice from "@/(components)/indice";
 import Sobre from "@/(components)/sobreNos";
 import { Container } from "./styled";
 import Image from "next/image";
+import { useEvento } from "@/stores/eventoStore";
+import { useInscritos } from "@/stores/inscricoesStore";
+import { useUsuario } from "@/stores/usuarioStore";
+import { useEffect } from "react";
 
 export default function QuemSomos() {
+  const { eventos, getEventos } = useEvento();
+  const { inscricoes, getListaInscricoes } = useInscritos();
+  const { usuarios, getUsuariosLista } = useUsuario();
+
+  useEffect(() => {
+    getEventos();
+    getListaInscricoes();
+    getUsuariosLista();
+  }, []);
+
   return (
     <>
       <Sobre />
       <Container>
         <div className="indices">
-          <Indice indice={1000} titulo="Eventos Cadastrados" />
-          <Indice indice={1000} titulo="Cadastros Realizados" />
-          <Indice indice={1000} titulo="Inscrições em Eventos" />
+          <Indice indice={eventos.length} titulo="Eventos Cadastrados" />
+          <Indice indice={usuarios.length} titulo="Cadastros Realizados" />
+          <Indice indice={inscricoes.length} titulo="Inscrições em Eventos" />
         </div>
 
         <div className="colaboradores">
