@@ -1,18 +1,18 @@
 "use client";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import api from "@/service/api";
 import Image from "next/image";
 import { Usuario } from "@/interfaces";
 import { Form, GrupoInput, ImagemPerfil } from "../styled";
+import { useUsuario } from "@/stores/usuarioStore";
+import { signOut } from "next-auth/react";
+
 interface Props {
   usuario: Usuario | null;
-  getUsuario: () => void;
 }
 
-export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
+export default function FormUpdateUsuario({ usuario }: Props) {
+  const { patchUsuario, deleteUsuario, isLoading } = useUsuario();
   const [mostrarSenha, setMostrarSenha] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [nome, setNome] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [email, setEmail] = useState("");
@@ -37,7 +37,6 @@ export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
 
     const formData = {
       nome: nome,
@@ -48,22 +47,11 @@ export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
       fotoPerfil: fotoPerfil,
     };
 
-    api
-      .patch(`/usuarios/${usuario?._id}`, formData)
-      .then(() => {
-        toast.success("Dados atualizados com sucesso!");
-        getUsuario();
-      })
-      .catch(() => {
-        toast.error("Erro ao atualizar o usuário, tente novamente!");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    patchUsuario(usuario!._id, formData);
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form>
       <div className={isLoading ? "loading" : "notLoading"}>
         <ImagemPerfil>
           <label htmlFor="fotoPerfil">
@@ -160,9 +148,24 @@ export default function FormUpdateUsuario({ usuario, getUsuario }: Props) {
         </div>
       </div>
 
-      <button type="submit" className="btn-form" disabled={isLoading}>
-        {isLoading ? "Atualizando..." : "Atualizar"}
-      </button>
+      <div className="d-flex gap-5">
+        <button type="submit" className="btn-form" onSubmit={onSubmit} disabled={isLoading}>
+          {isLoading ? "Atualizando..." : "Atualizar"}
+        </button>
+        <button
+          type="button"
+          className="btn-form"
+          disabled={isLoading}
+          onClick={() => {
+            if (confirm("Tem certeza que deseja cancelar este evento?")) {
+              deleteUsuario(usuario?._id || "");
+              signOut();
+            }
+          }}
+        >
+          {isLoading ? "Excluindo conta..." : "Excluir Conta"}
+        </button>
+      </div>
     </Form>
   );
 }

@@ -4,20 +4,20 @@ import { Form, GrupoInput, ImagemPerfil } from "../styled";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
-import { toast } from "react-toastify";
-import api from "@/service/api";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
+import { useUsuario } from "@/stores/usuarioStore";
 
 export default function FormUsuario() {
   const {
     register,
     setValue,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<createDataUsuario>({ resolver: zodResolver(usuarioSchema) });
+  const { postUsuario, isLoading } = useUsuario();
   const [mostrarSenha, setMostrarSenha] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isFotoPerfil, setIsFotoPerfil] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const toggleMostrarSenha = () => {
@@ -29,28 +29,12 @@ export default function FormUsuario() {
   };
 
   const onSubmit = async (data: createDataUsuario) => {
-    setIsLoading(true);
-
     const dadosFormatados = {
       ...data,
       fotoPerfil: isFotoPerfil,
     };
 
-    await api
-      .post("/usuarios", dadosFormatados)
-      .then((response) => {
-        if (response.status === 201) {
-          toast.success("Usuário criado com sucesso! Agora você pode logar.");
-        } else {
-          toast.error("Erro ao criar o usuário, tente novamente!");
-        }
-      })
-      .catch(() => {
-        toast.error("Erro ao criar o usuário, tente novamente!");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    postUsuario(dadosFormatados, reset);
   };
 
   useEffect(() => {

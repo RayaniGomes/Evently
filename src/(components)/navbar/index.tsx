@@ -14,33 +14,22 @@ import { useEffect, useState } from "react";
 import { useEvento } from "@/stores/eventoStore";
 import { Container } from "react-bootstrap";
 import { signOut, useSession } from "next-auth/react";
-import api from "@/service/api";
-import { toast } from "react-toastify";
-import { Usuario } from "@/interfaces";
 import { primeiroNome } from "@/help/funcoesUteis";
+import { useUsuario } from "@/stores/usuarioStore";
 
 export default function Navbar() {
   const { filtrarEventos } = useEvento();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [itemAtivo, setItemAtivo] = useState("home");
-  const [usuario, setUsuario] = useState<Usuario | null>(null);
   const { data: session } = useSession();
+  const { usuarios, getUsuario } = useUsuario();
+  const usuario = usuarios.find((u) => u.email === session?.user?.email);
 
   const handleLogout = async () => {
     await signOut({ callbackUrl: "/login" });
-    setUsuario(null);
+    getUsuario("");
   };
 
-  const getUsuario = async () => {
-    await api
-      .get(`/usuarios/email?email=${session?.user?.email}`)
-      .then((response) => {
-        setUsuario(response.data);
-      })
-      .catch(() => {
-        toast.error("Erro ao buscar o usuário, tente novamente!");
-      });
-  };
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -54,7 +43,7 @@ export default function Navbar() {
 
   useEffect(() => {
     if (session) {
-      getUsuario();
+      getUsuario(session.user.email as string);
     }
   }, [session]);
 
