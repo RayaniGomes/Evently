@@ -74,6 +74,13 @@ export interface CardInscricoesProps {
   getInscricoes?: (email: string) => void;
 }
 
+export interface BtnInscricaoProps {
+  evento: Evento;
+  color: string;
+  bgColor: string;
+  hover: string;
+}
+
 export interface MinhasInscricoes {
   _id?: string;
   evento: { 

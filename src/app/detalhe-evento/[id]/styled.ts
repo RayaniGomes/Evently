@@ -74,6 +74,10 @@ export const Detalhe = styled.div`
       font-size: 12px;
       box-shadow: var(--drop-shadow);
       margin-top: 3rem;
+
+      &:hover {
+        box-shadow: var(--drop-shadow-branco-hover);
+      }
     }
   }
 
