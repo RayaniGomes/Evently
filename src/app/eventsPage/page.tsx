@@ -1,14 +1,14 @@
 "use client";
 import CardEventos from "@/(components)/cards/cardEventos";
-import { Filtro } from "@/(components)/filtro";
-import Titulo from "@/(components)/titulo";
-import { useEvento } from "@/stores/eventoStore";
+import { Filtro } from "@/(components)/filter";
+import Titulo from "@/(components)/title";
+import { useEvento } from "@/stores/eventStore";
 import { useEffect, useState } from "react";
 import { Pesquisar, Section } from "./styled";
-import FiltroModal from "@/(components)/filtroModal";
-import Paginacao from "@/(components)/paginacao";
+import FiltroModal from "@/(components)/filterModal";
+import Paginacao from "@/(components)/pagination";
 import { Container } from "react-bootstrap";
-import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
+import { FuncaoPaginacao } from "@/help/functionPagination";
 
 export default function Eventos() {
   const { eventos, getEventos, filtrarEventos, isLoading } = useEvento();

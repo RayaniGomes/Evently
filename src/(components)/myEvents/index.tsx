@@ -1,11 +1,11 @@
 "use client";
 import { useEffect } from "react";
-import Paginacao from "../paginacao";
-import { Inscricoes } from "../minhasInscrições/styled";
+import Paginacao from "../pagination";
+import { Inscricoes } from "../mySubscription/styled";
 import { Usuario } from "@/interfaces";
 import CardMeusEventos from "../cards/cardMeusEventos";
-import { useEvento } from "@/stores/eventoStore";
-import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
+import { useEvento } from "@/stores/eventStore";
+import { FuncaoPaginacao } from "@/help/functionPagination";
 
 interface Props {
   usuario: Usuario | null;

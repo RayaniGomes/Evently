@@ -1,11 +1,11 @@
 "use client";
-import Banner from "@/(components)/banner";
+import Banner from "@/(components)/bannerHome";
 import CardEventos from "@/(components)/cards/cardEventos";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 import { useEffect } from "react";
 import { Section } from "./styled";
 import { Container } from "react-bootstrap";
-import { eventosDaSemana } from "@/help/funcoesUteis";
+import { eventosDaSemana } from "@/help/functionsUseful";
 
 export default function Home() {
   const { eventos, getEventos } = useEvento();

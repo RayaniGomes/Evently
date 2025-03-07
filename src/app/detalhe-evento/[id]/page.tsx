@@ -3,11 +3,11 @@ import { use, useEffect, useState } from "react";
 import Image from "next/image";
 import { Detalhe, Section } from "./styled";
 import Compartilhar from "@/(components)/buttons/btnCompartinhar";
-import { formatarData } from "@/help/funcoesUteis";
+import { formatarData } from "@/help/functionsUseful";
 import { useSession } from "next-auth/react";
-import { useInscritos } from "@/stores/inscricoesStore";
+import { useInscritos } from "@/stores/enrollmentStore";
 import ModalUpdateEvento from "@/(components)/modalUlpdateEvent";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 import BtnInscricao from "@/(components)/buttons/btnInscricao";
 
 type Params = Promise<{ id: string }>;

@@ -1,6 +1,6 @@
 "use client";
 import { BtnInscricaoProps, MinhasInscricoes } from "@/interfaces";
-import { useInscritos } from "@/stores/inscricoesStore";
+import { useInscritos } from "@/stores/enrollmentStore";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { toast } from "react-toastify";

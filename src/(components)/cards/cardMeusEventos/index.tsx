@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { ContainerCard } from "../styled";
 import Link from "next/link";
-import Compartilhar from "../../compartinhar";
+import Compartilhar from "../../buttons/btnCompartinhar";
 import { CardProps } from "@/interfaces";
-import { useEvento } from "@/stores/eventoStore";
-import { formatarData } from "@/help/funcoesUteis";
+import { useEvento } from "@/stores/eventStore";
+import { formatarData } from "@/help/functionsUseful";
 import { useState } from "react";
-import ModalUpdateEvento from "@/(components)/modalUlpdateEvento";
+import ModalUpdateEvento from "@/(components)/modalUlpdateEvent";
 
 export default function CardMeusEventos({
   evento,
@@ -35,7 +35,7 @@ export default function CardMeusEventos({
           <div className="d-flex justify-content-between">
             <h6 className="nome-evento">{evento.nome}</h6>
             <Compartilhar
-              $url={`/detalhe-evento/${evento._id}`} 
+              $url={`/detalhe-evento/${evento._id}`}
               $bgColor={color}
               $color={bgColor}
               $tamanho={25}
@@ -64,7 +64,12 @@ export default function CardMeusEventos({
             Cancelar evento
           </button>
           <button onClick={toggleModal}>Editar evento</button>
-          <ModalUpdateEvento showModal={showModal} toggleModal={toggleModal} evento={evento} getUsuario={getUsuario}/>
+          <ModalUpdateEvento
+            showModal={showModal}
+            toggleModal={toggleModal}
+            evento={evento}
+            getUsuario={getUsuario}
+          />
           <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
         </div>
       </div>

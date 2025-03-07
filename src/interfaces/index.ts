@@ -1,4 +1,4 @@
-import { createDataEvento } from "@/schema/evento.schema";
+import { createDataEvento } from "@/schema/event.schema";
 
 export interface Evento {
   _id: string;
@@ -83,7 +83,7 @@ export interface BtnInscricaoProps {
 
 export interface MinhasInscricoes {
   _id?: string;
-  evento: { 
+  evento: {
     id: {
       _id: string;
     };
@@ -111,7 +111,7 @@ export interface MinhasInscricoes {
     _id: string;
     nome: string;
     email: string;
-  }
+  };
   createdAt?: string;
 }
 

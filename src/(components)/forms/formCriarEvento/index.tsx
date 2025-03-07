@@ -2,12 +2,12 @@ import {
   createDataEvento,
   eventoSchema,
   UFS_VALIDAS,
-} from "@/schema/evento.schema";
+} from "@/schema/event.schema";
 import { FormEvento, GrupoInput } from "./styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Usuario } from "@/interfaces";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 
 interface Props {
   usuario: Usuario | null;

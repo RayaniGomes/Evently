@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { ContainerBanner, Slide } from "./styled";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 
@@ -34,7 +34,7 @@ export default function Banner() {
                 <h3>{evento.nome}</h3>
                 <h4>{evento.data}</h4>
                 <h4>{evento.local}</h4>
-                <Link href={`/detalhes-evento/${evento._id}`}>Detalhes</Link>
+                <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
               </div>
             </Slide>
           ))

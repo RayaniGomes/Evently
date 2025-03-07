@@ -1,11 +1,11 @@
 "use client";
 import Indice from "@/(components)/indice";
-import Sobre from "@/(components)/sobreNos";
+import Sobre from "@/(components)/bannerAboutUs";
 import { Container } from "./styled";
 import Image from "next/image";
-import { useEvento } from "@/stores/eventoStore";
-import { useInscritos } from "@/stores/inscricoesStore";
-import { useUsuario } from "@/stores/usuarioStore";
+import { useEvento } from "@/stores/eventStore";
+import { useInscritos } from "@/stores/enrollmentStore";
+import { useUsuario } from "@/stores/userStore";
 import { useEffect } from "react";
 
 export default function QuemSomos() {

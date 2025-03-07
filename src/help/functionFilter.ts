@@ -1,5 +1,5 @@
 "use client";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 import { useEffect } from "react";
 
 /**

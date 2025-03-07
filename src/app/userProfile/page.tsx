@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 import { redirect } from "next/navigation";
 import ContainerPerfil from "@/(components)/containerPerfil";
+import { authOptions } from "@/lib/auth";
 
 export default async function Perfil() {
   const session = await getServerSession(authOptions);

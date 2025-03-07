@@ -2,8 +2,8 @@
 import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AOS from "aos";
-import FormLogin from "@/(components)/formularios/formLogin";
-import FormUsuario from "@/(components)/formularios/formUsuario";
+import FormLogin from "@/(components)/forms/formLogin";
+import FormUsuario from "@/(components)/forms/formUsuario";
 import { Section } from "./styled";
 
 export default function ContainerLogin() {

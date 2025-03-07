@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Usuario } from "@/interfaces";
 import { Form, GrupoInput, ImagemPerfil } from "../styled";
-import { useUsuario } from "@/stores/usuarioStore";
+import { useUsuario } from "@/stores/userStore";
 import { signOut } from "next-auth/react";
 
 interface Props {
@@ -149,7 +149,12 @@ export default function FormUpdateUsuario({ usuario }: Props) {
       </div>
 
       <div className="d-flex gap-5">
-        <button type="submit" className="btn-form" onSubmit={onSubmit} disabled={isLoading}>
+        <button
+          type="submit"
+          className="btn-form"
+          onSubmit={onSubmit}
+          disabled={isLoading}
+        >
           {isLoading ? "Atualizando..." : "Atualizar"}
         </button>
         <button

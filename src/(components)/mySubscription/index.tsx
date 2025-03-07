@@ -1,11 +1,11 @@
 "use client";
 import { useEffect } from "react";
 import { Inscricoes } from "./styled";
-import Paginacao from "../paginacao";
+import Paginacao from "../pagination";
 import { useSession } from "next-auth/react";
 import CardMinhasInscricoes from "../cards/cardMinhasInscricoes";
-import { FuncaoPaginacao } from "@/help/funcaoPaginacao";
-import { useInscritos } from "@/stores/inscricoesStore";
+import { FuncaoPaginacao } from "@/help/functionPagination";
+import { useInscritos } from "@/stores/enrollmentStore";
 
 export default function MinhasInscrições() {
   const { inscricoes, getInscricoes } = useInscritos();

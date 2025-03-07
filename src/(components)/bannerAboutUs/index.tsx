@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Section } from "./styled";
-import Titulo from "../titulo";
+import Titulo from "../title";
 
 export default function Sobre() {
   return (

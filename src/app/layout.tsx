@@ -1,14 +1,13 @@
 "use client";
-import type { Metadata } from "next";
+import { Bounce, ToastContainer } from "react-toastify";
+import { SessionProvider } from "next-auth/react";
 import "./globals.css";
 import StyledComponentsRegistry from "./registry";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
-import { Bounce, ToastContainer } from "react-toastify";
 import Navbar from "@/(components)/navbar";
 import Footer from "@/(components)/footer";
-import { SessionProvider } from "next-auth/react";
 
 export default function RootLayout({
   children,
@@ -32,7 +31,7 @@ export default function RootLayout({
           pauseOnFocusLoss
           draggable
           pauseOnHover
-          theme="dark"
+          theme="colored"
           transition={Bounce}
         />
         <StyledComponentsRegistry>

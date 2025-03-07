@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { ContainerCard } from "../styled";
 import Link from "next/link";
-import Compartilhar from "../../compartinhar";
+import Compartilhar from "../../buttons/btnCompartinhar";
 import { CardInscricoesProps } from "@/interfaces";
-import { formatarData } from "@/help/funcoesUteis";
-import { useInscritos } from "@/stores/inscricoesStore";
+import { formatarData } from "@/help/functionsUseful";
+import { useInscritos } from "@/stores/enrollmentStore";
 
 export default function CardMinhasInscricoes({
   inscricao,

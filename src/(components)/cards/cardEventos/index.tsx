@@ -1,13 +1,14 @@
 import Image from "next/image";
 import { ContainerCard } from "../styled";
 import Link from "next/link";
-import Compartilhar from "../../compartinhar";
+import Compartilhar from "../../buttons/btnCompartinhar";
 import { CardProps, MinhasInscricoes } from "@/interfaces";
 import { redirect } from "next/navigation";
-import { formatarData } from "@/help/funcoesUteis";
+import { formatarData } from "@/help/functionsUseful";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
-import { useInscritos } from "@/stores/inscricoesStore";
+import { useInscritos } from "@/stores/enrollmentStore";
+import BtnInscricao from "@/(components)/buttons/btnInscricao";
 
 export default function CardEventos({
   evento,
@@ -86,10 +87,13 @@ export default function CardEventos({
           <h6>{formatarData(evento.data)}</h6>
         </div>
 
-        <div className="botoes-card ">
-          <button type="button" onClick={handleInscricao} disabled={isLoading}>
-            {isLoading ? "Carregando..." : "Inscrever-se"}
-          </button>
+        <div className="botoes-card">
+          <BtnInscricao
+            evento={evento}
+            color="--azul-escuro"
+            bgColor="--branco"
+            hover="--drop-shadow-branco-hover"
+          />
 
           <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
         </div>

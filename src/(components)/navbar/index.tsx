@@ -11,11 +11,11 @@ import {
 } from "./styled";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useEffect, useState } from "react";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 import { Container } from "react-bootstrap";
 import { signOut, useSession } from "next-auth/react";
-import { primeiroNome } from "@/help/funcoesUteis";
-import { useUsuario } from "@/stores/usuarioStore";
+import { primeiroNome } from "@/help/functionsUseful";
+import { useUsuario } from "@/stores/userStore";
 import { redirect } from "next/navigation";
 
 export default function Navbar() {
@@ -29,7 +29,6 @@ export default function Navbar() {
   const handleLogout = () => {
     signOut();
     getUsuario("");
-    redirect("/");
   };
 
   const toggleMenu = () => {
@@ -165,7 +164,13 @@ export default function Navbar() {
               </Link>
             </div>
             <div>
-              <button type="button" className="btn-sair" onClick={() => handleLogout()}>SAIR</button>
+              <button
+                type="button"
+                className="btn-sair"
+                onClick={() => handleLogout()}
+              >
+                SAIR
+              </button>
             </div>
             <form className="search-mobile">
               <input type="search" placeholder="Pesquisar" />
@@ -176,7 +181,10 @@ export default function Navbar() {
           </div>
         </NavMobile>
 
-        <ButtonMenuHamburger onClick={toggleMenu} className={isMenuOpen ? "bi bi-x" : "bi bi-list"} />
+        <ButtonMenuHamburger
+          onClick={toggleMenu}
+          className={isMenuOpen ? "bi bi-x" : "bi bi-list"}
+        />
       </Container>
     </Nav>
   );

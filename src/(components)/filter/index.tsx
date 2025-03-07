@@ -1,8 +1,8 @@
 "use client";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 import InputCheckbox from "../inputCheckbox";
 import { Section } from "./styled";
-import SetFiltro from "@/help/funcaoFiltro";
+import SetFiltro from "@/help/functionFilter";
 
 export function Filtro() {
   const { estados, cidades, tipos, data } = SetFiltro();

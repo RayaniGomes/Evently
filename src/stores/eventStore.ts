@@ -1,6 +1,6 @@
 "use client";
 import { Evento, PropEventoStore } from "@/interfaces";
-import { createDataEvento } from "@/schema/evento.schema";
+import { createDataEvento } from "@/schema/event.schema";
 import api from "@/service/api";
 import { use } from "react";
 import { toast } from "react-toastify";

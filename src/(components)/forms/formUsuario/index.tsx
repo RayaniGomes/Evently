@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { Form, GrupoInput, ImagemPerfil } from "../styled";
 import { useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createDataUsuario, usuarioSchema } from "@/schema/usuario.schema";
+import { createDataUsuario, usuarioSchema } from "@/schema/user.schema";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { useUsuario } from "@/stores/usuarioStore";
+import { useUsuario } from "@/stores/userStore";
 
 export default function FormUsuario() {
   const {

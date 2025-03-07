@@ -1,9 +1,9 @@
 import { FiltroModalProps } from "@/interfaces";
 import { Modal } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { UFS_VALIDAS } from "@/schema/evento.schema";
+import { UFS_VALIDAS } from "@/schema/event.schema";
 import { Forms, GrupoInput } from "./styled";
-import { useEvento } from "@/stores/eventoStore";
+import { useEvento } from "@/stores/eventStore";
 
 export default function ModalUpdateEvento({
   showModal,
@@ -66,10 +66,9 @@ export default function ModalUpdateEvento({
       criador: evento?.criador,
     };
 
-    patchEvento(evento?._id as string, formData)
-      .then(() => {
-        toggleModal();
-      });
+    patchEvento(evento?._id as string, formData).then(() => {
+      toggleModal();
+    });
   };
   return (
     <Modal size="lg" show={showModal} onHide={toggleModal}>
