@@ -26,7 +26,6 @@
 ## 📦 Instalação e Configuração
 
 Instruções de como rodar o projeto:
-**Front-End**
 
 1. Clone o projeto em sua maquina seguindo o modo que você achar melhor;
 2. Instale as dependências:
