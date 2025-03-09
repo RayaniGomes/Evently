@@ -2,6 +2,11 @@ import { StyledCard } from "@/interfaces";
 import styled from "styled-components";
 
 export const Btn = styled.button<StyledCard>`
+  width: ${(props) => props.$width}px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: var(${(props) => props.$bgColor});
   color: var(${(props) => props.$color});
   border-radius: 10px;

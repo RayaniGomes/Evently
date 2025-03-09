@@ -1,81 +1,81 @@
 "use client";
-import { useEvento } from "@/stores/eventStore";
+import { useEvent } from "@/stores/eventStore";
 import InputCheckbox from "../inputCheckbox";
 import { Section } from "./styled";
-import SetFiltro from "@/help/functionFilter";
+import SetFilter from "@/utils/filters";
 
-export function Filtro() {
-  const { estados, cidades, tipos, data } = SetFiltro();
-  const { filtrarEventos } = useEvento();
+export function Filter() {
+  const { states, city, category, date } = SetFilter();
+  const { filterEvents } = useEvent();
 
-  const limparFiltro = () => {
-    filtrarEventos({});
+  const clearFilter = () => {
+    filterEvents({});
   };
 
   return (
     <Section>
-      <form action={limparFiltro}>
+      <form action={clearFilter}>
         <div className="header">
           <h5>Filtro</h5>
           <button>Limpar</button>
         </div>
 
         <div className="item-form">
-          <label htmlFor="">
+          <label>
             Data: <hr />
           </label>
           <input
             type="date"
-            onChange={(e) => filtrarEventos({ data: e.target.value })}
+            onChange={(e) => filterEvents({ date: e.target.value })}
           />
         </div>
         <div className="item-form">
-          <label htmlFor="">
+          <label>
             Estado: <hr />
           </label>
-          <div className="inputs uf">
-            {estados.map((uf) => (
+          <div className="inputs state">
+            {states.map((state) => (
               <InputCheckbox
-                key={uf}
-                id={uf}
-                htmlFor={uf}
-                label={uf}
-                color="--branco"
-                onChange={() => filtrarEventos({ uf })}
+                key={state}
+                id={state}
+                htmlFor={state}
+                label={state}
+                color="--white"
+                onChange={() => filterEvents({ state })}
               />
             ))}
           </div>
         </div>
         <div className="item-form">
-          <label htmlFor="">
+          <label>
             Cidade: <hr />
           </label>
-          <div className="inputs cidade">
-            {cidades.map((cidade) => (
+          <div className="inputs city">
+            {city.map((city) => (
               <InputCheckbox
-                key={cidade}
-                id={cidade}
-                htmlFor={cidade}
-                label={cidade}
-                color="--branco"
-                onChange={() => filtrarEventos({ cidade })}
+                key={city}
+                id={city}
+                htmlFor={city}
+                label={city}
+                color="--white"
+                onChange={() => filterEvents({ city })}
               />
             ))}
           </div>
         </div>
-        <div className="item-form tipo">
-          <label htmlFor="">
-            Tipos: <hr />
+        <div className="item-form category">
+          <label>
+            Categoria: <hr />
           </label>
           <div className="inputs">
-            {tipos.map((tipo) => (
+            {category.map((category) => (
               <InputCheckbox
-                key={tipo}
-                id={tipo}
-                htmlFor={tipo}
-                label={tipo}
-                color="--branco"
-                onChange={() => filtrarEventos({ tipo })}
+                key={category}
+                id={category}
+                htmlFor={category}
+                label={category}
+                color="--white"
+                onChange={() => filterEvents({ category })}
               />
             ))}
           </div>

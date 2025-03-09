@@ -11,24 +11,28 @@ import {
 } from "./styled";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useEffect, useState } from "react";
-import { useEvento } from "@/stores/eventStore";
+import { useEvent } from "@/stores/eventStore";
 import { Container } from "react-bootstrap";
 import { signOut, useSession } from "next-auth/react";
-import { primeiroNome } from "@/help/functionsUseful";
-import { useUsuario } from "@/stores/userStore";
+import { firstName } from "@/utils/funtions";
+import { useUser } from "@/stores/userStore";
 import { redirect } from "next/navigation";
 
 export default function Navbar() {
-  const { filtrarEventos } = useEvento();
+  const { filterEvents } = useEvent();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [itemAtivo, setItemAtivo] = useState("home");
   const { data: session } = useSession();
-  const { usuarios, getUsuario } = useUsuario();
-  const usuario = usuarios.find((u) => u.email === session?.user?.email);
+  const { users, getUser } = useUser();
+  const user = users.find((u) => u.email === session?.user?.email);
 
   const handleLogout = () => {
     signOut();
-    getUsuario("");
+    getUser("");
+
+    if (window.location.pathname === "/profile") {
+      redirect("/login");
+    }
   };
 
   const toggleMenu = () => {
@@ -44,9 +48,21 @@ export default function Navbar() {
 
   useEffect(() => {
     if (session) {
-      getUsuario(session.user.email as string);
+      getUser(session.user.email as string);
     }
   }, [session]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+  
+    filterEvents({ name: searchValue });
+    if (searchValue !== "") {
+      redirect(`/eventsPage?search=${searchValue}`);
+    } else {
+      redirect(`/eventsPage`);
+    }
+  };
+  
 
   return (
     <Nav>
@@ -66,8 +82,7 @@ export default function Navbar() {
             type="search"
             placeholder="Pesquise pelo nome do seu evento"
             onChange={(e) => {
-              console.log("Pesquisando por:", e.target.value);
-              filtrarEventos({ nome: e.target.value });
+              handleSearch(e);
             }}
           />
           <button type="submit">
@@ -84,16 +99,16 @@ export default function Navbar() {
             HOME
           </Link>
           <Link
-            href="/quem-somos"
-            className={itemAtivo === "quem-somos" ? "active" : ""}
-            onClick={() => setItemAtivo("quem-somos")}
+            href="/aboutUs"
+            className={itemAtivo === "aboutUs" ? "active" : ""}
+            onClick={() => setItemAtivo("aboutUs")}
           >
             QUEM SOMOS
           </Link>
           <Link
-            href="/eventos"
-            className={itemAtivo === "eventos" ? "active" : ""}
-            onClick={() => setItemAtivo("eventos")}
+            href="/eventsPage"
+            className={itemAtivo === "eventsPage" ? "active" : ""}
+            onClick={() => setItemAtivo("eventsPage")}
           >
             EVENTOS
           </Link>
@@ -105,7 +120,7 @@ export default function Navbar() {
             className={itemAtivo === "login" ? "active" : ""}
             onClick={() => setItemAtivo("login")}
           >
-            {!session ? "LOGIN" : primeiroNome(usuario?.nome ?? "")}
+            {!session ? "LOGIN" : firstName(user?.name ?? "")}
           </Link>
 
           <Dropdown>
@@ -116,7 +131,7 @@ export default function Navbar() {
             ) : (
               <Dropdown.Toggle id="dropdown-basic">
                 <Image
-                  src={usuario?.fotoPerfil ?? "/perfil.svg"}
+                  src={user?.profilePhoto ?? "/perfil.svg"}
                   width={50}
                   height={50}
                   alt="Imagem de perfil"
@@ -124,12 +139,14 @@ export default function Navbar() {
               </Dropdown.Toggle>
             )}
             <Dropdown.Menu className="dropdown-menu">
-              <Dropdown.Item as={Link} href="/perfil">
+              <Dropdown.Item as={Link} href="/userProfile">
                 Perfil
               </Dropdown.Item>
-              <Dropdown.Item as="button" onClick={() => handleLogout()}>
-                Sair
-              </Dropdown.Item>
+              {session && (
+                <Dropdown.Item as="button" onClick={() => handleLogout()}>
+                  Sair
+                </Dropdown.Item>
+              )}
             </Dropdown.Menu>
           </Dropdown>
         </Login>
@@ -147,33 +164,33 @@ export default function Navbar() {
             </div>
             <div>
               <Link
-                href="/quem-somos"
-                className={itemAtivo === "quem-somos" ? "active" : ""}
-                onClick={() => setItemAtivo("quem-somos")}
+                href="/aboutUs"
+                className={itemAtivo === "aboutUs" ? "active" : ""}
+                onClick={() => setItemAtivo("aboutUs")}
               >
                 QUEM SOMOS
               </Link>
             </div>
             <div>
               <Link
-                href="/eventos"
-                className={itemAtivo === "eventos" ? "active" : ""}
-                onClick={() => setItemAtivo("eventos")}
+                href="/eventsPage"
+                className={itemAtivo === "eventsPage" ? "active" : ""}
+                onClick={() => setItemAtivo("eventsPage")}
               >
-                EVENTOS
+                EVENTS
               </Link>
             </div>
             <div>
               <button
                 type="button"
-                className="btn-sair"
+                className="btn-out"
                 onClick={() => handleLogout()}
               >
                 SAIR
               </button>
             </div>
             <form className="search-mobile">
-              <input type="search" placeholder="Pesquisar" />
+              <input type="search" placeholder="Search" />
               <button type="submit">
                 <i className="bi bi-search"></i>
               </button>

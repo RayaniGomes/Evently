@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import { Section } from "./styled";
-import Titulo from "../title";
+import Title from "../title";
 
-export default function Sobre() {
+export default function BannerAboutUs() {
   return (
     <Section>
-      <Titulo titulo="Sobre nós" border="--branco" />
+      <Title title="Sobre nós" border="--white" />
       <h5>
         Evently é um sistema inovador de gerenciamento de eventos projetado para
         simplificar a organização, planejamento e execução de qualquer tipo de

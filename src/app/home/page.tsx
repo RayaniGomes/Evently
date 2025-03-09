@@ -1,20 +1,20 @@
 "use client";
-import Banner from "@/(components)/bannerHome";
-import CardEventos from "@/(components)/cards/cardEventos";
-import { useEvento } from "@/stores/eventStore";
+import BannerHome from "@/(components)/bannerHome";
 import { useEffect } from "react";
 import { Section } from "./styled";
 import { Container } from "react-bootstrap";
-import { eventosDaSemana } from "@/help/functionsUseful";
+import { eventsWeek } from "@/utils/funtions";
+import { useEvent } from "@/stores/eventStore";
+import CardEvents from "@/(components)/cards/cardEvents";
 
 export default function Home() {
-  const { eventos, getEventos } = useEvento();
+  const { events, getEvents } = useEvent();
 
   useEffect(() => {
-    getEventos();
+    getEvents();
   }, []);
 
-  if (eventos.length === 0) {
+  if (events.length === 0) {
     return (
       <Container as={Section} style={{ height: "90vh" }}>
         <h2 className="text-center w-100 mt-5 mb-5">Carregando...</h2>
@@ -24,18 +24,18 @@ export default function Home() {
 
   return (
     <>
-      <Banner />
+      <BannerHome />
       <Container as={Section}>
         <h2>Eventos da semana</h2>
         <div className="cards">
-          {eventosDaSemana(eventos).length > 0 ? (
-            eventosDaSemana(eventos).map((evento) => (
-              <CardEventos
-                key={evento._id}
-                evento={evento}
-                bgColor="--azul-medio"
-                color="--branco"
-                hover="--drop-shadow-branco-hover"
+          {eventsWeek(events).length > 0 ? (
+            eventsWeek(events).map((event) => (
+              <CardEvents
+                key={event._id}
+                event={event}
+                bgColor="--blue-medium"
+                color="--white"
+                hover="--drop-shadow-white-hover"
               />
             ))
           ) : (

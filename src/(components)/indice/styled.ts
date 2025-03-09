@@ -9,7 +9,7 @@ export const ContainerIndice = styled.div`
   flex-direction: column;
   padding: 1rem;
   background: var(--gradiente-radial);
-  color: var(--branco);
+  color: var(--white);
   text-align: center;
   border-radius: 20px;
   box-shadow: var(--drop-shadow);

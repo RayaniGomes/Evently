@@ -6,7 +6,7 @@ export const Section = styled.section`
   flex-direction: column;
   align-items: center;
   background: var(--gradiente-radial);
-  color: var(--branco);
+  color: var(--white);
   padding: 1rem;
   border-radius: 10px;
 
@@ -22,15 +22,15 @@ export const Section = styled.section`
 
     button {
       border: none;
-      background-color: var(--branco);
-      color: var(--azul-escuro);
+      background-color: var(--white);
+      color: var(--blue-dark);
       font-size: 14px;
       font-weight: 500;
       padding: 0.25rem 0.5rem;
       border-radius: 10px;
 
       &:hover {
-        box-shadow: var(--drop-shadow-branco-hover);
+        box-shadow: var(--drop-shadow-white-hover);
       }
     }
   }
@@ -53,7 +53,7 @@ export const Section = styled.section`
 
       hr {
         width: 100%;
-        border: 1px solid var(--branco);
+        border: 1px solid var(--white);
         opacity: 1;
         margin: 0;
         border-radius: 1px;
@@ -80,7 +80,7 @@ export const Section = styled.section`
     }
 
     &::-webkit-scrollbar-track {
-      background: var(--branco);
+      background: var(--white);
       border-radius: 7px;
     }
 
@@ -90,7 +90,7 @@ export const Section = styled.section`
     }
   }
 
-  .uf {
+  .state {
     text-transform: uppercase;
   }
 

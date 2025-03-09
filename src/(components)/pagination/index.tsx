@@ -1,21 +1,15 @@
-import { PaginacaoProps } from "@/interfaces";
-import { ContainerPaginacao } from "./styled";
+import { PaginationProps } from "@/interfaces";
+import { Container } from "./styled";
 
-/**
- * Componente de pagina o que renderiza um conjunto de botões 
- * numerados que permitem navegar entre as páginas de um 
- * componente que lista itens.
- */
-
-export default function Paginacao({
+export default function Pagination({
   handlePageClick,
   currentPage,
   totalPages,
   color,
-  colorHover
-}: PaginacaoProps) {
+  colorHover,
+}: PaginationProps) {
   return (
-    <ContainerPaginacao $color={color} $colorHover={colorHover}>
+    <Container $color={color} $colorHover={colorHover}>
       <button
         className="bi bi-chevron-double-left"
         onClick={() => handlePageClick(1)}
@@ -38,6 +32,6 @@ export default function Paginacao({
         onClick={() => handlePageClick(totalPages)}
         disabled={currentPage === totalPages}
       />
-    </ContainerPaginacao>
+    </Container>
   );
 }

@@ -4,7 +4,7 @@ export const Nav = styled.nav`
   width: 100%;
   display: flex;
   height: 5rem;
-  background-color: var(--azul-medio);
+  background-color: var(--blue-medium);
   position: fixed;
   top: 0;
   left: 0;
@@ -37,14 +37,14 @@ export const Form = styled.form`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: var(--branco);
+  background-color: var(--white);
   border-radius: 0.625rem;
   padding: 0.25rem 0.5rem;
 
   input {
     width: 100%;
     border: none;
-    color: var(--azul-escuro);
+    color: var(--blue-dark);
     background-color: transparent;
   }
 
@@ -70,7 +70,7 @@ export const Menu = styled.div`
   a {
     font-size: 14px;
     font-weight: 400;
-    color: var(--branco);
+    color: var(--white);
     text-decoration: none;
     position: relative;
 
@@ -81,7 +81,7 @@ export const Menu = styled.div`
       bottom: -2px;
       width: 100%;
       height: 2px;
-      background-color: var(--branco);
+      background-color: var(--white);
       border-radius: 4px;
       scale: 0 1;
       transform-origin: center;
@@ -106,12 +106,12 @@ export const Menu = styled.div`
 export const Login = styled.div`
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
 
   a {
     font-size: 14px;
     font-weight: 400;
-    color: var(--branco);
+    color: var(--white);
     text-decoration: none;
     position: relative;
 
@@ -122,7 +122,7 @@ export const Login = styled.div`
       bottom: -2px;
       width: 100%;
       height: 2px;
-      background-color: var(--branco);
+      background-color: var(--white);
       border-radius: 4px;
       scale: 0 1;
       transform-origin: center;
@@ -143,14 +143,14 @@ export const Login = styled.div`
     height: 50px;
     border: none;
     border-radius: 50%;
-    background-color: var(--branco);
+    background-color: var(--white);
     font-size: 35px !important;
-    color: var(--azul-medio);
+    color: var(--blue-medium);
 
     &:hover {
-      background-color: var(--branco);
-      color: var(--azul-medio);
-      box-shadow: var(--drop-shadow-branco-hover);
+      background-color: var(--white);
+      color: var(--blue-medium);
+      box-shadow: var(--drop-shadow-white-hover);
       transform: scale(1.1);
     }
   }
@@ -164,7 +164,7 @@ export const Login = styled.div`
   }
 
   .dropdown-menu {
-    background-color: var(--branco);
+    background-color: var(--white);
     border: none;
 
     a,
@@ -175,7 +175,7 @@ export const Login = styled.div`
       align-items: flex-start;
       font-size: 14px;
       font-weight: 500;
-      color: var(--azul-escuro);
+      color: var(--blue-dark);
       background-color: transparent;
       border: none;
       padding: 0.5rem 1rem !important;
@@ -205,7 +205,7 @@ export const NavMobile = styled.div`
   a {
     font-size: 14px;
     font-weight: 400;
-    color: var(--branco);
+    color: var(--white);
     text-decoration: none;
     position: relative;
 
@@ -216,7 +216,7 @@ export const NavMobile = styled.div`
       bottom: -2px;
       width: 100%;
       height: 2px;
-      background-color: var(--branco);
+      background-color: var(--white);
       border-radius: 4px;
       scale: 0 1;
       transform-origin: center;
@@ -241,14 +241,14 @@ export const NavMobile = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-left: auto;
-    background-color: var(--branco);
+    background-color: var(--white);
     border-radius: 0.3125rem;
     padding: 0.25rem 0.5rem;
 
     input {
       width: 100%;
       border: none;
-      color: var(--azul-escuro);
+      color: var(--blue-dark);
       background-color: transparent;
     }
 
@@ -258,10 +258,10 @@ export const NavMobile = styled.div`
     }
   }
 
-  .btn-sair {
+  .btn-out {
     border: none;
     background-color: transparent;
-    color: var(--branco);
+    color: var(--white);
     font-size: 14px;
     font-weight: 400;
   }
@@ -279,7 +279,7 @@ export const NavMobile = styled.div`
       right: 0;
       padding: 0 2rem;
       gap: 2rem;
-      background-color: var(--azul-medio);
+      background-color: var(--blue-medium);
 
       @media (max-width: 425px) {
         width: 70vw;
@@ -292,8 +292,8 @@ export const ButtonMenuHamburger = styled.button`
   display: flex;
   width: 30px;
   height: 30px;
-  color: var(--azul-medio);
-  background-color: var(--branco);
+  color: var(--blue-medium);
+  background-color: var(--white);
   border: none;
   font-size: 30px;
   display: none;
@@ -303,7 +303,7 @@ export const ButtonMenuHamburger = styled.button`
   margin-left: 1rem;
 
   &:hover {
-    box-shadow: var(--drop-shadow-branco-hover);
+    box-shadow: var(--drop-shadow-white-hover);
   }
 
   @media (max-width: 768px) {

@@ -1,139 +1,147 @@
-import { createDataEvento } from "@/schema/event.schema";
+import { createDataEvent } from "@/schema/event.schema";
 
-export interface Evento {
+export interface User {
   _id: string;
-  nome: string;
-  data: string;
-  horario: string;
-  maxPessoas: number;
-  tipo: string;
-  descricao: string;
-  local: string;
-  endereco: string;
-  numero: number;
-  bairro: string;
-  cidade: string;
-  uf: string;
-  complemento?: string;
-  imagem?: string;
-  criador?: {
+  name: string;
+  email: string;
+  dateOfBirth: string;
+  password: string;
+  profilePhoto?: string;
+  creator: boolean;
+  createdAt?: string;
+}
+
+export interface Event {
+  _id: string;
+  name: string;
+  date: string;
+  time: string;
+  maxPeople: number;
+  category: string;
+  description: string;
+  location: string;
+  address: string;
+  number: string;
+  neighborhood: string;
+  city: string;
+  state: string;
+  complement?: string;
+  image?: string;
+  creator?: {
     _id: string;
-    nome: string;
+    name: string;
     email: string;
   };
   createdAt?: string;
 }
 
-export interface PropEventoStore {
-  eventos: Evento[];
-  isLoading: boolean;
-  getEventos: () => void;
-  getEventoId: (id: string) => void;
-  getCriadorEventos: (id: string) => void;
-  postEvento: (data: createDataEvento, reset?: () => void) => void;
-  patchEvento: (id: string, data: any) => Promise<void>;
-  deleteEvento: (id: string) => void;
-  filtrarEventos: (filtros: {}) => void;
-}
-
-export interface Usuario {
-  _id: string;
-  nome: string;
-  email: string;
-  dataNascimento: string;
-  senha: string;
-  criador: boolean;
-  fotoPerfil?: string;
-  eventos?: Evento[];
-  minhasInscricoes?: Evento[];
-}
-
-export interface PropUsuarioStore {
-  usuarios: Usuario[];
-  isLoading: boolean;
-  getUsuario: (email: string) => void;
-  getUsuariosLista: () => void;
-  postUsuario: (data: any, reset?: () => void) => void;
-  patchUsuario: (id: string, data: any) => void;
-  deleteUsuario: (id: string) => void;
-}
-
-export interface CardProps {
-  evento: Evento;
-  bgColor: string;
-  color: string;
-  hover: string;
-  getUsuario?: () => void;
-}
-
-export interface CardInscricoesProps {
-  inscricao: MinhasInscricoes;
-  bgColor: string;
-  color: string;
-  hover: string;
-  getInscricoes?: (email: string) => void;
-}
-
-export interface BtnInscricaoProps {
-  evento: Evento;
-  color: string;
-  bgColor: string;
-  hover: string;
-}
-
-export interface MinhasInscricoes {
+export interface Enrollment {
   _id?: string;
-  evento: {
-    id: {
-      _id: string;
-    };
-    nome: string;
-    data: string;
-    horario: string;
-    maxPessoas: number;
-    tipo: string;
-    descricao: string;
-    local: string;
-    endereco: string;
-    numero: number;
-    bairro: string;
-    cidade: string;
-    uf: string;
-    complemento?: string;
-    imagem?: string;
-    criador?: {
-      _id: string;
-      nome: string;
+  event: {
+    id: string;
+    name: string;
+    date: string;
+    time: string;
+    maxPeople: number;
+    category: string;
+    description: string;
+    location: string;
+    address: string;
+    number: string;
+    neighborhood: string;
+    city: string;
+    state: string;
+    complement?: string;
+    image?: string;
+    creator?: {
+      name: string;
       email: string;
     };
   };
-  inscritos: {
+  enrollment: {
     _id: string;
-    nome: string;
+    name: string;
     email: string;
   };
   createdAt?: string;
 }
 
-export interface PropInscritosStore {
-  inscricoes: MinhasInscricoes[];
+export interface PropUserStore {
+  users: User[];
   isLoading: boolean;
-  getListaInscricoes: () => void;
-  getInscricoes: (nome: string) => void;
-  postInscricao: (inscricao: MinhasInscricoes) => void;
-  cancelarInscricao: (id: string) => void;
+  getUser: (email: string) => void;
+  getUsersList: () => void;
+  postUser: (date: any, reset?: () => void) => void;
+  patchUser: (id: string, date: any) => void;
+  deleteUser: (id: string) => void;
 }
 
-export interface FiltroModalProps {
-  evento?: Evento;
+export interface PropEventStore {
+  events: Event[];
+  isLoading: boolean;
+  getEvents: () => void;
+  getEventId: (id: string) => void;
+  getCreatorEvents: (email: string) => void;
+  postEvent: (date: createDataEvent, reset?: () => void) => void;
+  patchEvent: (id: string, date: any) => Promise<void>;
+  deleteEvent: (id: string) => void;
+  filterEvents: (filter: {}) => void;
+}
+
+export interface PropEnrollmentStore {
+  enrollments: Enrollment[];
+  isLoading: boolean;
+  getListEnrollments: () => void;
+  getEnrollments: (name: string) => void;
+  postEnrollment: (enrollment: Enrollment) => void;
+  deleteEnrollment: (id: string) => void;
+}
+
+export interface PropsForm {
+  user: User | null;
+}
+
+export interface CardProps {
+  event: Event;
+  bgColor: string;
+  color: string;
+  hover: string;
+  getUser?: () => void;
+}
+
+export interface CardEnrollmentProps {
+  enrollment: Enrollment;
+  bgColor: string;
+  color: string;
+  hover: string;
+  getEnrollments?: (email: string) => void;
+}
+
+export interface StyledCard {
+  $bgColor: string;
+  $color: string;
+  $hover: string;
+  $width?: number;
+}
+
+export interface BtnEnrollmentProps {
+  event: Event;
+  color: string;
+  bgColor: string;
+  hover: string;
+  width?: number;
+}
+
+export interface FilterModalProps {
+  event?: Event;
   showModal: boolean;
   toggleModal: () => void;
-  getUsuario?: () => void;
-  getEvento?: () => void;
+  getUser?: () => void;
+  getEvent?: () => void;
 }
 
 export interface IndiceProps {
-  titulo: string;
+  title: string;
   indice: number;
 }
 
@@ -145,7 +153,7 @@ export interface CheckboxProps {
   onChange: () => void;
 }
 
-export interface PaginacaoProps {
+export interface PaginationProps {
   handlePageClick: (page: number) => void;
   currentPage: number;
   totalPages: number;
@@ -153,12 +161,16 @@ export interface PaginacaoProps {
   colorHover: string;
 }
 
-export interface TituloProps {
-  titulo: string;
+export interface TitleProps {
+  title: string;
   border: string;
 }
 
-export interface StyledCompartilhar {
+export interface StyledBorderProps {
+  $color: string;
+}
+
+export interface StyledShare {
   $bgColor: string;
   $color: string;
   $tamanho: number;
@@ -170,17 +182,7 @@ export interface StyledCompartilhar {
   $url?: string;
 }
 
-export interface StyledCard {
-  $bgColor: string;
-  $color: string;
-  $hover: string;
-}
-
-export interface StyledBorderProps {
-  $color: string;
-}
-
-export interface StyledPaginacao {
+export interface StyledPagination {
   $color: string;
   $colorHover: string;
 }

@@ -1,64 +1,61 @@
 "use client";
 import { useEffect } from "react";
-import Paginacao from "../pagination";
-import { Inscricoes } from "../mySubscription/styled";
-import { Usuario } from "@/interfaces";
-import CardMeusEventos from "../cards/cardMeusEventos";
-import { useEvento } from "@/stores/eventStore";
-import { FuncaoPaginacao } from "@/help/functionPagination";
+import Pagination from "../pagination";
+import { Enrollments } from "../mySubscription/styled";
+import { PropsForm, User } from "@/interfaces";
+import { useEvent } from "@/stores/eventStore";
+import { SetPagination } from "@/utils/pagination";
+import CardMyEvents from "../cards/cardMyEvents";
 
-interface Props {
-  usuario: Usuario | null;
-}
-export default function MeusEventos({ usuario }: Props) {
-  const { eventos, getCriadorEventos } = useEvento();
+export default function MyEvents({ user }: PropsForm) {
+  const { events, getCreatorEvents } = useEvent();
 
-  const eventosOrdenados = [...eventos].sort((a, b) => {
+  const eventsOrdered = [...events].sort((a, b) => {
     const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
     const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
     return dataB - dataA;
   });
 
   const {
-    paginatedEventos: paginatedEventos,
+    paginatedEvents: paginatedEvents,
     itemsPorPage,
     totalPages,
     currentPage,
     handlePageClick,
-  } = FuncaoPaginacao({ eventos: eventosOrdenados });
+  } = SetPagination({ events: eventsOrdered });
 
   useEffect(() => {
-    getCriadorEventos(usuario?._id || "");
+    getCreatorEvents(user?.email || "");
   }, []);
 
   return (
-    <Inscricoes>
-      <div className="total-inscricoes">
-        <p>Total de eventos: {eventos.length}</p>
+    <Enrollments>
+      <div className="total-enrollments">
+        <p>Total de eventos: {events.length}</p>
       </div>
-      {eventos.length > 0 ? (
-        paginatedEventos.map((evento) => (
-          <CardMeusEventos
-            key={evento._id}
-            evento={evento}
-            bgColor="--branco"
-            color="--azul-escuro"
-            hover="--drop-shadow-azul-hover"
+      {events.length > 0 ? (
+        paginatedEvents.map((event) => (
+          <CardMyEvents
+            key={event._id}
+            event={event}
+            bgColor="--white"
+            color="--blue-dark"
+            hover="--drop-shadow-blue-hover"
           />
         ))
       ) : (
-        <h3>Você não tem eventos cadastrados</h3>
+        <h3>Você não tem evento cadastrado</h3>
       )}
 
-      {eventos.length > itemsPorPage && (
-        <Paginacao
-          color="--branco"
-          colorHover="--azul-escuro"
+      {events.length > itemsPorPage && (
+        <Pagination
+          color="--white"
+          colorHover="--blue-dark"
           currentPage={currentPage}
           totalPages={totalPages}
           handlePageClick={handlePageClick}
         />
       )}
-    </Inscricoes>
+    </Enrollments>
   );
 }

@@ -11,7 +11,7 @@ export const Section = styled.section`
     width: 100%;
     padding: 0 2rem;
     text-align: left;
-    color: var(--azul-escuro);
+    color: var(--blue-dark);
   }
 
   .cards {

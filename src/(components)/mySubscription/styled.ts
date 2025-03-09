@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const Inscricoes = styled.div`
+export const Enrollments = styled.div`
   width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2rem;
 
-  .total-inscricoes {
+  .total-enrollments {
     width: 100%;
     display: flex;
     justify-content: right;

@@ -3,11 +3,11 @@ import { Container } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import AOS from "aos";
 import FormLogin from "@/(components)/forms/formLogin";
-import FormUsuario from "@/(components)/forms/formUsuario";
 import { Section } from "./styled";
+import FormUser from "../forms/formUser";
 
 export default function ContainerLogin() {
-  const [ativarcadastro, setAtivarcadastro] = useState(false);
+  const [activate, setActivate] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -17,13 +17,13 @@ export default function ContainerLogin() {
   }, []);
 
   const toggleAtivarcadastro = () => {
-    setAtivarcadastro(!ativarcadastro);
+    setActivate(!activate);
   };
 
   return (
     <Container as={Section}>
       <div
-        className={isClient && ativarcadastro ? "ativado" : "form"}
+        className={isClient && activate ? "active" : "form"}
         data-aos="fade-left"
         data-aos-anchor="#example-anchor"
         data-aos-offset="500"
@@ -33,7 +33,7 @@ export default function ContainerLogin() {
         <FormLogin />
         <button
           type="button"
-          className="btn-cadastre"
+          className="btn-register"
           onClick={toggleAtivarcadastro}
         >
           Cadastre-se
@@ -42,13 +42,13 @@ export default function ContainerLogin() {
       </div>
       <div className="hr display-none" />
       <div
-        className={isClient && ativarcadastro ? "form" : "ativado"}
+        className={isClient && activate ? "form" : "active"}
         data-aos="fade-right"
         data-aos-offset="300"
         data-aos-easing="ease-in-sine"
       >
         <h3>Cadastre-se</h3>
-        <FormUsuario />
+        <FormUser />
         <button
           type="button"
           className="btn-login"

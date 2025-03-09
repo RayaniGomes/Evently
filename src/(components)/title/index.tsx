@@ -1,13 +1,13 @@
-import { TituloProps } from "@/interfaces";
-import { ContainerTitulo } from "./styled";
+import { TitleProps } from "@/interfaces";
+import { Container } from "./styled";
 
-export default function Titulo({ titulo, border }: TituloProps) {
+export default function Title({ title, border }: TitleProps) {
   return (
-    <ContainerTitulo color={border}>
+    <Container $color={border}>
       <h1>
-        {titulo}
+        {title}
         <hr />
       </h1>
-    </ContainerTitulo>
+    </Container>
   );
 }

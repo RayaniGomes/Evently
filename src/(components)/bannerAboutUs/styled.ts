@@ -9,7 +9,7 @@ export const Section = styled.section`
   padding: 3rem 5rem;
   background: linear-gradient(180deg, rgba(6, 18, 30, 0.37) 0%, #103356 87%),
     url("/bgSobre.png") no-repeat center center / cover;
-  color: var(--branco);
+  color: var(--white);
   text-align: center;
   gap: 2rem;
 
@@ -23,7 +23,7 @@ export const Section = styled.section`
     gap: 2rem;
 
     a {
-      color: var(--branco);
+      color: var(--white);
       font-size: 40px;
     }
   }

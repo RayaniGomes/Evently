@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const FormEvento = styled.form`
+export const FormEvent = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   padding: 0 3rem;
-  .notLoading {
+  .not-loading {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -24,7 +24,7 @@ export const FormEvento = styled.form`
     gap: 1rem;
   }
 
-  .endereco {
+  .address {
     width: 100%;
     display: flex;
     align-items: center;
@@ -47,11 +47,11 @@ export const FormEvento = styled.form`
     border-radius: 10px;
     font-size: 12px;
     font-weight: 600;
-    background-color: var(--branco);
-    color: var(--azul-escuro);
+    background-color: var(--white);
+    color: var(--blue-dark);
 
     &:hover {
-      box-shadow: var(--drop-shadow-branco-hover);
+      box-shadow: var(--drop-shadow-white-hover);
     }
   }
 
@@ -60,11 +60,11 @@ export const FormEvento = styled.form`
     text-align: left;
     font-weight: bold;
     font-size: 12px;
-    padding: .25rem .5rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 7px;
-    margin-top: -.5rem;
-    background-color:rgb(243, 191, 191);
-    color: #9E0000;
+    margin-top: -0.5rem;
+    background-color: rgb(243, 191, 191);
+    color: #9e0000;
   }
 
   @media (max-width: 768px) {
@@ -87,52 +87,50 @@ export const GrupoInput = styled.div`
     background-color: transparent;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--branco);
+    border-bottom: 1px solid var(--white);
     border-radius: 10px;
     gap: 1rem;
 
     input,
     select {
-      color:rgba(244, 244, 244, 0.7);
+      color: rgba(244, 244, 244, 0.7);
       width: 100%;
       height: 100%;
-      padding: .25rem .5rem;
+      padding: 0.25rem 0.5rem;
       background-color: transparent;
       border: none;
       border-radius: 10px;
     }
 
     option {
-      color: var(--azul-escuro);
+      color: var(--blue-dark);
     }
-
   }
-  
+
   ::placeholder {
-    color: var(--branco);
+    color: var(--white);
     opacity: 0.7;
   }
-  
-  .descricao {
-      width: 100%;
-      height: 100px;
-      background-color: transparent;
-      border-bottom: 1px solid var(--branco);
-      border-left: 1px solid var(--branco);
-      border-right: 1px solid var(--branco);
-      border-radius: 0 0 10px 10px;
 
-      
-      textarea {
-        width: 100%;
-        height: 100%;
-        padding: .25rem .5rem;
-        background-color: transparent;
-        border: none;
-        border-radius: 10px;
-        color:rgba(244, 244, 244, 0.7);
-      }
+  .description {
+    width: 100%;
+    height: 100px;
+    background-color: transparent;
+    border-bottom: 1px solid var(--white);
+    border-left: 1px solid var(--white);
+    border-right: 1px solid var(--white);
+    border-radius: 0 0 10px 10px;
+
+    textarea {
+      width: 100%;
+      height: 100%;
+      padding: 0.25rem 0.5rem;
+      background-color: transparent;
+      border: none;
+      border-radius: 10px;
+      color: rgba(244, 244, 244, 0.7);
     }
+  }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);

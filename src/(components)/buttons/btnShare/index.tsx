@@ -3,9 +3,9 @@ import Link from "next/link";
 import { BtnCompartilhar } from "./styled";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { StyledCompartilhar } from "@/interfaces";
+import { StyledShare } from "@/interfaces";
 
-export default function Compartilhar({
+export default function Share({
   $bgColor,
   $color,
   $tamanho,
@@ -15,7 +15,7 @@ export default function Compartilhar({
   $right,
   $hover,
   $url,
-}: StyledCompartilhar) {
+}: StyledShare) {
   const [isOpen, setIsOpen] = useState(false);
   const [baseUrl, setBaseUrl] = useState("http://localhost:3000");
 
@@ -67,18 +67,22 @@ export default function Compartilhar({
         </button>
 
         <Link
-          href={`https://wa.me/?text=${encodeURIComponent(`${baseUrl}${$url || ""}`)}`}
+          href={`https://wa.me/?text=${encodeURIComponent(
+            `${baseUrl}${$url || ""}`
+          )}`}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Compartilhar no WhatsApp"
+          aria-label="Share no WhatsApp"
         >
           <i className="bi bi-whatsapp" />
         </Link>
 
         <Link
-          href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${baseUrl}${$url || ""}`)}`}
+          href={`http://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            `${baseUrl}${$url || ""}`
+          )}`}
           target="_blank"
-          aria-label="Compartilhar no Facebook"
+          aria-label="Share no Facebook"
         >
           <i className="bi bi-facebook" />
         </Link>

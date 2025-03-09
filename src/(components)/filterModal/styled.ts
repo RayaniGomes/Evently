@@ -56,7 +56,7 @@ export const Forms = styled.div`
     }
   }
 
-  .uf {
+  .state {
     text-transform: uppercase;
   }
 `;

@@ -1,7 +1,7 @@
-import { StyledPaginacao } from "@/interfaces";
+import { StyledPagination } from "@/interfaces";
 import styled from "styled-components";
 
-export const ContainerPaginacao = styled.div<StyledPaginacao>`
+export const Container = styled.div<StyledPagination>`
   display: flex;
   justify-content: center;
   align-items: center;

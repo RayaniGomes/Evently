@@ -1,20 +1,20 @@
 import { z } from "zod";
 
-export const usuarioSchema = z.object({
-  nome: z
+export const userSchema = z.object({
+  name: z
     .string()
-    .nonempty({ message: "O nome é obrigatório" })
+    .nonempty({ message: "O name é obrigatório" })
     .refine((value) => !/^\s+$/g.test(value), {
       message: "O nome não pode ser apenas espaços em branco",
     }),
-  dataNascimento: z
+  dateOfBirth: z
     .string()
-    .refine((data) => !isNaN(Date.parse(data)), {
+    .refine((date) => !isNaN(Date.parse(date)), {
       message: "A data de nascimento deve ser uma data válida.",
     })
     .refine(
-      (data) => {
-        const birthDate = new Date(data);
+      (date) => {
+        const birthDate = new Date(date);
         const today = new Date();
         return birthDate <= today;
       },
@@ -23,14 +23,14 @@ export const usuarioSchema = z.object({
       }
     ),
   email: z.string().email("O e-mail é obrigatório"),
-  senha: z
+  password: z
     .string()
     .min(6, "A senha deve conter no mínimo 6 caracteres.")
     .refine((value) => !/^\s+$/g.test(value), {
       message: "A senha não pode conter apenas espaços em branco.",
     }),
-  criador: z.string(),
-  fotoPerfil: z.string().optional(),
+  creator: z.string().optional(),
+  profilePhoto: z.string().optional(),
 });
 
-export type createDataUsuario = z.infer<typeof usuarioSchema>;
+export type createDataUser = z.infer<typeof userSchema>;

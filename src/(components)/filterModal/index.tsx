@@ -2,19 +2,19 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { Forms } from "./styled";
 import InputCheckbox from "../inputCheckbox";
-import SetFiltro from "@/help/functionFilter";
-import { useEvento } from "@/stores/eventStore";
-import { FiltroModalProps } from "@/interfaces";
+import SetFilter from "@/utils/filters";
+import { useEvent } from "@/stores/eventStore";
+import { FilterModalProps } from "@/interfaces";
 
-export default function FiltroModal({
+export default function FilterModal({
   showModal,
   toggleModal,
-}: FiltroModalProps) {
-  const { estados = [], cidades = [], tipos = [] } = SetFiltro() || {};
-  const { filtrarEventos } = useEvento();
+}: FilterModalProps) {
+  const { states = [], city = [], category = [] } = SetFilter() || {};
+  const { filterEvents } = useEvent();
 
-  const limparFiltro = () => {
-    filtrarEventos({});
+  const cleanFilter = () => {
+    filterEvents({});
   };
 
   return (
@@ -26,53 +26,53 @@ export default function FiltroModal({
       <Modal.Body>
         <Forms>
           <div className="item-form">
-            <label className="border-bottom">Data:</label>
+            <label>Data:</label>
             <input
               type="date"
-              onChange={(e) => filtrarEventos({ data: e.target.value })}
+              onChange={(e) => filterEvents({ date: e.target.value })}
             />
           </div>
           <div className="item-form">
-            <label className="border-bottom">Estado:</label>
-            <div className="inputs uf">
-              {estados.map((uf) => (
+            <label>Estado:</label>
+            <div className="inputs state">
+              {states.map((state) => (
                 <InputCheckbox
-                  key={uf}
-                  id={uf}
-                  htmlFor={uf}
-                  label={uf}
-                  color="--azul-escuro"
-                  onChange={() => filtrarEventos({ uf })}
+                  key={state}
+                  id={state}
+                  htmlFor={state}
+                  label={state}
+                  color="--blue-dark"
+                  onChange={() => filterEvents({ state })}
                 />
               ))}
             </div>
           </div>
           <div className="item-form">
-            <label className="border-bottom">Cidade:</label>
+            <label>Cidade:</label>
             <div className="inputs">
-              {cidades.map((cidade) => (
+              {city.map((city) => (
                 <InputCheckbox
-                  key={cidade}
-                  id={cidade}
-                  htmlFor={cidade}
-                  label={cidade}
-                  color="--azul-escuro"
-                  onChange={() => filtrarEventos({ cidade })}
+                  key={city}
+                  id={city}
+                  htmlFor={city}
+                  label={city}
+                  color="--blue-dark"
+                  onChange={() => filterEvents({ city })}
                 />
               ))}
             </div>
           </div>
           <div className="item-form">
-            <label className="border-bottom">Tipos:</label>
+            <label>Categoria:</label>
             <div className="inputs">
-              {tipos.map((tipo) => (
+              {category.map((category) => (
                 <InputCheckbox
-                  key={tipo}
-                  id={tipo}
-                  htmlFor={tipo}
-                  label={tipo}
-                  color="--azul-escuro"
-                  onChange={() => filtrarEventos({ tipo })}
+                  key={category}
+                  id={category}
+                  htmlFor={category}
+                  label={category}
+                  color="--blue-dark"
+                  onChange={() => filterEvents({ category })}
                 />
               ))}
             </div>
@@ -81,7 +81,7 @@ export default function FiltroModal({
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={limparFiltro}>
+        <Button variant="secondary" onClick={cleanFilter}>
           Limpar
         </Button>
         <Button variant="primary" onClick={toggleModal}>

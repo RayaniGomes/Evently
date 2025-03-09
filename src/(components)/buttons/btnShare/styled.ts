@@ -1,7 +1,7 @@
-import { StyledCompartilhar } from "@/interfaces";
+import { StyledShare } from "@/interfaces";
 import styled from "styled-components";
 
-export const BtnCompartilhar = styled.div<StyledCompartilhar>`
+export const BtnCompartilhar = styled.div<StyledShare>`
   position: absolute;
   top: ${(props) => props.$top}rem;
   right: ${(props) => props.$right}rem;

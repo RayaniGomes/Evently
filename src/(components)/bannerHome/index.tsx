@@ -1,40 +1,41 @@
 "use client";
 import Link from "next/link";
 import { ContainerBanner, Slide } from "./styled";
-import { useEvento } from "@/stores/eventStore";
+import { useEvent } from "@/stores/eventStore";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { formatDate } from "@/utils/funtions";
 
-export default function Banner() {
-  const { eventos, getEventos } = useEvento();
+export default function BannerHome() {
+  const { events, getEvents } = useEvent();
 
   useEffect(() => {
-    getEventos();
+    getEvents();
   }, []);
 
-  const ultimosEventos = [...eventos]
+  const latestEvents = [...events]
     .sort((a, b) => {
       const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
       const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-      return dataA - dataB;
+      return dataB - dataA;
     })
     .slice(0, 4);
 
   return (
     <ContainerBanner>
       <Container>
-        {ultimosEventos.length > 0 ? (
-          ultimosEventos.map((evento, index) => (
+        {latestEvents.length > 0 ? (
+          latestEvents.map((event, index) => (
             <Slide
-              key={evento._id ?? index}
-              imagem={evento.imagem ?? "/sem-imagem.svg"}
+              key={event._id ?? index}
+              image={event.image ?? "/sem-image.svg"}
             >
-              <div className="imagem" />
-              <div className="conteudo">
-                <h3>{evento.nome}</h3>
-                <h4>{evento.data}</h4>
-                <h4>{evento.local}</h4>
-                <Link href={`/detalhe-evento/${evento._id}`}>Detalhes</Link>
+              <div className="image" />
+              <div className="content">
+                <h3>{event.name}</h3>
+                <h4>{formatDate(event.date)}</h4>
+                <h4>{event.location}</h4>
+                <Link href={`/eventDetail/${event._id}`}>Detalhes</Link>
               </div>
             </Slide>
           ))

@@ -7,7 +7,7 @@ export const Form = styled.form`
   flex-direction: column;
   gap: 1rem;
 
-  .notLoading {
+  .not-loading {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -19,7 +19,7 @@ export const Form = styled.form`
     opacity: 0.5;
   }
 
-  .senha {
+  .password {
     width: 100%;
     display: flex;
     align-items: center;
@@ -53,31 +53,31 @@ export const Form = styled.form`
     border-radius: 10px;
     font-size: 12px;
     font-weight: 600;
-    background-color: var(--branco);
-    color: var(--azul-escuro);
+    background-color: var(--white);
+    color: var(--blue-dark);
     margin-top: 3rem;
 
     &:hover {
-      box-shadow: var(--drop-shadow-branco-hover);
+      box-shadow: var(--drop-shadow-white-hover);
     }
   }
 
-  .criador {
+  .creator {
     width: 100%;
     display: flex;
     align-items: center;
 
     select {
-      color: var(--branco);
+      color: var(--white);
       background-color: transparent;
       border: none;
-      border-bottom: 1px solid var(--branco);
+      border-bottom: 1px solid var(--white);
       border-radius: 10px;
       padding: 0.25rem;
       margin-left: 0.5rem;
 
       option {
-        color: var(--azul-escuro);
+        color: var(--blue-dark);
       }
     }
 
@@ -87,41 +87,16 @@ export const Form = styled.form`
       align-items: flex-start;
     }
   }
-
-  .google {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 3rem;
-    gap: 0.5rem;
-
-    button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      border-radius: 10px;
-      font-size: 30px;
-      background-color: var(--branco);
-      color: var(--azul-escuro);
-      padding: 1rem;
-      text-decoration: none;
-
-      &:hover {
-        box-shadow: var(--drop-shadow-branco-hover);
-      }
-    }
-  }
 `;
 
-export const GrupoInput = styled.div`
+export const GroupInput = styled.div`
   width: 100%;
   height: 40px;
   padding: 0.25rem 0.5rem;
   background-color: transparent;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid var(--branco);
+  border-bottom: 1px solid var(--white);
   border-radius: 10px;
   gap: 0.5rem;
   position: relative;
@@ -135,12 +110,12 @@ export const GrupoInput = styled.div`
     background-color: transparent;
     border: none;
     font-size: 14px;
-    color: var(--branco);
+    color: var(--white);
     border-radius: 10px;
     padding: 0.25rem 0.5rem;
 
     &::placeholder {
-      color: var(--branco);
+      color: var(--white);
     }
 
     &:active {
@@ -172,18 +147,21 @@ export const GrupoInput = styled.div`
   button {
     border: none;
     background-color: transparent;
-    color: var(--branco);
+    color: var(--white);
     font-size: 20px;
   }
-
 `;
 
-export const ImagemPerfil = styled.div`
+export const ImageProfile = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
   justify-content: left;
   gap: 1rem;
+
+  .alert {
+    width: 100%;
+    opacity: 0.5;
+  }
 
   label {
     .placeholder {
@@ -194,36 +172,34 @@ export const ImagemPerfil = styled.div`
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: var(--branco);
+      color: var(--white);
 
       i {
         font-size: 50px;
-        color: var(--azul-escuro);
+        color: var(--blue-dark);
       }
     }
-
 
     img {
       width: 100px;
       height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      background-color: var(--branco);
+      background-color: var(--white);
     }
   }
 
   input {
     width: 100%;
     border: none;
-    border-bottom: 1px solid var(--branco);
     border-radius: 10px;
-    padding: 0.25rem .5rem;
+    padding: 0.25rem 0.5rem;
     background-color: transparent;
-    color: var(--branco);
+    color: var(--white);
     font-size: 14px;
-    
+
     &::placeholder {
-      color: var(--branco);
+      color: var(--white);
     }
   }
 `;

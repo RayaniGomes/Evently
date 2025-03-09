@@ -1,41 +1,44 @@
 "use client";
-import { MinhasInscricoes, PropInscritosStore } from "@/interfaces";
+import { Enrollment, PropEnrollmentStore } from "@/interfaces";
 import api from "@/service/api";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-export const useInscritos = create<PropInscritosStore>((set) => ({
-  inscricoes: [],
+export const useEnrollment = create<PropEnrollmentStore>((set) => ({
+  enrollments: [],
   isLoading: false,
 
-  getListaInscricoes: async () => {
+  getListEnrollments: async () => {
     set({ isLoading: true });
-    await api.get("/inscricoes")
-      .then((response) => set({ inscricoes: response.data }))
+    await api
+      .get("/enrollments")
+      .then((response) => set({ enrollments: response.data }))
       .catch(() => toast.error("Erro ao buscar inscrições!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  getInscricoes: async (email: string) => {
+  getEnrollments: async (email: string) => {
     set({ isLoading: true });
-    await api.get(`/inscricoes?email=${email}`)
-      .then((response) => set({ inscricoes: response.data }))
+    await api
+      .get(`/enrollments?email=${email}`)
+      .then((response) => set({ enrollments: response.data }))
       .catch(() => toast.error("Erro ao buscar inscrições!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  postInscricao: async (inscricao: MinhasInscricoes) => {
+  postEnrollment: async (data: Enrollment) => {
     set({ isLoading: true });
-    await api.post("/inscricoes", inscricao, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
+    await api
+      .post("/enrollments", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
       .then((response) => {
         if (response.status === 201) {
           toast.success("Inscrição realizada com sucesso!");
           set((state) => ({
-            inscricoes: [...state.inscricoes, response.data],
+            enrollments: [...state.enrollments, response.data],
           }));
         } else {
           toast.error("Erro ao realizar inscrição, tente novamente!");
@@ -51,13 +54,14 @@ export const useInscritos = create<PropInscritosStore>((set) => ({
       .finally(() => set({ isLoading: false }));
   },
 
-  cancelarInscricao: async (id: string) => {
+  deleteEnrollment: async (id: string) => {
     set({ isLoading: true });
-    await api.delete(`/inscricoes/${id}`)
-      .then((response) => {
+    await api
+      .delete(`/enrollments/${id}`)
+      .then(async (response) => {
         if (response.status === 204) {
           set((state) => ({
-            inscricoes: state.inscricoes.filter((inscricao) => inscricao._id !== id),
+            enrollments: state.enrollments.filter((enrollment) => enrollment._id !== id),
           }));
           toast.success("Inscrição cancelada com sucesso!");
         }

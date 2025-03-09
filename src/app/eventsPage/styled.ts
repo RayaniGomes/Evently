@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Pesquisar = styled.div`
+export const Search = styled.div`
   width: 100%;
   display: none;
   align-items: center;
@@ -30,7 +30,7 @@ export const Pesquisar = styled.div`
     }
   }
 
-  .filtro {
+  .filter {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -38,7 +38,7 @@ export const Pesquisar = styled.div`
     border: none;
     border-radius: 10px;
     background: var(--gradiente-radial);
-    color: var(--branco);
+    color: var(--white);
   }
 
   @media (max-width: 768px) {

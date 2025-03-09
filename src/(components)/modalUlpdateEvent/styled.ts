@@ -5,8 +5,8 @@ export const Forms = styled.form`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  
-  .notLoading {
+
+  .not-loading {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -24,7 +24,7 @@ export const Forms = styled.form`
     gap: 1rem;
   }
 
-  .endereco {
+  .address {
     width: 100%;
     display: flex;
     align-items: center;
@@ -47,11 +47,11 @@ export const Forms = styled.form`
     border-radius: 10px;
     font-size: 12px;
     font-weight: 600;
-    background: var(--botao);
-    color: var(--branco);
+    background: var(--button);
+    color: var(--white);
 
     &:hover {
-      box-shadow: var(--drop-shadow-branco-hover);
+      box-shadow: var(--drop-shadow-white-hover);
     }
   }
 
@@ -60,11 +60,11 @@ export const Forms = styled.form`
     text-align: left;
     font-weight: bold;
     font-size: 12px;
-    padding: .25rem .5rem;
+    padding: 0.25rem 0.5rem;
     border-radius: 7px;
-    margin-top: -.5rem;
-    background-color:rgb(243, 191, 191);
-    color: #9E0000;
+    margin-top: -0.5rem;
+    background-color: rgb(243, 191, 191);
+    color: #9e0000;
   }
 
   @media (max-width: 768px) {
@@ -75,7 +75,7 @@ export const Forms = styled.form`
   }
 `;
 
-export const GrupoInput = styled.div`
+export const GrupInput = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -87,54 +87,51 @@ export const GrupoInput = styled.div`
     background-color: transparent;
     display: flex;
     align-items: center;
-    border-bottom: 1px solid var(--azul-escuro);
+    border-bottom: 1px solid var(--blue-dark);
     border-radius: 10px;
     gap: 1rem;
 
     input,
     select {
-      color: var(--azul-escuro);
+      color: var(--blue-dark);
       width: 100%;
       height: 100%;
-      padding: 0 .5rem;
+      padding: 0 0.5rem;
       background-color: transparent;
       border: none;
       border-radius: 10px;
     }
 
     option {
-      color: var(--azul-escuro);
+      color: var(--blue-dark);
     }
-
   }
-  
+
   ::placeholder {
-    color: var(--azul-escuro);
+    color: var(--blue-dark);
   }
-  
-  .descricao {
-      width: 100%;
-      height: 100px;
-      background-color: transparent;
-      border-bottom: 1px solid var(--azul-escuro);
-      border-left: 1px solid var(--azul-escuro);
-      border-right: 1px solid var(--azul-escuro);
-      border-radius: 0 0 10px 10px;
 
-      
-      textarea {
-        width: 100%;
-        height: 100%;
-        padding: .25rem .5rem;
-        background-color: transparent;
-        border: none;
-        border-radius: 10px;
-        color: var(--azul-escuro);
-      }
+  .description {
+    width: 100%;
+    height: 100px;
+    background-color: transparent;
+    border-bottom: 1px solid var(--blue-dark);
+    border-left: 1px solid var(--blue-dark);
+    border-right: 1px solid var(--blue-dark);
+    border-radius: 0 0 10px 10px;
+
+    textarea {
+      width: 100%;
+      height: 100%;
+      padding: 0.25rem 0.5rem;
+      background-color: transparent;
+      border: none;
+      border-radius: 10px;
+      color: var(--blue-dark);
     }
+  }
 
   input[type="date"]::-webkit-calendar-picker-indicator {
-    filter: invert(1);
     font-size: 20px;
 
     ::placeholder {

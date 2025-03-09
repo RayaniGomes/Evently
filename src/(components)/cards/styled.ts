@@ -1,7 +1,7 @@
 import { StyledCard } from "@/interfaces";
 import styled from "styled-components";
 
-export const ContainerCard = styled.div<StyledCard>`
+export const Container = styled.div<StyledCard>`
   display: flex;
   width: 100%;
   height: 200px;
@@ -36,12 +36,12 @@ export const ContainerCard = styled.div<StyledCard>`
     }
   }
 
-  .nome-evento {
+  .name-event {
     width: 90%;
     text-transform: uppercase;
   }
 
-  .botoes-card {
+  .btn-card {
     display: flex;
     justify-content: end;
     align-items: center;
@@ -49,6 +49,7 @@ export const ContainerCard = styled.div<StyledCard>`
 
     button,
     a {
+      height: 40px;
       background-color: var(${(props) => props.$color});
       color: var(${(props) => props.$bgColor});
       border-radius: 10px;
@@ -56,7 +57,7 @@ export const ContainerCard = styled.div<StyledCard>`
       font-weight: 600;
       font-size: 12px;
       box-shadow: var(--drop-shadow);
-      padding: 1rem;
+      padding: 0 1rem;
 
       &:hover {
         transform: scale(1.1);

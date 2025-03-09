@@ -1,36 +1,41 @@
 "use client";
-import { PropUsuarioStore } from "@/interfaces";
+import { PropUserStore } from "@/interfaces";
+import { createDataUser } from "@/schema/user.schema";
 import api from "@/service/api";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-export const useUsuario = create<PropUsuarioStore>((set) => ({
-  usuarios: [],
+export const useUser = create<PropUserStore>((set) => ({
+  users: [],
   isLoading: false,
 
-  getUsuario: async (email: string) => {
+  getUser: async (email: string) => {
     set({ isLoading: true });
-    await api.get(`/usuarios/email?email=${email}`)
-      .then((response) => set({ usuarios: [response.data] }))
+    await api
+      .get(`/users/email?email=${email}`)
+      .then((response) => set({ users: [response.data] }))
       .finally(() => set({ isLoading: false }));
   },
 
-  getUsuariosLista: async () => {
+  getUsersList: async () => {
     set({ isLoading: true });
-    await api.get("/usuarios")
-      .then((response) => set({ usuarios: response.data }))
+    await api
+      .get("/users")
+      .then((response) => set({ users: response.data }))
       .catch(() => toast.error("Erro ao buscar os usuários, tente novamente!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  postUsuario: async (data: any, reset?: () => void) => {
+  postUser: async (data: createDataUser, reset?: () => void) => {
     set({ isLoading: true });
-    await api.post("/usuarios", data)
+    await api
+      .post("/users", data)
       .then((response) => {
         if (response.status === 201) {
-          toast.success("Usuário criado com sucesso! Agora você pode logar.");
+          toast.success(
+            "Usuário criado com sucesso! Agora você pode fazer seu login!"
+          );
           if (reset) reset();
-          useUsuario.getState().getUsuariosLista();
         } else {
           toast.error("Erro ao criar o usuário, tente novamente!");
         }
@@ -39,24 +44,26 @@ export const useUsuario = create<PropUsuarioStore>((set) => ({
       .finally(() => set({ isLoading: false }));
   },
 
-  patchUsuario: async (id: string, data: any) => {
+  patchUser: async (id: string, data: createDataUser) => {
     set({ isLoading: true });
-    await api.patch(`/usuarios/${id}`, data)
+    await api
+      .patch(`/users/${id}`, data)
       .then(() => {
         toast.success("Dados atualizados com sucesso!");
-        useUsuario.getState().getUsuario(data.email);
+        useUser.getState().getUser(data.email);
       })
       .catch(() => toast.error("Erro ao atualizar o usuário, tente novamente!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  deleteUsuario: async (id: string) => {
+  deleteUser: async (id: string) => {
     set({ isLoading: true });
-    await api.delete(`/usuarios/${id}`)
+    await api
+      .delete(`/users/${id}`)
       .then((response) => {
         if (response.status === 204) {
           set({
-            usuarios: useUsuario.getState().usuarios.filter((usuario) => usuario._id !== id),
+            users: useUser.getState().users.filter((user) => user._id !== id),
           });
           toast.success("Conta excluída com sucesso!");
         }

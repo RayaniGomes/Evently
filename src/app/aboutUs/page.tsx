@@ -1,32 +1,35 @@
 "use client";
 import Indice from "@/(components)/indice";
-import Sobre from "@/(components)/bannerAboutUs";
+import BannerAboutUs from "@/(components)/bannerAboutUs";
 import { Container } from "./styled";
 import Image from "next/image";
-import { useEvento } from "@/stores/eventStore";
-import { useInscritos } from "@/stores/enrollmentStore";
-import { useUsuario } from "@/stores/userStore";
+import { useEvent } from "@/stores/eventStore";
+import { useEnrollment } from "@/stores/enrollmentStore";
+import { useUser } from "@/stores/userStore";
 import { useEffect } from "react";
 
-export default function QuemSomos() {
-  const { eventos, getEventos } = useEvento();
-  const { inscricoes, getListaInscricoes } = useInscritos();
-  const { usuarios, getUsuariosLista } = useUsuario();
+export default function AboutUs() {
+  const { events, getEvents } = useEvent();
+  const { enrollments, getListEnrollments } = useEnrollment();
+  const { users, getUsersList } = useUser();
 
   useEffect(() => {
-    getEventos();
-    getListaInscricoes();
-    getUsuariosLista();
+    getEvents();
+    getListEnrollments();
+    getUsersList();
   }, []);
 
   return (
     <>
-      <Sobre />
+      <BannerAboutUs />
       <Container>
         <div className="indices">
-          <Indice indice={eventos.length} titulo="Eventos Cadastrados" />
-          <Indice indice={usuarios.length} titulo="Cadastros Realizados" />
-          <Indice indice={inscricoes.length} titulo="Inscrições em Eventos" />
+          <Indice indice={events.length || 0} title="Eventos Cadastrados" />
+          <Indice indice={users.length || 0} title="Usuarios Cadastros" />
+          <Indice
+            indice={enrollments.length || 0}
+            title="Inscrições em Eventos"
+          />
         </div>
 
         <div className="colaboradores">

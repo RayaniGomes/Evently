@@ -13,7 +13,7 @@ export const Section = styled.section`
 
   h1 {
     text-align: center;
-    color: var(--azul-escuro);
+    color: var(--blue-dark);
   }
 
   @media (max-width: 768px) {
@@ -47,27 +47,27 @@ export const Detalhe = styled.div`
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      color: var(--azul-escuro);
+      color: var(--blue-dark);
 
       .label {
-        color: var(--azul-escuro);
+        color: var(--blue-dark);
         opacity: 0.5;
       }
     }
   }
 
-  .btnContainer {
+  .btn-container {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 1rem;
 
-    .btnInscricao {
+    .btn-enrollment {
       width: 200px;
       height: 40px;
-      background: var(--botao);
-      color: var(--branco);
+      background: var(--button);
+      color: var(--white);
       border-radius: 10px;
       border: none;
       font-weight: 600;
@@ -76,7 +76,7 @@ export const Detalhe = styled.div`
       margin-top: 3rem;
 
       &:hover {
-        box-shadow: var(--drop-shadow-branco-hover);
+        box-shadow: var(--drop-shadow-white-hover);
       }
     }
   }
@@ -97,7 +97,7 @@ export const Detalhe = styled.div`
 
   @media (max-width: 425px) {
     .info-container {
-      .btnInscricao {
+      .btn-enrollment {
         width: 100px;
         height: 30px;
         font-size: 10px;

@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const FooterContainer = styled.footer`
   display: flex;
   align-items: center;
-  background-color: var(--azul-medio);
+  background-color: var(--blue-medium);
   padding: 1rem;
-  color: var(--branco);
+  color: var(--white);
 
   .container {
     width: 100%;
@@ -21,7 +21,7 @@ export const FooterContainer = styled.footer`
   }
 
   a {
-    color: var(--branco);
+    color: var(--white);
     text-decoration: none;
     display: flex;
     align-items: center;

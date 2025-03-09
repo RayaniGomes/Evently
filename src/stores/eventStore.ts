@@ -1,47 +1,50 @@
 "use client";
-import { Evento, PropEventoStore } from "@/interfaces";
-import { createDataEvento } from "@/schema/event.schema";
+import { Event, PropEventStore } from "@/interfaces";
+import { createDataEvent } from "@/schema/event.schema";
 import api from "@/service/api";
-import { use } from "react";
 import { toast } from "react-toastify";
 import { create } from "zustand";
 
-export const useEvento = create<PropEventoStore>((set) => ({
-  eventos: [],
+export const useEvent = create<PropEventStore>((set) => ({
+  events: [],
   isLoading: false,
 
-  getEventos: async () => {
+  getEvents: async () => {
     set({ isLoading: true });
 
     await api
-      .get("/eventos")
-      .then((response) => set({ eventos: response.data }))
+      .get("/events")
+      .then((response) => set({ events: response.data }))
       .catch(() => toast.error("Erro ao carregar eventos!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  getEventoId: async (id: string) => {
+  getEventId: async (id: string) => {
     set({ isLoading: true });
     await api
-      .get(`/eventos/${id}`)
-      .then((response) => set({ eventos: [response.data] }))
+      .get(`/events/${id}`)
+      .then((response) => set({ events: [response.data] }))
       .catch(() => toast.error("Erro ao carregar evento!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  getCriadorEventos: async (id: string) => {
+  getCreatorEvents: async (email: string) => {
     set({ isLoading: true });
     await api
-      .get(`/eventos?criador=${id}`)
-      .then((response) => set({ eventos: response.data }))
+      .get(`/events?creator=${email}`)
+      .then((response) => {
+        if (response.data) {
+          set({ events: response.data });
+        }
+      })
       .catch(() => toast.error("Erro ao carregar eventos do criador!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  postEvento: async (data: createDataEvento, reset?: () => void) => {
+  postEvent: async (data: createDataEvent, reset?: () => void) => {
     set({ isLoading: true });
     await api
-      .post("/eventos", data)
+      .post("/events", data)
       .then((response) => {
         if (response.status === 201) {
           toast.success("Evento criado com sucesso!");
@@ -58,60 +61,56 @@ export const useEvento = create<PropEventoStore>((set) => ({
       });
   },
 
-  patchEvento: async (id: string, data: any) => {
+  patchEvent: async (id: string, data: createDataEvent) => {
     set({ isLoading: true });
     await api
-      .patch(`/eventos/${id}`, data)
-      .then((response) => {
-        if (response.status === 200) {
-          toast.success("Evento atualizado com sucesso!");
-          useEvento.getState().getEventoId(id);
-        } else {
-          toast.error("Erro ao atualizar o evento, tente novamente!");
-        }
+      .patch(`/events/${id}`, data)
+      .then(() => {
+        toast.success("Evento atualizado com sucesso!");
       })
       .catch(() => toast.error("Erro ao atualizar o evento, tente novamente!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  deleteEvento: async (id: string) => {
+  deleteEvent: async (id: string) => {
     set({ isLoading: true });
     await api
-      .delete(`/eventos/${id}`)
+      .delete(`/events/${id}`)
       .then((res) => {
         if (res.status === 204) {
           set({
-            eventos: useEvento
+            events: useEvent
               .getState()
-              .eventos.filter((evento: Evento) => evento._id !== id),
+              .events.filter((event: Event) => event._id !== id),
           });
           toast.success("Evento cancelado com sucesso!");
-          useEvento.getState().getEventos();
         }
       })
-      .catch(() => toast.error("Erro ao deletar o evento, tente novamente!"))
+      .catch(() => toast.error("Erro ao cancelar o evento, tente novamente!"))
       .finally(() => set({ isLoading: false }));
   },
 
-  filtrarEventos: async (filtros: {
-    data?: string;
-    cidade?: string;
-    uf?: string;
-    tipo?: string;
-    nome?: string;
+  filterEvents: async (filter: {
+    date?: string;
+    city?: string;
+    state?: string;
+    category?: string;
+    name?: string;
   }) => {
     set({ isLoading: true });
 
     const params = new URLSearchParams();
-    if (filtros.data) params.append("data", filtros.data.replace(/\//g, "-"));
-    if (filtros.cidade) params.append("cidade", filtros.cidade);
-    if (filtros.uf) params.append("uf", filtros.uf);
-    if (filtros.tipo) params.append("tipo", filtros.tipo);
-    if (filtros.nome) params.append("nome", filtros.nome);
+    if (filter.date) params.append("date", filter.date.replace(/\//g, "-"));
+    if (filter.city) params.append("city", filter.city);
+    if (filter.state) params.append("state", filter.state);
+    if (filter.category) params.append("category", filter.category);
+    if (filter.name) params.append("name", filter.name);
 
     await api
-      .get(`/eventos?${params.toString()}`)
-      .then((response) => set({ eventos: response.data }))
+      .get(`/events?${params.toString()}`)
+      .then((response) => {
+        set({ events: response.data });
+      })
       .catch(() => toast.error("Erro ao filtrar eventos!"))
       .finally(() => set({ isLoading: false }));
   },

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const UFS_VALIDAS = [
+export const valid_state = [
   "AC",
   "AL",
   "AP",
@@ -38,54 +38,49 @@ const nonEmptyString = (fieldName: string) =>
       message: `${fieldName} não pode conter apenas espaços em branco.`,
     });
 
-export const eventoSchema = z.object({
-  nome: nonEmptyString("O nome do evento"),
-  data: z
+export const eventSchema = z.object({
+  name: nonEmptyString("O nome do evento"),
+  date: z
     .string()
-    .refine((data) => !isNaN(Date.parse(data)), {
+    .refine((date) => !isNaN(Date.parse(date)), {
       message: "A data de nascimento deve ser uma data válida.",
     })
-    .refine((data) => new Date(data) >= new Date(), {
+    .refine((date) => new Date(date) >= new Date(), {
       message: "Você não pode cadastrar um evento no passado.",
     }),
-  horario: z
+  time: z
     .string()
     .regex(/^([01]?[0-9]|2[0-3]):[0-5][0-9]$/, {
       message: "Formato de hora inválido. Use o formato HH:MM.",
     })
     .refine(
       (value) => {
-        const [hora, minuto] = value.split(":").map(Number);
-        return hora >= 0 && hora <= 23 && minuto >= 0 && minuto <= 59;
+        const [hour, minute] = value.split(":").map(Number);
+        return hour >= 0 && hour <= 23 && minute >= 0 && minute <= 59;
       },
       { message: "Hora inválida. Verifique os valores de hora e minuto." }
     ),
-    maxPessoas: z
-    .string()
-    .transform((value) => Number(value))
-    .refine((value) => !isNaN(value), {
-      message: "A quantidade de pessoas deve ser um número válido.",
-    })
+  maxPeople: z
+    .number()
+    .int("A quantidade de pessoas deve ser um número inteiro.")
     .refine((value) => value > 0, {
       message: "A quantidade de pessoas deve ser maior que zero.",
     }),
-  tipo: nonEmptyString("O tipo do evento"),
-  imagem: z.string().url("A URL fornecida não é válida."),
-  descricao: z.string().optional(),
-  local: nonEmptyString("O local do evento"),
-  endereco: nonEmptyString("O endereço do evento"),
-  numero: nonEmptyString("O número do endereço do evento"),
-  bairro: nonEmptyString("O bairro do evento"),
-  cidade: nonEmptyString("A cidade do evento"),
-  uf: z
-    .string()
-    .length(2, { message: "A UF deve ter exatamente 2 caracteres." })
-    .refine((value) => UFS_VALIDAS.includes(value), {
-      message: "UF inválida. Insira uma sigla de estado brasileiro válida.",
-    }),
-  complemento: z
+
+  category: nonEmptyString("A categoria do evento"),
+  image: z.string().url("A URL fornecida não é válida."),
+  description: z.string().optional(),
+  location: nonEmptyString("O location do evento"),
+  address: nonEmptyString("O endereço do evento"),
+  number: nonEmptyString("O número do endereço do evento"),
+  neighborhood: z.string(),
+  city: nonEmptyString("A cidade do evento"),
+  state: z.string().refine((value) => valid_state.includes(value), {
+    message: "UF inválida. Insira uma sigla de state brasileiro válida.",
+  }),
+  complement: z
     .string()
     .max(255, { message: "O complemento pode ter no máximo 255 caracteres." }),
 });
 
-export type createDataEvento = z.infer<typeof eventoSchema>;
+export type createDataEvent = z.infer<typeof eventSchema>;

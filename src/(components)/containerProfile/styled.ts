@@ -8,13 +8,19 @@ export const Section = styled.section`
   align-items: center;
   margin: 0 auto;
   padding: 7rem 2rem;
-  gap: 5rem;
+  gap: 2rem;
 
-  .perfil {
+  .profile {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+  }
+
+  .alert {
+    width: 100%;
+    opacity: 0.8;
+    border: 1px solid var(--blue-dark);
   }
 
   @media (max-width: 768px) {
@@ -23,7 +29,7 @@ export const Section = styled.section`
   }
 `;
 
-export const Botoes = styled.div`
+export const Buttons = styled.div`
   width: 100%;
   display: flex;
 
@@ -34,23 +40,23 @@ export const Botoes = styled.div`
     justify-content: center;
     align-items: center;
     background-color: transparent;
-    border: 2px solid var(--azul-escuro);
+    border: 2px solid var(--blue-dark);
     border-radius: 10px 10px 0 0;
     font-size: 16px;
     font-weight: 600;
-    color: var(--azul-escuro);
+    color: var(--blue-dark);
 
     &:hover {
       transform: scale(1);
-      background-color: var(--azul-escuro);
-      color: var(--branco);
+      background-color: var(--blue-dark);
+      color: var(--white);
       opacity: 1;
     }
   }
 
   .active {
-    background-color: var(--azul-escuro);
-    color: var(--branco);
+    background-color: var(--blue-dark);
+    color: var(--white);
     border-radius: 10px 10px 0 0;
   }
 
@@ -73,7 +79,7 @@ export const PerfilMain = styled.div`
   align-items: center;
   flex-direction: column;
   background: var(--gradiente-radial);
-  color: var(--branco);
+  color: var(--white);
   border-radius: 0 10px 10px 10px;
   padding: 3rem 0rem;
   gap: 1rem;

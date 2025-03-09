@@ -14,25 +14,23 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
-        const response = await api.get(`/usuarios/email?email=${credentials.email}`);
-        const usuario = response.data;
+        const response = await api.get(
+          `/users/email?email=${credentials.email}`
+        );
+        const user = response.data;
 
-        if (!usuario) throw new Error("register_required");
-        if (usuario.senha !== credentials.password) throw new Error("invalid_credentials");
+        if (!user) throw new Error("register_required");
+        if (user.password !== credentials.password)
+          throw new Error("invalid_credentials");
 
         return {
-          id: usuario.id,
-          name: usuario.nome,
-          email: usuario.email,
-          criador: usuario.criador,
-          senha: usuario.senha,
-          image: usuario.fotoPerfil,
+          id: user.id,
+          name: user.name,
+          email: user.email,
+          creator: user.creator,
+          image: user.profilePhoto,
         };
       },
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
   callbacks: {
@@ -41,7 +39,7 @@ export const authOptions: NextAuthOptions = {
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
-        token.criador = user.criador;
+        token.creator = user.creator;
       }
       return token;
     },
@@ -50,6 +48,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id as string;
         session.user.name = token.name as string;
         session.user.email = token.email as string;
+        session.user.creator = token.creator as boolean;
       }
       return session;
     },

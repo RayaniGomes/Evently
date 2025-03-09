@@ -1,288 +1,272 @@
-import { FiltroModalProps } from "@/interfaces";
+import { FilterModalProps } from "@/interfaces";
 import { Modal } from "react-bootstrap";
-import { useEffect, useState } from "react";
-import { UFS_VALIDAS } from "@/schema/event.schema";
-import { Forms, GrupoInput } from "./styled";
-import { useEvento } from "@/stores/eventStore";
+import { useEffect } from "react";
+import {
+  createDataEvent,
+  eventSchema,
+  valid_state,
+} from "@/schema/event.schema";
+import { Forms, GrupInput } from "./styled";
+import { useEvent } from "@/stores/eventStore";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-export default function ModalUpdateEvento({
+export default function ModalUpdateEvent({
   showModal,
   toggleModal,
-  evento,
-}: FiltroModalProps) {
-  const { patchEvento, isLoading } = useEvento();
-  const [nome, setNome] = useState("");
-  const [data, setData] = useState("");
-  const [horario, setHorario] = useState("");
-  const [maxPessoas, setMaxPessoas] = useState<number>();
-  const [tipo, setTipo] = useState("");
-  const [imagem, setImagem] = useState("");
-  const [descricao, setDescricao] = useState("");
-  const [local, setLocal] = useState("");
-  const [endereco, setEndereco] = useState("");
-  const [numero, setNumero] = useState("");
-  const [bairro, setBairro] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [uf, setUf] = useState("");
-  const [complemento, setComplemento] = useState("");
+  event,
+}: FilterModalProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<createDataEvent>({
+    resolver: zodResolver(eventSchema),
+    defaultValues: {
+      name: "",
+      date: "",
+      time: "",
+      maxPeople: 0,
+      category: "",
+      image: "",
+      description: "",
+      location: "",
+      address: "",
+      number: "",
+      neighborhood: "",
+      city: "",
+      state: "",
+      complement: "",
+    },
+  });
+
+  const { getEvents, getEventId, patchEvent, isLoading } = useEvent();
 
   useEffect(() => {
-    if (evento) {
-      setNome(evento.nome);
-      setData(evento.data);
-      setHorario(evento.horario);
-      setMaxPessoas(evento.maxPessoas);
-      setTipo(evento.tipo);
-      setImagem(evento.imagem || "/sem-imagem.svg");
-      setDescricao(evento.descricao);
-      setLocal(evento.local);
-      setEndereco(evento.endereco);
-      setNumero(evento.numero.toString() || "");
-      setBairro(evento.bairro);
-      setCidade(evento.cidade);
-      setUf(evento.uf);
-      setComplemento(evento.complemento || "");
+    if (event) {
+      reset({
+        name: event.name,
+        date: event.date,
+        time: event.time,
+        maxPeople: event.maxPeople,
+        category: event.category,
+        image: event.image || "/sem-image.svg",
+        description: event.description,
+        location: event.location,
+        address: event.address,
+        number: event.number.toString() || "s/n",
+        neighborhood: event.neighborhood,
+        city: event.city,
+        state: event.state,
+        complement: event.complement || "",
+      });
     }
-  }, [evento]);
+  }, [event, reset]);
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = async (formData: createDataEvent) => {
+    await patchEvent(event?._id as string, formData);
+    toggleModal();
 
-    const formData = {
-      nome: nome,
-      data: data,
-      horario: horario,
-      maxPessoas: maxPessoas ? Number(maxPessoas) : 0,
-      tipo: tipo,
-      imagem: imagem,
-      descricao: descricao,
-      local: local,
-      endereco: endereco,
-      numero: numero ? Number(numero) : null,
-      bairro: bairro,
-      cidade: cidade,
-      uf: uf,
-      complemento: complemento,
-      criador: evento?.criador,
-    };
-
-    patchEvento(evento?._id as string, formData).then(() => {
-      toggleModal();
-    });
+    if (
+      window.location.pathname === "/userProfile" ||
+      window.location.pathname === `/eventDetail/${event?._id}`
+    ) {
+      getEventId(event?._id as string);
+    } else {
+      getEvents();
+    }
   };
+
   return (
     <Modal size="lg" show={showModal} onHide={toggleModal}>
       <Modal.Header closeButton>
         <Modal.Title>Editar Evento</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Forms onSubmit={onSubmit}>
-          <div className={isLoading ? "loading" : "notLoading"}>
-            <GrupoInput>
-              <label htmlFor="nomeEvento">Nome do evento</label>
+        <Forms onSubmit={handleSubmit(onSubmit)}>
+          <div className={isLoading ? "loading" : "not-loading"}>
+            <GrupInput>
+              <label htmlFor="nomeEvent">Nome do evento</label>
               <div className="input">
-                <input
-                  id="nomeEvento"
-                  type="text"
-                  placeholder="Nome do Evento"
-                  defaultValue={evento?.nome}
-                  onChange={(e) => setNome(e.target.value)}
-                />
+                <input id="nomeEvent" type="text" {...register("name")} />
+                {errors.name && <span>{errors.name.message}</span>}
               </div>
-            </GrupoInput>
+            </GrupInput>
 
             <div className="input-duplo">
-              <GrupoInput>
-                <label htmlFor="dataEvento">Data do evento</label>
-                <div className="input">
-                  <input
-                    id="dataEvento"
-                    type="date"
-                    defaultValue={evento?.data}
-                    onChange={(e) => setData(e.target.value)}
-                  />
-                </div>
-              </GrupoInput>
+              <div className="w-100 d-flex flex-column gap-3">
+                <GrupInput>
+                  <label htmlFor="dataEvent">Data do evento</label>
+                  <div className="input">
+                    <input id="dataEvent" type="date" {...register("date")} />
+                  </div>
+                </GrupInput>
+                {errors.date && <span>{errors.date.message}</span>}
+              </div>
 
-              <GrupoInput>
-                <label htmlFor="horario">Hora do evento</label>
-                <div className="input">
-                  <input
-                    id="horario"
-                    type="time"
-                    defaultValue={evento?.horario}
-                    onChange={(e) => setHorario(e.target.value)}
-                  />
-                </div>
-              </GrupoInput>
+              <div className="w-100 d-flex flex-column gap-3">
+                <GrupInput>
+                  <label htmlFor="time">Hora do evento</label>
+                  <div className="input">
+                    <input id="time" type="time" {...register("time")} />
+                  </div>
+                </GrupInput>
+                {errors.time && <span>{errors.time.message}</span>}
+              </div>
 
-              <GrupoInput>
-                <label htmlFor="maxPessoas">Qtd. maxima de pessoas</label>
-                <div className="input">
-                  <input
-                    type="number"
-                    id="maxPessoas"
-                    placeholder="2000"
-                    defaultValue={evento?.maxPessoas}
-                    onChange={(e) =>
-                      setMaxPessoas(
-                        e.target.value ? Number(e.target.value) : undefined
-                      )
-                    }
-                    min="1"
-                  />
-                </div>
-              </GrupoInput>
+              <div className="w-100 d-flex flex-column gap-3">
+                <GrupInput>
+                  <label htmlFor="maxPeople">Qtd. máxima de pessoas</label>
+                  <div className="input">
+                    <input
+                      type="number"
+                      id="maxPeople"
+                      placeholder="2000"
+                      {...register("maxPeople", { valueAsNumber: true })}
+                      min="1"
+                    />
+                  </div>
+                </GrupInput>
+                {errors.maxPeople && <span>{errors.maxPeople.message}</span>}
+              </div>
             </div>
 
             <div className="input-duplo">
-              <GrupoInput>
-                <label htmlFor="tipoEvento">tipo de evento</label>
-                <div className="input">
-                  <input
-                    id="tipoEvento"
-                    type="text"
-                    placeholder="Show"
-                    defaultValue={evento?.tipo}
-                    onChange={(e) => setTipo(e.target.value)}
-                  />
-                </div>
-              </GrupoInput>
+              <div className="w-100 d-flex flex-column gap-3">
+                <GrupInput>
+                  <label htmlFor="tipoEvent">Categoria do evento</label>
+                  <div className="input">
+                    <input
+                      id="tipoEvent"
+                      type="text"
+                      {...register("category")}
+                    />
+                    {errors.category && <span>{errors.category.message}</span>}
+                  </div>
+                </GrupInput>
+              </div>
 
-              <GrupoInput>
-                <label htmlFor="linkImagem">Link da imagem do evento</label>
-                <div className="input">
-                  <input
-                    id="linkImagem"
-                    type="text"
-                    placeholder="https://exemplo.com"
-                    defaultValue={evento?.imagem}
-                    onChange={(e) => setImagem(e.target.value)}
-                  />
-                </div>
-              </GrupoInput>
+              <div className="w-100 d-flex flex-column gap-3">
+                <GrupInput>
+                  <label htmlFor="linkImagem">Link da imagem do evento</label>
+                  <div className="input">
+                    <input id="linkImagem" type="text" {...register("image")} />
+                  </div>
+                </GrupInput>
+                {errors.image && <span>{errors.image.message}</span>}
+              </div>
             </div>
 
-            <GrupoInput>
-              <label htmlFor="descricao">Descrição</label>
-              <div className="descricao">
-                <textarea
-                  id="descricao"
-                  placeholder="Descrição do Evento"
-                  defaultValue={evento?.descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
-                />
+            <GrupInput>
+              <label htmlFor="description">Descrição</label>
+              <div className="description">
+                <textarea id="description" {...register("description")} />
               </div>
-            </GrupoInput>
+            </GrupInput>
+            {errors.description && <span>{errors.description.message}</span>}
           </div>
-          <div className="endereco">
+
+          <div className="address">
             <h5>Endereço do local do evento</h5>
-            <div className={isLoading ? "loading" : "notLoading"}>
-              <GrupoInput>
-                <label htmlFor="local">Local do evento</label>
+            <div className={isLoading ? "loading" : "not-loading"}>
+              <GrupInput>
+                <label htmlFor="location">Local do evento</label>
                 <div className="input">
-                  <input
-                    id="local"
-                    type="text"
-                    placeholder="Local do Evento"
-                    defaultValue={evento?.local}
-                    onChange={(e) => setLocal(e.target.value)}
-                  />
+                  <input id="location" type="text" {...register("location")} />
                 </div>
-              </GrupoInput>
+              </GrupInput>
+              {errors.location && <span>{errors.location.message}</span>}
 
               <div className="input-duplo">
-                <GrupoInput>
-                  <label htmlFor="endereco">Endereço</label>
-                  <div className="input">
-                    <input
-                      id="endereco"
-                      type="text"
-                      placeholder="R. do Evento"
-                      defaultValue={evento?.endereco}
-                      onChange={(e) => setEndereco(e.target.value)}
-                    />
-                  </div>
-                </GrupoInput>
+                <div className="w-100 d-flex flex-column gap-3">
+                  <GrupInput>
+                    <label htmlFor="address">Endereço</label>
+                    <div className="input">
+                      <input
+                        id="address"
+                        type="text"
+                        {...register("address")}
+                      />
+                    </div>
+                  </GrupInput>
+                  {errors.address && <span>{errors.address.message}</span>}
+                </div>
 
-                <GrupoInput>
-                  <label htmlFor="numero">Número</label>
-                  <div className="input">
-                    <input
-                      type="text"
-                      placeholder="123"
-                      defaultValue={evento?.numero}
-                      onChange={(e) =>
-                        setNumero(
-                          evento?.numero ? evento.numero.toString() : ""
-                        )
-                      }
-                    />
-                  </div>
-                </GrupoInput>
+                <div className="w-100 d-flex flex-column gap-3">
+                  <GrupInput>
+                    <label htmlFor="number">Número</label>
+                    <div className="input">
+                      <input id="number" type="text" {...register("number")} />
+                    </div>
+                  </GrupInput>
+                  {errors.number && <span>{errors.number.message}</span>}
+                </div>
               </div>
 
               <div className="input-duplo">
-                <GrupoInput>
-                  <label htmlFor="bairro">Bairro</label>
-                  <div className="input">
-                    <input
-                      id="bairro"
-                      type="text"
-                      placeholder="Bairro do Evento"
-                      defaultValue={evento?.bairro}
-                      onChange={(e) => setBairro(e.target.value)}
-                    />
-                  </div>
-                </GrupoInput>
+                <div className="w-100 d-flex flex-column gap-3">
+                  <GrupInput>
+                    <label htmlFor="neighborhood">Bairro</label>
+                    <div className="input">
+                      <input
+                        id="neighborhood"
+                        type="text"
+                        {...register("neighborhood")}
+                      />
+                    </div>
+                  </GrupInput>
+                  {errors.neighborhood && (
+                    <span>{errors.neighborhood.message}</span>
+                  )}
+                </div>
 
-                <GrupoInput>
-                  <label htmlFor="cidade">Cidade</label>
-                  <div className="input">
-                    <input
-                      id="cidade"
-                      type="text"
-                      placeholder="Cidade do Evento"
-                      defaultValue={evento?.cidade}
-                      onChange={(e) => setCidade(e.target.value)}
-                    />
-                  </div>
-                </GrupoInput>
+                <div className="w-100 d-flex flex-column gap-3">
+                  <GrupInput>
+                    <label htmlFor="city">Cidade</label>
+                    <div className="input">
+                      <input id="city" type="text" {...register("city")} />
+                    </div>
+                  </GrupInput>
+                  {errors.city && <span>{errors.city.message}</span>}
+                </div>
               </div>
 
               <div className="input-duplo">
-                <GrupoInput>
-                  <label htmlFor="uf">Estado</label>
-                  <div className="input">
-                    <select
-                      id="uf"
-                      defaultValue={evento?.uf}
-                      onChange={(e) => setUf(e.target.value)}
-                    >
-                      <option value="" disabled>
-                        Selecionar
-                      </option>
-                      {UFS_VALIDAS.map((uf) => (
-                        <option key={uf} value={uf}>
-                          {uf}
+                <div className="w-100 d-flex flex-column gap-3">
+                  <GrupInput>
+                    <label htmlFor="state">Estado</label>
+                    <div className="input">
+                      <select id="state" {...register("state")}>
+                        <option value="" disabled>
+                          Selecionar
                         </option>
-                      ))}
-                    </select>
-                  </div>
-                </GrupoInput>
+                        {valid_state.map((state) => (
+                          <option key={state} value={state}>
+                            {state}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </GrupInput>
+                  {errors.state && <span>{errors.state.message}</span>}
+                </div>
 
-                <GrupoInput>
-                  <label htmlFor="complemento">Complemento</label>
-                  <div className="input">
-                    <input
-                      id="complemento"
-                      type="text"
-                      placeholder="Proximo..."
-                      defaultValue={evento?.complemento}
-                      onChange={(e) => setComplemento(e.target.value)}
-                    />
-                  </div>
-                </GrupoInput>
+                <div className="w-100 d-flex flex-column gap-3">
+                  <GrupInput>
+                    <label htmlFor="complement">Complemento</label>
+                    <div className="input">
+                      <input
+                        id="complement"
+                        type="text"
+                        {...register("complement")}
+                      />
+                    </div>
+                  </GrupInput>
+                  {errors.complement && (
+                    <span>{errors.complement.message}</span>
+                  )}
+                </div>
               </div>
             </div>
           </div>

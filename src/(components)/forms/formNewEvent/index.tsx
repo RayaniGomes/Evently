@@ -1,111 +1,108 @@
+import { PropsForm, User } from "@/interfaces";
 import {
-  createDataEvento,
-  eventoSchema,
-  UFS_VALIDAS,
+  createDataEvent,
+  eventSchema,
+  valid_state,
 } from "@/schema/event.schema";
-import { FormEvento, GrupoInput } from "./styled";
+import { useEvent } from "@/stores/eventStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Usuario } from "@/interfaces";
-import { useEvento } from "@/stores/eventStore";
+import { FormEvent, GrupoInput } from "./styled";
 
-interface Props {
-  usuario: Usuario | null;
-}
-
-export default function FormCriarEvento({ usuario }: Props) {
+export default function FormNewEvent({ user }: PropsForm) {
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<createDataEvento>({ resolver: zodResolver(eventoSchema) });
-  const { postEvento, isLoading } = useEvento();
+  } = useForm<createDataEvent>({ resolver: zodResolver(eventSchema) });
+  const { postEvent, isLoading } = useEvent();
 
-  const onSubmit = async (data: createDataEvento) => {
-    if (!usuario) {
+  const onSubmit = async (date: createDataEvent) => {
+    if (!user) {
       throw new Error("Usuário não encontrado");
     }
 
-    const dadosEvento = {
-      ...data,
-      criador: {
-        id: usuario._id,
-        nome: usuario.nome,
-        email: usuario.email,
+    const dataEvent = {
+      ...date,
+      creator: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
       },
     };
 
-    postEvento(dadosEvento, reset);
+    postEvent(dataEvent, reset);
   };
 
   return (
-    <FormEvento onSubmit={handleSubmit(onSubmit)}>
-      <div className={isLoading ? "loading" : "notLoading"}>
+    <FormEvent onSubmit={handleSubmit(onSubmit)}>
+      <div className={isLoading ? "loading" : "not-loading"}>
         <GrupoInput>
-          <label htmlFor="nomeEvento">Nome do evento</label>
+          <label htmlFor="nomeEvent">Name do evento</label>
           <div className="input">
             <input
-              id="nomeEvento"
+              id="nomeEvent"
               type="text"
-              placeholder="Nome do Evento"
-              {...register("nome")}
+              placeholder="Name do Evento"
+              {...register("name")}
             />
           </div>
         </GrupoInput>
-        {errors.nome && <span>{errors.nome.message}</span>}
+        {errors.name && <span>{errors.name.message}</span>}
 
         <div className="input-duplo">
           <div className="w-100 d-flex flex-column gap-3">
             <GrupoInput>
-              <label htmlFor="dataEvento">Data do evento</label>
+              <label htmlFor="dataEvent">Data do evento</label>
               <div className="input">
-                <input id="dataEvento" type="date" {...register("data")} />
+                <input id="dataEvent" type="date" {...register("date")} />
               </div>
             </GrupoInput>
-            {errors.data && <span>{errors.data.message}</span>}
+            {errors.date && <span>{errors.date.message}</span>}
           </div>
 
           <div className="w-100 d-flex flex-column gap-3">
             <GrupoInput>
-              <label htmlFor="horario">Hora do evento</label>
+              <label htmlFor="time">Hora do evento</label>
               <div className="input">
-                <input id="horario" type="time" {...register("horario")} />
+                <input id="time" type="time" {...register("time")} />
               </div>
             </GrupoInput>
-            {errors.horario && <span>{errors.horario.message}</span>}
+            {errors.time && <span>{errors.time.message}</span>}
           </div>
 
           <div className="w-100 d-flex flex-column gap-3">
             <GrupoInput>
-              <label htmlFor="maxPessoas">Qtd. maxima de pessoas</label>
+              <label htmlFor="maxPeople">Qtd. maxima de pessoas</label>
               <div className="input">
                 <input
                   type="number"
-                  id="maxPessoas"
+                  id="maxPeople"
                   placeholder="2000"
-                  {...register("maxPessoas")}
+                  {...register("maxPeople", { valueAsNumber: true })}
+                  min="1"
                 />
               </div>
             </GrupoInput>
-            {errors.maxPessoas && <span>{errors.maxPessoas.message}</span>}
+            {errors.maxPeople && <span>{errors.maxPeople.message}</span>}
           </div>
         </div>
 
         <div className="input-duplo">
           <div className="w-100 d-flex flex-column gap-3">
             <GrupoInput>
-              <label htmlFor="tipoEvento">tipo de evento</label>
+              <label htmlFor="tipoEvent">Categoria do evento</label>
               <div className="input">
                 <input
-                  id="tipoEvento"
+                  id="tipoEvent"
                   type="text"
                   placeholder="Show"
-                  {...register("tipo")}
+                  {...register("category")}
                 />
               </div>
             </GrupoInput>
-            {errors.tipo && <span>{errors.tipo.message}</span>}
+            {errors.category && <span>{errors.category.message}</span>}
           </div>
 
           <div className="w-100 d-flex flex-column gap-3">
@@ -116,138 +113,140 @@ export default function FormCriarEvento({ usuario }: Props) {
                   id="linkImagem"
                   type="text"
                   placeholder="https://exemplo.com"
-                  {...register("imagem")}
+                  {...register("image")}
                 />
               </div>
             </GrupoInput>
-            {errors.imagem && <span>{errors.imagem.message}</span>}
+            {errors.image && <span>{errors.image.message}</span>}
           </div>
         </div>
 
         <GrupoInput>
-          <label htmlFor="descricao">Descrição</label>
-          <div className="descricao">
+          <label htmlFor="description">Descrição</label>
+          <div className="description">
             <textarea
-              id="descricao"
+              id="description"
               placeholder="Descrição do Evento"
-              {...register("descricao")}
+              {...register("description")}
             />
           </div>
         </GrupoInput>
-        {errors.descricao && <span>{errors.descricao.message}</span>}
+        {errors.description && <span>{errors.description.message}</span>}
       </div>
-      <div className="endereco">
-        <h5>Endereço do local do evento</h5>
-        <div className={isLoading ? "loading" : "notLoading"}>
+      <div className="address">
+        <h5>Endereço do location do evento</h5>
+        <div className={isLoading ? "loading" : "not-loading"}>
           <GrupoInput>
-            <label htmlFor="local">Local do evento</label>
+            <label htmlFor="location">Location do evento</label>
             <div className="input">
               <input
-                id="local"
+                id="location"
                 type="text"
-                placeholder="Local do Evento"
-                {...register("local")}
+                placeholder="Location do Event"
+                {...register("location")}
               />
             </div>
           </GrupoInput>
-          {errors.local && <span>{errors.local.message}</span>}
+          {errors.location && <span>{errors.location.message}</span>}
 
           <div className="input-duplo">
             <div className="w-100 d-flex flex-column gap-3">
               <GrupoInput>
-                <label htmlFor="endereco">Endereço</label>
+                <label htmlFor="address">Endereço</label>
                 <div className="input">
                   <input
-                    id="endereco"
+                    id="address"
                     type="text"
-                    placeholder="R. do Evento"
-                    {...register("endereco")}
+                    placeholder="R. do Event"
+                    {...register("address")}
                   />
                 </div>
               </GrupoInput>
-              {errors.endereco && <span>{errors.endereco.message}</span>}
+              {errors.address && <span>{errors.address.message}</span>}
             </div>
 
             <div className="w-100 d-flex flex-column gap-3">
               <GrupoInput>
-                <label htmlFor="numero">Número</label>
+                <label htmlFor="number">Número</label>
                 <div className="input">
                   <input
                     type="text"
                     placeholder="123"
-                    {...register("numero")}
+                    {...register("number")}
                   />
                 </div>
               </GrupoInput>
-              {errors.numero && <span>{errors.numero.message}</span>}
+              {errors.number && <span>{errors.number.message}</span>}
             </div>
           </div>
 
           <div className="input-duplo">
             <div className="w-100 d-flex flex-column gap-3">
               <GrupoInput>
-                <label htmlFor="bairro">Bairro</label>
+                <label htmlFor="neighborhood">Bairro</label>
                 <div className="input">
                   <input
-                    id="bairro"
+                    id="neighborhood"
                     type="text"
                     placeholder="Bairro do Evento"
-                    {...register("bairro")}
+                    {...register("neighborhood")}
                   />
                 </div>
               </GrupoInput>
-              {errors.bairro && <span>{errors.bairro.message}</span>}
+              {errors.neighborhood && (
+                <span>{errors.neighborhood.message}</span>
+              )}
             </div>
 
             <div className="w-100 d-flex flex-column gap-3">
               <GrupoInput>
-                <label htmlFor="cidade">Cidade</label>
+                <label htmlFor="city">Cidade</label>
                 <div className="input">
                   <input
-                    id="cidade"
+                    id="city"
                     type="text"
                     placeholder="Cidade do Evento"
-                    {...register("cidade")}
+                    {...register("city")}
                   />
                 </div>
               </GrupoInput>
-              {errors.cidade && <span>{errors.cidade.message}</span>}
+              {errors.city && <span>{errors.city.message}</span>}
             </div>
           </div>
 
           <div className="input-duplo">
             <div className="w-100 d-flex flex-column gap-3">
               <GrupoInput>
-                <label htmlFor="uf">Estado</label>
+                <label htmlFor="state">Estado</label>
                 <div className="input">
-                  <select id="uf" defaultValue="" {...register("uf")}>
+                  <select id="state" defaultValue="" {...register("state")}>
                     <option value="" disabled>
                       Selecionar
                     </option>
-                    {UFS_VALIDAS.map((uf) => (
-                      <option key={uf} value={uf}>
-                        {uf}
+                    {valid_state.map((state) => (
+                      <option key={state} value={state}>
+                        {state}
                       </option>
                     ))}
                   </select>
                 </div>
               </GrupoInput>
-              {errors.uf && <span>{errors.uf.message}</span>}
+              {errors.state && <span>{errors.state.message}</span>}
             </div>
 
             <div className="w-100 d-flex flex-column gap-3">
               <GrupoInput>
-                <label htmlFor="complemento">Complemento</label>
+                <label htmlFor="complement">Complemento</label>
                 <div className="input">
                   <input
-                    id="complemento"
+                    id="complement"
                     type="text"
                     placeholder="Proximo..."
-                    {...register("complemento")}
+                    {...register("complement")}
                   />
                 </div>
               </GrupoInput>
-              {errors.complemento && <span>{errors.complemento.message}</span>}
+              {errors.complement && <span>{errors.complement.message}</span>}
             </div>
           </div>
         </div>
@@ -256,6 +255,6 @@ export default function FormCriarEvento({ usuario }: Props) {
       <button type="submit" className="btn-form" disabled={isLoading}>
         {isLoading ? "Enviando..." : "Enviar"}
       </button>
-    </FormEvento>
+    </FormEvent>
   );
 }

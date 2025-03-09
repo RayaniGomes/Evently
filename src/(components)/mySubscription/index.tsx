@@ -1,69 +1,65 @@
 "use client";
 import { useEffect } from "react";
-import { Inscricoes } from "./styled";
-import Paginacao from "../pagination";
+import { Enrollments } from "./styled";
 import { useSession } from "next-auth/react";
-import CardMinhasInscricoes from "../cards/cardMinhasInscricoes";
-import { FuncaoPaginacao } from "@/help/functionPagination";
-import { useInscritos } from "@/stores/enrollmentStore";
+import CardMyEnrollments from "../cards/cardMyEnrollments";
+import { SetPagination } from "@/utils/pagination";
+import { useEnrollment } from "@/stores/enrollmentStore";
+import Pagination from "../pagination";
 
-export default function MinhasInscrições() {
-  const { inscricoes, getInscricoes } = useInscritos();
+export default function MyEnrollments() {
+  const { enrollments, getEnrollments } = useEnrollment();
   const { data: session } = useSession();
 
-  const inscricoesOrdenados = [...inscricoes].sort((a, b) => {
+  const orderOfRegistration = [...enrollments].sort((a, b) => {
     const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
     const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
     return dataB - dataA;
   });
 
   const {
-    paginatedEventos: paginatedInscricoes,
+    paginatedEvents: paginatedEnrollments,
     itemsPorPage,
     totalPages,
     currentPage,
     handlePageClick,
-  } = FuncaoPaginacao({ eventos: inscricoesOrdenados });
+  } = SetPagination({ events: orderOfRegistration });
 
-  const validacaoInscricoes = inscricoes.some(
-    (inscricao) => inscricao.inscritos.email === session?.user.email
+  const isEnrolled = enrollments.some(
+    (enrollment) => enrollment.enrollment.email === session?.user.email
   );
 
   useEffect(() => {
-    getInscricoes(session?.user.email || "");
+    getEnrollments(session?.user.email || "");
   }, [session]);
 
   return (
-    <Inscricoes>
-      <div className="total-inscricoes">
-        {validacaoInscricoes ? (
-          <p>Total de eventos inscritos: {inscricoes.length}</p>
-        ) : (
-          <p>Total de inscrições: 0</p>
-        )}
+    <Enrollments>
+      <div className="total-enrollments">
+        <p>Total de eventos inscritos: {enrollments.length || 0}</p>
       </div>
-      {inscricoes.length > 0 && validacaoInscricoes ? (
-        paginatedInscricoes.map((inscricao) => (
-          <CardMinhasInscricoes
-            key={inscricao._id}
-            inscricao={inscricao}
-            bgColor="--branco"
-            color="--azul-escuro"
-            hover="--drop-shadow-azul-hover"
+      {enrollments.length > 0 && isEnrolled ? (
+        paginatedEnrollments.map((enrollment) => (
+          <CardMyEnrollments
+            key={enrollment._id}
+            enrollment={enrollment}
+            bgColor="--white"
+            color="--blue-dark"
+            hover="--drop-shadow-blue-hover"
           />
         ))
       ) : (
         <h3>Nenhuma inscrição encontrada</h3>
       )}
-      {validacaoInscricoes && inscricoes.length > itemsPorPage && (
-        <Paginacao
-          color="--branco"
-          colorHover="--azul-escuro"
+      {isEnrolled && enrollments.length > itemsPorPage && (
+        <Pagination
+          color="--white"
+          colorHover="--blue-dark"
           currentPage={currentPage}
           totalPages={totalPages}
           handlePageClick={handlePageClick}
         />
       )}
-    </Inscricoes>
+    </Enrollments>
   );
 }

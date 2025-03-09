@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { Form, GrupoInput } from "../styled";
+import { Form, GroupInput } from "../styled";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
@@ -13,21 +13,20 @@ export default function FormLogin() {
     handleSubmit,
     formState: { errors },
   } = useForm<createDataLogin>({ resolver: zodResolver(loginSchema) });
-
-  const [mostrarSenha, setMostrarSenha] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const toggleMostrarSenha = () => {
-    setMostrarSenha(!mostrarSenha);
+    setShowPassword(!showPassword);
   };
 
-  const onSubmit: SubmitHandler<createDataLogin> = async (data) => {
+  const onSubmit: SubmitHandler<createDataLogin> = async (date) => {
     setIsLoading(true);
 
     const dataLogin = await signIn("credentials", {
-      email: data.email,
-      password: data.senha,
+      email: date.email,
+      password: date.password,
       redirect: false,
     });
 
@@ -37,10 +36,10 @@ export default function FormLogin() {
       } else if (dataLogin.error === "register_required") {
         toast.error("Usuário não encontrado. Por favor, cadastre-se.");
       } else {
-        toast.error("Erro ao logar, tente novamente.");
+        toast.error("Erro ao fazer login, tente novamente!");
       }
     } else {
-      router.push("/perfil");
+      router.push("/userProfile");
     }
 
     setIsLoading(false);
@@ -48,8 +47,8 @@ export default function FormLogin() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <div className={isLoading ? "loading" : "notLoading"}>
-        <GrupoInput>
+      <div className={isLoading ? "loading" : "not-loading"}>
+        <GroupInput>
           <i className="bi bi-person-fill" />
           <input
             type="email"
@@ -57,40 +56,30 @@ export default function FormLogin() {
             {...register("email")}
             disabled={isLoading}
           />
-        </GrupoInput>
+        </GroupInput>
         {errors.email && <span>{errors.email.message}</span>}
 
-        <GrupoInput>
+        <GroupInput>
           <i className="bi bi-lock-fill" />
           <input
-            type={mostrarSenha ? "text" : "password"}
+            type={showPassword ? "text" : "password"}
             placeholder="Senha"
-            {...register("senha")}
+            {...register("password")}
             disabled={isLoading}
           />
           <button
             type="button"
             onClick={toggleMostrarSenha}
             disabled={isLoading}
-            className={mostrarSenha ? "bi bi-eye-slash-fill" : "bi bi-eye-fill"}
+            className={showPassword ? "bi bi-eye-slash-fill" : "bi bi-eye-fill"}
           />
-        </GrupoInput>
-        {errors.senha && <span>{errors.senha.message}</span>}
+        </GroupInput>
+        {errors.password && <span>{errors.password.message}</span>}
       </div>
 
       <button type="submit" className="btn-form" disabled={isLoading}>
         {isLoading ? "Entrando..." : "Login"}
       </button>
-
-      <div className="google">
-        <h6>Login com o Google</h6>
-        <button
-          type="button"
-          className="bi bi-google"
-          onClick={() => signIn("google", { callbackUrl: "/perfil" })}
-          disabled={isLoading}
-        />
-      </div>
     </Form>
   );
 }

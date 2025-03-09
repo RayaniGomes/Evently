@@ -4,13 +4,13 @@ export const ContainerBanner = styled.section`
   width: 100%;
   display: flex;
   margin-top: 5rem;
-  
+
   .container {
     width: 100%;
     display: flex;
     max-width: 1320px !important;
     overflow: hidden;
-    --bs-gutter-x: 0
+    --bs-gutter-x: 0;
   }
 
   @media (width <= 1440px) {
@@ -20,7 +20,7 @@ export const ContainerBanner = styled.section`
   }
 `;
 
-export const Slide = styled.div<{ imagem: string }>`
+export const Slide = styled.div<{ image: string }>`
   width: 100%;
   height: 500px;
   display: flex;
@@ -29,16 +29,16 @@ export const Slide = styled.div<{ imagem: string }>`
   column-gap: 10px;
   animation: slide 12s infinite;
 
-  .imagem {
+  .image {
     position: relative;
     width: 100vw;
     height: 100%;
     z-index: -1;
-    background: url(${(props) => props.imagem}) no-repeat center center;
+    background: url(${(props) => props.image}) no-repeat center center;
     background-size: cover;
   }
 
-  .conteudo {
+  .content {
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -47,15 +47,15 @@ export const Slide = styled.div<{ imagem: string }>`
     width: 500px;
     height: 100%;
     padding: 0 5rem;
-    color: var(--branco);
+    color: var(--white);
     right: 0;
     background: #10335680;
     backdrop-filter: blur(4px);
     border-radius: 50% 0 50% 50%;
 
     a {
-      background-color: var(--branco);
-      color: var(--azul-escuro);
+      background-color: var(--white);
+      color: var(--blue-dark);
       width: 200px;
       height: 40px;
       border-radius: 10px;
@@ -67,7 +67,7 @@ export const Slide = styled.div<{ imagem: string }>`
       font-weight: 600;
 
       &:hover {
-        box-shadow: var(--drop-shadow-branco-hover);
+        box-shadow: var(--drop-shadow-white-hover);
       }
     }
   }
@@ -91,7 +91,7 @@ export const Slide = styled.div<{ imagem: string }>`
   }
 
   @media (max-width: 1024px) {
-    .conteudo {
+    .content {
       padding: 0 2rem 0 4rem;
     }
   }
@@ -100,7 +100,7 @@ export const Slide = styled.div<{ imagem: string }>`
     width: 100%;
     height: 350px;
 
-    .conteudo {
+    .content {
       width: 100%;
       border-radius: 0;
       align-items: right;
