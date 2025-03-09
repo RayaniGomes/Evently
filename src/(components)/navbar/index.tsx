@@ -131,7 +131,7 @@ export default function Navbar() {
             ) : (
               <Dropdown.Toggle id="dropdown-basic">
                 <Image
-                  src={user?.profilePhoto ?? "/perfil.svg"}
+                  src={user?.profilePhoto || "/PersonFill.svg"}
                   width={50}
                   height={50}
                   alt="Imagem de perfil"

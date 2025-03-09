@@ -52,7 +52,7 @@ export default function FormUser() {
           <label htmlFor="profilePhoto">
             {isPhotoProfile ? (
               <Image
-                src={isPhotoProfile || "/sem-image.svg"}
+                src={isPhotoProfile || "/PersonFill.svg"}
                 alt="Imagem de Perfil"
                 width={100}
                 height={100}

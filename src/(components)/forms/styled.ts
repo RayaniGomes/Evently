@@ -46,19 +46,37 @@ export const Form = styled.form`
     color: #9e0000;
   }
 
-  .btn-form {
-    width: 200px;
-    height: 40px;
-    border: none;
-    border-radius: 10px;
-    font-size: 12px;
-    font-weight: 600;
-    background-color: var(--white);
-    color: var(--blue-dark);
+  .buttons {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     margin-top: 3rem;
+    gap: 2rem;
 
-    &:hover {
-      box-shadow: var(--drop-shadow-white-hover);
+    .btn-form {
+      width: 200px;
+      height: 40px;
+      border: none;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      background-color: var(--white);
+      color: var(--blue-dark);
+
+      &:hover {
+        box-shadow: var(--drop-shadow-white-hover);
+      }
+    }
+
+    @media (max-width: 425px) {
+      flex-direction: column;
+      gap: 1rem;
+
+      .btn-form {
+        width: 50%;
+        height: 30px;
+      }
     }
   }
 
@@ -155,7 +173,7 @@ export const GroupInput = styled.div`
 export const ImageProfile = styled.div`
   width: 100%;
   display: flex;
-  justify-content: left;
+  align-items: center;
   gap: 1rem;
 
   .alert {
@@ -164,6 +182,10 @@ export const ImageProfile = styled.div`
   }
 
   label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     .placeholder {
       width: 100px;
       height: 100px;
@@ -181,8 +203,8 @@ export const ImageProfile = styled.div`
     }
 
     img {
-      width: 100px;
-      height: 100px;
+      min-width: 100px;
+      min-height: 100px;
       border-radius: 50%;
       object-fit: cover;
       background-color: var(--white);
@@ -191,5 +213,11 @@ export const ImageProfile = styled.div`
 
   @media (max-width: 425px) {
     flex-wrap: wrap;
+
+    label {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
   }
 `;

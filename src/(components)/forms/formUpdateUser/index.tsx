@@ -60,7 +60,7 @@ export default function FormUpdateUser({ user }: PropsForm) {
           <label htmlFor="profilePhoto">
             {user?.profilePhoto ? (
               <Image
-                src={user?.profilePhoto || "/sem-image.svg"}
+                src={user?.profilePhoto || "/PersonFill.svg"}
                 alt="Imagem de Perfil"
                 width={100}
                 height={100}
@@ -72,7 +72,7 @@ export default function FormUpdateUser({ user }: PropsForm) {
             )}
           </label>
 
-          <div className="w-100 mt-3">
+          <div className="w-100">
             <GroupInput>
               <i className="bi bi-link-45deg"></i>
               <input
@@ -140,7 +140,7 @@ export default function FormUpdateUser({ user }: PropsForm) {
         </div>
       </div>
 
-      <div className="d-flex gap-5">
+      <div className="buttons">
         <button type="submit" className="btn-form" disabled={isLoading}>
           {isLoading ? "Atualizando..." : "Atualizar"}
         </button>
