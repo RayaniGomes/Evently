@@ -51,22 +51,22 @@ export const Form = styled.form`
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 3rem;
     gap: 2rem;
+    
+  }
+  .btn-form {
+    width: 200px;
+    height: 40px;
+    border: none;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: var(--white);
+    color: var(--blue-dark);
+    margin-top: 4rem;
 
-    .btn-form {
-      width: 200px;
-      height: 40px;
-      border: none;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      background-color: var(--white);
-      color: var(--blue-dark);
-
-      &:hover {
-        box-shadow: var(--drop-shadow-white-hover);
-      }
+    &:hover {
+      box-shadow: var(--drop-shadow-white-hover);
     }
 
     @media (max-width: 425px) {
@@ -173,12 +173,13 @@ export const GroupInput = styled.div`
 export const ImageProfile = styled.div`
   width: 100%;
   display: flex;
-  align-items: center;
   gap: 1rem;
 
   .alert {
     width: 100%;
     opacity: 0.5;
+    text-align: left;
+    padding: 0;
   }
 
   label {
