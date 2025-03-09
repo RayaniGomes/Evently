@@ -1,28 +1,26 @@
 "use client";
 import Link from "next/link";
-import { ContainerBanner, Slide } from "./styled";
+import { ContainerBanner, Embla, Slide } from "./styled";
 import { useEvent } from "@/stores/eventStore";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Container } from "react-bootstrap";
 import { formatDate } from "@/utils/funtions";
-import Flickity from "flickity";
-import 'flickity/dist/flickity.min.css';
+import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
+import { EmblaOptionsType } from "embla-carousel";
 
-export default function BannerHome() {
+type PropType = {
+  options?: EmblaOptionsType
+}
+
+export default function BannerHome({  options }: PropType) {
   const { events, getEvents } = useEvent();
-  const flickityRef = useRef(null);
+  const [emblaRef] = useEmblaCarousel({ loop:true, ...options}, [
+    Autoplay({ playOnInit: true, delay: 3000, })
+  ])
 
   useEffect(() => {
     getEvents();
-    if (flickityRef.current) {
-      new Flickity(flickityRef.current, {
-        cellAlign: "center",
-        autoPlay: 1500,
-        wrapAround: true,
-        prevNextButtons: true,
-        pageDots: false,
-      });
-    }
   }, []);
 
   const latestEvents = [...events]
@@ -37,22 +35,26 @@ export default function BannerHome() {
     <ContainerBanner>
       <Container>
         {latestEvents.length > 0 ? (
-          <div className="w-100 flickity" ref={flickityRef}>
-            {latestEvents.map((event) => (
-              <Slide
-                key={event._id}
-                image={event.image ?? "/sem-image.svg"}
-              >
-                <div className="image" />
-                <div className="content">
-                  <h3>{event.name}</h3>
-                  <h4>{formatDate(event.date)}</h4>
-                  <h4>{event.location}</h4>
-                  <Link href={`/eventDetail/${event._id}`}>Detalhes</Link>
-                </div>
-              </Slide>
-            ))}
-          </div>
+          <Embla>
+            <div className="embla__viewport" ref={emblaRef}>
+              <div className="embla__container">
+                {latestEvents.map((event) => (
+                  <Slide
+                    key={event._id}
+                    image={event.image ?? "/sem-image.svg"}
+                  >
+                    <div className="image" />
+                    <div className="content">
+                      <h3>{event.name}</h3>
+                      <h4>{formatDate(event.date)}</h4>
+                      <h4>{event.location}</h4>
+                      <Link href={`/eventDetail/${event._id}`}>Detalhes</Link>
+                    </div>
+                  </Slide>
+                ))}
+              </div>
+            </div>
+          </Embla>
         ) : (
           <h2 className="text-center w-100 mt-5">Nenhum evento encontrado</h2>
         )}

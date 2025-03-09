@@ -13,41 +13,24 @@ export const ContainerBanner = styled.section`
     --bs-gutter-x: 0;
   }
 
-  .flickity-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    top: 40%;
-  }
-  
-  .flickity-prev-next-button {
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-  }
-  
-  .flickity-prev-next-button {
-    background: rgba(16, 51, 86, 0.5);
-    color: var(--white);
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-  }
-  
-  .flickity-prev-next-button:hover {
-    background:rgba(16, 51, 86, 0.8);
-  }
-  
-  &:hover {
-    .flickity-prev-next-button {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-  
   @media (width <= 1440px) {
     .container {
       max-width: 100% !important;
     }
+  }
+`;
+
+export const Embla = styled.div`
+  width: 100%;
+  margin: auto;
+
+  .embla__viewport {
+    overflow: hidden;
+  }
+
+  .embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
   }
 `;
 
@@ -58,6 +41,7 @@ export const Slide = styled.div<{ image: string }>`
   justify-content: center;
   align-items: center;
   column-gap: 10px;
+  transform: translate3d(0, 0, 0);
 
   .image {
     position: relative;
