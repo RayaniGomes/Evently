@@ -3,6 +3,7 @@
 ## 📌 Sobre o Projeto
 
 > Plataforma para gerenciamento de eventos, permitindo a criação, edição e inscrição em eventos.
+>
 > A plataforma foi desenvolvido com intuito de mostrar meu conhecimento com as tecnologias ultilizadas.
 
 ## 🚀 Tecnologias Utilizadas
@@ -47,7 +48,14 @@ Instruções de como rodar o projeto:
        npm run dev
     ```
 
+5. Seu projeto já deve está rodando em localhost.
+> A api do projeto esta hospedada no render, sendo assim, pode ter um delay para carregar. 
+
+
+## 🚀 Deploy
+
+O projeto utiliza o deploy da [Versel](https://vercel.com), para visualizar o mesmo, por favor [clique aqui!](https://evently-hub.vercel.app/)
 
 ## 📝 Licença
 
-[MIT License](https://github.com/RayaniGomes/Evently/blob/main/LICENSE) © [Rayani](https://github.com/RayaniGomes)
+[MIT License](https://github.com/RayaniGomes/Evently/blob/main/LICENSE) © [Rayani Gomes](https://github.com/RayaniGomes)
