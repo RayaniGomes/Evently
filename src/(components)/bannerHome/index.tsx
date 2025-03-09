@@ -6,6 +6,7 @@ import { useEffect, useRef } from "react";
 import { Container } from "react-bootstrap";
 import { formatDate } from "@/utils/funtions";
 import Flickity from "flickity";
+import 'flickity/dist/flickity.min.css';
 
 export default function BannerHome() {
   const { events, getEvents } = useEvent();
@@ -16,7 +17,7 @@ export default function BannerHome() {
     if (flickityRef.current) {
       new Flickity(flickityRef.current, {
         cellAlign: "center",
-        autoPlay: 1500, // Tempo de passagem
+        autoPlay: 1500,
         wrapAround: true,
         prevNextButtons: true,
         pageDots: false,
