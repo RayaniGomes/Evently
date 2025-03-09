@@ -6,6 +6,8 @@
 >
 > A plataforma foi desenvolvido com intuito de mostrar meu conhecimento com as tecnologias ultilizadas.
 
+![Home Page](image.png)
+
 ## 🚀 Tecnologias Utilizadas
 
 - [AOS](https://michalsnik.github.io/aos/)
@@ -50,6 +52,9 @@ Instruções de como rodar o projeto:
 5. Seu projeto já deve está rodando em localhost.
 > A api do projeto esta hospedada no render, sendo assim, pode ter delay para carregar. 
 
+## 🖼️ Layout
+
+O layout desenvolvido segue um [Figma](https://www.figma.com/design/uobQsGZhIAQFPN4EsWzeN6/Evently?node-id=0-1&t=OYkBfesu7Q4vw6fc-1) disponibilizado pela por mim. 
 
 ## 🚀 Deploy
 
