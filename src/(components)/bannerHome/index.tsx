@@ -37,9 +37,9 @@ export default function BannerHome() {
       <Container>
         {latestEvents.length > 0 ? (
           <div className="w-100 flickity" ref={flickityRef}>
-            {latestEvents.map((event, index) => (
+            {latestEvents.map((event) => (
               <Slide
-                key={event._id ?? index}
+                key={event._id}
                 image={event.image ?? "/sem-image.svg"}
               >
                 <div className="image" />

@@ -188,18 +188,4 @@ export const ImageProfile = styled.div`
       background-color: var(--white);
     }
   }
-
-  input {
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    padding: 0.25rem 0.5rem;
-    background-color: transparent;
-    color: var(--white);
-    font-size: 14px;
-
-    &::placeholder {
-      color: var(--white);
-    }
-  }
 `;

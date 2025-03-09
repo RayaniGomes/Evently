@@ -11,14 +11,25 @@ import { useUser } from "@/stores/userStore";
 
 export default function MyEnrollments() {
   const { enrollments, getEnrollments } = useEnrollment();
-  const { users } = useUser();
   const { data: session } = useSession();
 
-  const orderOfRegistration = [...enrollments].sort((a, b) => {
-    const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
-    const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
-    return dataB - dataA;
-  });
+  useEffect(() => {
+    getEnrollments(session?.user.email || "");
+  }, [session?.user.email, enrollments]);
+
+  const userEnrollments = useMemo(() => {
+    return enrollments.filter(
+      (enrollment) => enrollment.enrollment.email === session?.user.email
+    );
+  }, [enrollments, session]);
+
+  const orderOfRegistration = useMemo(() => {
+    return [...userEnrollments].sort((a, b) => {
+      const dataA = a.createdAt ? new Date(a.createdAt).getTime() : 0;
+      const dataB = b.createdAt ? new Date(b.createdAt).getTime() : 0;
+      return dataB - dataA;
+    });
+  }, [userEnrollments]);
 
   const {
     paginatedEvents: paginatedEnrollments,
@@ -28,24 +39,18 @@ export default function MyEnrollments() {
     handlePageClick,
   } = SetPagination({ events: orderOfRegistration });
 
-  const user = users.find((user) => user.email === session?.user.email);
-
   const isEnrolled = useMemo(() => {
-    return enrollments.filter((enrollment) => enrollment.enrollment.email === session?.user.email);
+    return enrollments.filter(
+      (enrollment) => enrollment.enrollment.email === session?.user.email
+    );
   }, [enrollments, session]);
-
-  
-  
-  useEffect(() => {
-    getEnrollments(session?.user.email || "");
-  }, [session?.user.email, enrollments]);
 
   return (
     <Enrollments>
       <div className="total-enrollments">
-        <p>Total de eventos inscritos: {enrollments.length || 0}</p>
+        <p>Total de eventos inscritos: {userEnrollments.length || 0}</p>
       </div>
-      {enrollments.length > 0 && isEnrolled ? (
+      {userEnrollments.length > 0 ? (
         paginatedEnrollments.map((enrollment) => (
           <CardMyEnrollments
             key={enrollment._id}

@@ -72,7 +72,7 @@ export default function FormUpdateUser({ user }: PropsForm) {
             )}
           </label>
 
-          <div className="mt-3">
+          <div className="w-100 mt-3">
             <GroupInput>
               <i className="bi bi-link-45deg"></i>
               <input
