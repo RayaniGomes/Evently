@@ -54,7 +54,7 @@ export default function Navbar() {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
-  
+
     filterEvents({ name: searchValue });
     if (searchValue !== "") {
       redirect(`/eventsPage?search=${searchValue}`);
@@ -62,7 +62,6 @@ export default function Navbar() {
       redirect(`/eventsPage`);
     }
   };
-  
 
   return (
     <Nav>
@@ -180,15 +179,17 @@ export default function Navbar() {
                 EVENTS
               </Link>
             </div>
-            <div>
-              <button
-                type="button"
-                className="btn-out"
-                onClick={() => handleLogout()}
-              >
-                SAIR
-              </button>
-            </div>
+            {session && (
+              <div>
+                <button
+                  type="button"
+                  className="btn-out"
+                  onClick={() => handleLogout()}
+                >
+                  SAIR
+                </button>
+              </div>
+            )}
             <form className="search-mobile">
               <input type="search" placeholder="Search" />
               <button type="submit">
