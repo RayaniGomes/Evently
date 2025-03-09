@@ -188,4 +188,8 @@ export const ImageProfile = styled.div`
       background-color: var(--white);
     }
   }
+
+  @media (max-width: 425px) {
+    flex-wrap: wrap;
+  }
 `;
