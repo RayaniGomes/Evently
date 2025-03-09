@@ -49,7 +49,7 @@ Instruções de como rodar o projeto:
     ```
 
 5. Seu projeto já deve está rodando em localhost.
-> A api do projeto esta hospedada no render, sendo assim, pode ter um delay para carregar. 
+> A api do projeto esta hospedada no render, sendo assim, pode ter delay para carregar. 
 
 
 ## 🚀 Deploy
