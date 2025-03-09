@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎉Evently
 
-## Getting Started
+## 📌 Sobre o Projeto
 
-First, run the development server:
+> Plataforma para gerenciamento de eventos, permitindo a criação, edição e inscrição em eventos.
+> A plataforma foi desenvolvido com intuito de mostrar meu conhecimento com as tecnologias ultilizadas.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 Tecnologias Utilizadas
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [AOS](https://michalsnik.github.io/aos/)
+- [Axios](https://axios-http.com/ptbr/docs/intro)
+- [Bootstrap Icons](https://icons.getbootstrap.com/)
+- [Flickity](https://flickity.metafizzy.co/)
+- [Node e NPM](https://nodejs.org/en/)
+- [React](https://reactjs.org)
+- [NextAuthJs](https://next-auth.js.org/)
+- [NextJs](https://nextjs.org)
+- [React Bootstrap](https://react-bootstrap.netlify.app/)
+- [React Toastify](https://fkhadra.github.io/react-toastify/introduction)
+- [React Hook Form](https://www.react-hook-form.com/)
+- [Styled Components](https://styled-components.com)
+- [Zustand](https://zustand-demo.pmnd.rs/)
+- [Zod](https://zustand-demo.pmnd.rs/)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📦 Instalação e Configuração
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Instruções de como rodar o projeto:
+**Front-End**
 
-## Learn More
+1. Clone o projeto em sua maquina seguindo o modo que você achar melhor;
+2. Instale as dependências:
 
-To learn more about Next.js, take a look at the following resources:
+   ```sh
+       npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Configure as variáveis de ambiente ``.env``:
+    Crie um arquivo .env na raiz do projeto e adicione:
+   ```env
+        NEXTAUTH_URL=http://localhost:3000
+        AUTH_SECRET="Sua Chave aqui"
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4. Inicie o servidor de desenvolvimento:
 
-## Deploy on Vercel
+    ```sh
+       npm run dev
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📝 Licença
+
+[MIT License](https://github.com/RayaniGomes/Evently/blob/main/LICENSE) © [Rayani](https://github.com/RayaniGomes)
