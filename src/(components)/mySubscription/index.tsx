@@ -1,14 +1,17 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { Enrollments } from "./styled";
 import { useSession } from "next-auth/react";
 import CardMyEnrollments from "../cards/cardMyEnrollments";
 import { SetPagination } from "@/utils/pagination";
 import { useEnrollment } from "@/stores/enrollmentStore";
 import Pagination from "../pagination";
+import { useEvent } from "@/stores/eventStore";
+import { useUser } from "@/stores/userStore";
 
 export default function MyEnrollments() {
   const { enrollments, getEnrollments } = useEnrollment();
+  const { users } = useUser();
   const { data: session } = useSession();
 
   const orderOfRegistration = [...enrollments].sort((a, b) => {
@@ -25,13 +28,17 @@ export default function MyEnrollments() {
     handlePageClick,
   } = SetPagination({ events: orderOfRegistration });
 
-  const isEnrolled = enrollments.some(
-    (enrollment) => enrollment.enrollment.email === session?.user.email
-  );
+  const user = users.find((user) => user.email === session?.user.email);
 
+  const isEnrolled = useMemo(() => {
+    return enrollments.filter((enrollment) => enrollment.enrollment.email === session?.user.email);
+  }, [enrollments, session]);
+
+  
+  
   useEffect(() => {
     getEnrollments(session?.user.email || "");
-  }, [session]);
+  }, [session?.user.email, enrollments]);
 
   return (
     <Enrollments>

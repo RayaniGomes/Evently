@@ -26,7 +26,7 @@ export default function MyEvents({ user }: PropsForm) {
 
   useEffect(() => {
     getCreatorEvents(user?.email || "");
-  }, []);
+  }, [user?.email, events]);
 
   return (
     <Enrollments>

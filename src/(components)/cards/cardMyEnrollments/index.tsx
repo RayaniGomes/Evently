@@ -13,11 +13,7 @@ export default function CardMyEnrollments({
   color,
   hover,
 }: CardEnrollmentProps) {
-  const { deleteEnrollment, getEnrollmentId } = useEnrollment();
-
-  useEffect(() => {
-    getEnrollmentId(enrollment._id || "");
-  })
+  const { deleteEnrollment } = useEnrollment();
 
   return (
     <Container $bgColor={bgColor} $color={color} $hover={hover}>
@@ -54,7 +50,7 @@ export default function CardMyEnrollments({
           <button
             onClick={() =>
               handleDelete(
-                enrollment._id || "",
+                enrollment._id as string,
                 "esta inscrição",
                 deleteEnrollment,
               )
