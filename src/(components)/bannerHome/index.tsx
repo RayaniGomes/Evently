@@ -2,15 +2,26 @@
 import Link from "next/link";
 import { ContainerBanner, Slide } from "./styled";
 import { useEvent } from "@/stores/eventStore";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Container } from "react-bootstrap";
 import { formatDate } from "@/utils/funtions";
+import Flickity from "flickity";
 
 export default function BannerHome() {
   const { events, getEvents } = useEvent();
+  const flickityRef = useRef(null);
 
   useEffect(() => {
     getEvents();
+    if (flickityRef.current) {
+      new Flickity(flickityRef.current, {
+        cellAlign: "center",
+        autoPlay: 1500, // Tempo de passagem
+        wrapAround: true,
+        prevNextButtons: true,
+        pageDots: false,
+      });
+    }
   }, []);
 
   const latestEvents = [...events]
@@ -25,20 +36,22 @@ export default function BannerHome() {
     <ContainerBanner>
       <Container>
         {latestEvents.length > 0 ? (
-          latestEvents.map((event, index) => (
-            <Slide
-              key={event._id ?? index}
-              image={event.image ?? "/sem-image.svg"}
-            >
-              <div className="image" />
-              <div className="content">
-                <h3>{event.name}</h3>
-                <h4>{formatDate(event.date)}</h4>
-                <h4>{event.location}</h4>
-                <Link href={`/eventDetail/${event._id}`}>Detalhes</Link>
-              </div>
-            </Slide>
-          ))
+          <div className="w-100 flickity" ref={flickityRef}>
+            {latestEvents.map((event, index) => (
+              <Slide
+                key={event._id ?? index}
+                image={event.image ?? "/sem-image.svg"}
+              >
+                <div className="image" />
+                <div className="content">
+                  <h3>{event.name}</h3>
+                  <h4>{formatDate(event.date)}</h4>
+                  <h4>{event.location}</h4>
+                  <Link href={`/eventDetail/${event._id}`}>Detalhes</Link>
+                </div>
+              </Slide>
+            ))}
+          </div>
         ) : (
           <h2 className="text-center w-100 mt-5">Nenhum evento encontrado</h2>
         )}

@@ -6,6 +6,7 @@ import StyledComponentsRegistry from "./registry";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
+import 'flickity/dist/flickity.min.css';
 import Navbar from "@/(components)/navbar";
 import Footer from "@/(components)/footer";
 
