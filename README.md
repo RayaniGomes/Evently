@@ -13,7 +13,7 @@
 - [AOS](https://michalsnik.github.io/aos/)
 - [Axios](https://axios-http.com/ptbr/docs/intro)
 - [Bootstrap Icons](https://icons.getbootstrap.com/)
-- [EmbEmbla Carousel](https://www.embla-carousel.com/)
+- [Embla Carousel](https://www.embla-carousel.com/)
 - [Node e NPM](https://nodejs.org/en/)
 - [React](https://reactjs.org)
 - [NextAuthJs](https://next-auth.js.org/)
