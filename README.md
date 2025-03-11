@@ -36,8 +36,7 @@ Instruções de como rodar o projeto:
    ```
 
 3. Configure as variáveis de ambiente `.env`:
- 
-  Crie um arquivo .env na raiz do projeto e adicione:
+   Crie um arquivo .env na raiz do projeto e adicione:
 
    ```env
         NEXTAUTH_URL=http://localhost:3000
