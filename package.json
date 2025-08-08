@@ -19,7 +19,7 @@
     "embla-carousel": "^8.5.2",
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.2",
-    "next": "15.1.7",
+    "next": "15.4.6",
     "next-auth": "^4.24.11",
     "react": "^19.0.0",
     "react-bootstrap": "^2.10.9",
