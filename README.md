@@ -4,7 +4,7 @@
 
 > Plataforma para gerenciamento de eventos, permitindo a criação, edição e inscrição em eventos.
 >
-> A plataforma foi desenvolvido com intuito de mostrar meu conhecimento com as tecnologias ultilizadas.
+> A plataforma foi desenvolvido com intuito de mostrar meu conhecimento com as tecnologias utilizadas.
 
 ![Home Page](image.png)
 
