@@ -58,7 +58,7 @@ O layout desenvolvido segue um [Figma](https://www.figma.com/design/uobQsGZhIAQF
 
 ## 🚀 Deploy
 
-O projeto utiliza o deploy da [Versel](https://vercel.com), para visualizar o mesmo, por favor [clique aqui!](https://evently-hub.vercel.app/)
+O projeto utiliza o deploy da [Vercel](https://vercel.com), para visualizar o mesmo, por favor [clique aqui!](https://evently-hub.vercel.app/)
 
 ## 📝 Licença
 
