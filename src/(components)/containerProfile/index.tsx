@@ -35,7 +35,7 @@ export default function ContainerProfile({ name, email }: User) {
         <Container as={Section}>
           <Title title={`Olá, ${firstName(name)}`} border="--blue-dark" />
 
-          <div className="alert">
+          {/* <div className="alert">
             <h6>Importante!</h6>
             <p>
               Para a foto do perfil ou do a imagem do evento, o sistema só
@@ -57,7 +57,7 @@ export default function ContainerProfile({ name, email }: User) {
               </Link>
               .
             </p>
-          </div>
+          </div> */}
 
           <div className="profile">
             <Buttons>

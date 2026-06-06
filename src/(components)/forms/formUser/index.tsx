@@ -76,21 +76,13 @@ export default function FormUser() {
             </GroupInput>
             <div className="alert">
               <p>
-                Para a foto do perfil, o sistema só aceita links com domínio{" "}
+                Para a foto do perfil, você pode usar a do github, ecemplo: {" "} 
                 <Link
                   href="https://github.com"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  github.com
-                </Link>{" "}
-                e{" "}
-                <Link
-                  href="https://www.encurtador.com.br"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  encurtador.com.br
+                  github.com/seuUser.png
                 </Link>
                 .
               </p>

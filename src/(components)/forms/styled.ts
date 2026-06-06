@@ -180,6 +180,10 @@ export const ImageProfile = styled.div`
     opacity: 0.5;
     text-align: left;
     padding: 0;
+
+    a {
+      color: var(--white) !important;
+    }
   }
 
   label {
