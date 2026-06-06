@@ -13,7 +13,6 @@ export default function Footer() {
             src="/logo.svg"
             alt="Logo"
             loading="lazy"
-            objectFit="cover"
             width={120}
             height={50}
           />

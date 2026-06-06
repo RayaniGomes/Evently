@@ -67,6 +67,7 @@ export default function Events() {
                 {events.length > 0 && paginatedEvents.length > 0 ? (
                   paginatedEvents.map((event, index) => (
                     <CardEvents
+                      key={index}
                       event={event}
                       bgColor="--blue-medium"
                       color="--white"

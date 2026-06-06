@@ -49,10 +49,11 @@ export default function CardEvents({
   return (
     <Container $bgColor={bgColor} $color={color} $hover={hover}>
       <Image
-        src={event.image ?? "/sem-image.svg"}
+        src={event.image ?? "/sem-imagem.svg"}
         alt={event.name}
         width={200}
         height={175}
+        priority
       />
       <div className="box">
         <div>
